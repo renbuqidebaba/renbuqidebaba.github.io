@@ -1,39 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Go_Learning</title>
-    <url>/2024/04/21/Go-Learning/</url>
-    <content><![CDATA[<h2 id="GC机制"><a href="#GC机制" class="headerlink" title="GC机制"></a>GC机制</h2><p>go语言的GC机制：Go1.3采用<strong>标记清除法</strong>， Go1.5采用<strong>三色标记法</strong>，Go1.8采用<strong>三色标记法+混合写屏障。</strong>指的是Gc事件发生过程中，会产生应用程序的停顿。停顿产生时整个应用程序线程都会被暂停，没有任何响应，有点像卡死的感觉，这个停顿称为STW。</p>
-<span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.标记清除法</span><br><span class="line"></span><br><span class="line">分为两个阶段：标记和清除</span><br><span class="line"></span><br><span class="line">标记阶段：从根对象出发寻找并标记所有存活的对象。</span><br><span class="line"></span><br><span class="line">清除阶段：遍历堆中的对象，回收未标记的对象，并加入空闲链表。</span><br><span class="line"></span><br><span class="line">缺点是需要暂停程序STW。</span><br><span class="line"></span><br><span class="line">2.三色标记法：</span><br><span class="line"></span><br><span class="line">将对象标记为白色，灰色或黑色。</span><br><span class="line"></span><br><span class="line">白色：不确定对象（默认色）；黑色：存活对象。灰色：存活对象，子对象待处理。</span><br><span class="line"></span><br><span class="line">标记开始时，先将所有对象加入白色集合（需要STW）。首先将根对象标记为灰色，</span><br><span class="line">然后将一个对象从灰色集合取出，遍历其子对象，放入灰色集合。</span><br><span class="line">同时将取出的对象放入黑色集合，直到灰色集合为空。最后的白色集合对象就是需要清理的对象。</span><br><span class="line"></span><br><span class="line">这种方法有一个缺陷，如果对象的引用被用户修改了，那么之前的标记就无效了。</span><br><span class="line">因此Go采用了写屏障技术，当对象新增或者更新会将其着色为灰色。</span><br><span class="line"></span><br><span class="line">基于插入写屏障和删除写屏障在结束时需要STW来重新扫描栈，带来性能瓶颈。混合写屏障分为以下四步：</span><br><span class="line"></span><br><span class="line">GC开始时，将栈上的全部对象标记为黑色（不需要二次扫描，无需STW）；</span><br><span class="line">GC期间，任何栈上创建的新对象均为黑色</span><br><span class="line">被删除引用的对象标记为灰色</span><br><span class="line">总而言之就是确保黑色对象不能引用白色对象，这个改进直接使得GC时间从 2s降低到2us。</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>编程技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2024/04/01/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Algorithm</title>
     <url>/2024/04/21/Algorithm/</url>
     <content><![CDATA[<h2 id="算法技术"><a href="#算法技术" class="headerlink" title="算法技术"></a>算法技术</h2><p>在这里分享我的算法技术，一开始自己是用cpp进行刷题，后面自己会逐渐更新go的刷题版本！！希望go的发展越来越好，岗位越来越多！</p>
@@ -117,7 +84,7 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> flag = <span class="number">1</span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span>(root-&gt;right &amp;&amp; root-&gt; val &gt;= root-&gt;right-&gt;val) flag = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(root-&gt;left &amp;&amp; root-&gt; val &lt;= root-&gt;left-&gt;val) flag = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(root -&gt; left);</span><br><span class="line">        <span class="built_in">dfs</span>(root -&gt; right);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">dfs</span>(root);</span><br><span class="line">        <span class="keyword">if</span>(flag) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>于是换掉一种思路，我们由230知道，二叉搜索树的中序遍历是一个升序的数组，那么我们对于这个二叉树取得中序，再进行判断，如果满足就是二叉搜索树</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(TreeNode* root,vector&lt;<span class="type">int</span>&gt;&amp; res)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(root -&gt; left, res);</span><br><span class="line">        res.<span class="built_in">push_back</span>(root -&gt; val);</span><br><span class="line">        <span class="built_in">dfs</span>(root -&gt; right, res);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        <span class="built_in">dfs</span>(root,res);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;res.<span class="built_in">size</span>()<span class="number">-1</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(res[i]&gt;=res[i+<span class="number">1</span>]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(TreeNode* root,vector&lt;<span class="type">int</span>&gt;&amp; res)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(root -&gt; left, res);</span><br><span class="line">        res.<span class="built_in">push_back</span>(root -&gt; val);</span><br><span class="line">        <span class="built_in">dfs</span>(root -&gt; right, res);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        <span class="built_in">dfs</span>(root,res);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;res.<span class="built_in">size</span>()<span class="number">-1</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(res[i]&gt;=res[i<span class="number">+1</span>]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -150,5 +117,38 @@
       <tags>
         <tag>算法技术</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Go_Learning</title>
+    <url>/2024/04/21/Go-Learning/</url>
+    <content><![CDATA[<h2 id="GC机制"><a href="#GC机制" class="headerlink" title="GC机制"></a>GC机制</h2><p>go语言的GC机制：Go1.3采用<strong>标记清除法</strong>， Go1.5采用<strong>三色标记法</strong>，Go1.8采用<strong>三色标记法+混合写屏障。</strong>指的是Gc事件发生过程中，会产生应用程序的停顿。停顿产生时整个应用程序线程都会被暂停，没有任何响应，有点像卡死的感觉，这个停顿称为STW。</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.标记清除法</span><br><span class="line"></span><br><span class="line">分为两个阶段：标记和清除</span><br><span class="line"></span><br><span class="line">标记阶段：从根对象出发寻找并标记所有存活的对象。</span><br><span class="line"></span><br><span class="line">清除阶段：遍历堆中的对象，回收未标记的对象，并加入空闲链表。</span><br><span class="line"></span><br><span class="line">缺点是需要暂停程序STW。</span><br><span class="line"></span><br><span class="line">2.三色标记法：</span><br><span class="line"></span><br><span class="line">将对象标记为白色，灰色或黑色。</span><br><span class="line"></span><br><span class="line">白色：不确定对象（默认色）；黑色：存活对象。灰色：存活对象，子对象待处理。</span><br><span class="line"></span><br><span class="line">标记开始时，先将所有对象加入白色集合（需要STW）。首先将根对象标记为灰色，</span><br><span class="line">然后将一个对象从灰色集合取出，遍历其子对象，放入灰色集合。</span><br><span class="line">同时将取出的对象放入黑色集合，直到灰色集合为空。最后的白色集合对象就是需要清理的对象。</span><br><span class="line"></span><br><span class="line">这种方法有一个缺陷，如果对象的引用被用户修改了，那么之前的标记就无效了。</span><br><span class="line">因此Go采用了写屏障技术，当对象新增或者更新会将其着色为灰色。</span><br><span class="line"></span><br><span class="line">基于插入写屏障和删除写屏障在结束时需要STW来重新扫描栈，带来性能瓶颈。混合写屏障分为以下四步：</span><br><span class="line"></span><br><span class="line">GC开始时，将栈上的全部对象标记为黑色（不需要二次扫描，无需STW）；</span><br><span class="line">GC期间，任何栈上创建的新对象均为黑色</span><br><span class="line">被删除引用的对象标记为灰色</span><br><span class="line">总而言之就是确保黑色对象不能引用白色对象，这个改进直接使得GC时间从 2s降低到2us。</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>编程技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2024/07/28/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
 </search>
