@@ -1,0 +1,6 @@
+/* Here is your custom css styles. */
+#articleContent img {
+    max-width: 60%;
+    margin: 0 auto;
+    display: block;
+}
