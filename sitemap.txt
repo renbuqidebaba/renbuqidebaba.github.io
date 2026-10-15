@@ -1,3 +1,4 @@
+https://renbuqidebaba.github.io/2026/10/15/Go-Learning/
 https://renbuqidebaba.github.io/2026/10/15/two-pointers/
 https://renbuqidebaba.github.io/2026/10/15/sorting-algorithm/
 https://renbuqidebaba.github.io/2026/10/15/search-algorithm/
@@ -8,7 +9,6 @@ https://renbuqidebaba.github.io/2026/10/15/data-structure-tricks/
 https://renbuqidebaba.github.io/2026/10/15/data-structure-cheatsheet/
 https://renbuqidebaba.github.io/2026/10/15/binary-tree/
 https://renbuqidebaba.github.io/2026/10/15/binary-search/
-https://renbuqidebaba.github.io/2024/04/21/Go-Learning/
 https://renbuqidebaba.github.io/2026/10/15/ai-agent-llm/
 https://renbuqidebaba.github.io/contact/index.html
 https://renbuqidebaba.github.io/2024/07/28/hello-world/
