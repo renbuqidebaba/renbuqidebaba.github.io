@@ -1159,7 +1159,7 @@ public:
         self<span class="token punctuation">.</span>dfs<span class="token punctuation">(</span>root<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
@@ -1541,7 +1541,7 @@ Pythonimport sys
         <span class="token keyword">return</span> <span class="token boolean">None</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
@@ -2000,7 +2000,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
                     <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
@@ -2479,7 +2479,7 @@ a <span class="token operator">=</span> a <span class="token operator">^</span> 
         <span class="token keyword">return</span> slow<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
@@ -3197,7 +3197,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>ans<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
@@ -3337,7 +3337,7 @@ c<span class="token operator">++</span><span class="token keyword">class</span> 
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
@@ -3501,7 +3501,7 @@ c<span class="token operator">++</span><span class="token keyword">class</span> 
         <span class="token keyword">return</span> j <span class="token operator">+</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
@@ -3797,7 +3797,7 @@ c<span class="token operator">++</span><span class="token keyword">class</span> 
         <span class="token keyword">return</span> ans<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
@@ -4003,7 +4003,7 @@ c<span class="token operator">++</span><span class="token keyword">class</span> 
         <span class="token keyword">return</span> ans<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
@@ -4291,7 +4291,7 @@ Pythondef __lt__<span class="token punctuation">(</span>self<span class="token p
 mmap<span class="token punctuation">[</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span> 当 s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> 第一次出现时，字典里没有这个键，直接 <span class="token operator">+=</span> 会抛出 KeyError。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>算法技术</category>
+        <category>算法心得</category>
       </categories>
   </entry>
   <entry>
