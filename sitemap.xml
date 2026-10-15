@@ -2,6 +2,96 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/data-structure-cheatsheet/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/dynamic-programming/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/linked-list/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/binary-tree/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/binary-search/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/two-pointers/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/greedy-algorithm/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/data-structure-tricks/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/search-algorithm/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/sorting-algorithm/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://renbuqidebaba.github.io/contact/index.html</loc>
     
     <lastmod>2026-10-15</lastmod>
@@ -21,15 +111,6 @@
   
   <url>
     <loc>https://renbuqidebaba.github.io/2024/04/21/Go-Learning/</loc>
-    
-    <lastmod>2026-10-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://renbuqidebaba.github.io/2024/04/21/Algorithm/</loc>
     
     <lastmod>2026-10-15</lastmod>
     
