@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://renbuqidebaba.github.io/2024/04/21/Go-Learning/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2026/10/15/ai-agent-llm/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://renbuqidebaba.github.io/2026/10/15/data-structure-cheatsheet/</loc>
     
     <lastmod>2026-10-15</lastmod>
@@ -110,15 +128,6 @@
   </url>
   
   <url>
-    <loc>https://renbuqidebaba.github.io/2024/04/21/Go-Learning/</loc>
-    
-    <lastmod>2026-10-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://renbuqidebaba.github.io/about/index.html</loc>
     
     <lastmod>2026-10-15</lastmod>
@@ -128,7 +137,7 @@
   </url>
   
   <url>
-    <loc>https://renbuqidebaba.github.io/categories/index.html</loc>
+    <loc>https://renbuqidebaba.github.io/life/index.html</loc>
     
     <lastmod>2026-05-31</lastmod>
     
@@ -137,7 +146,7 @@
   </url>
   
   <url>
-    <loc>https://renbuqidebaba.github.io/life/index.html</loc>
+    <loc>https://renbuqidebaba.github.io/categories/index.html</loc>
     
     <lastmod>2026-05-31</lastmod>
     
@@ -166,14 +175,14 @@
 
   
   <url>
-    <loc>https://renbuqidebaba.github.io/categories/%E7%AE%97%E6%B3%95%E6%8A%80%E6%9C%AF/</loc>
+    <loc>https://renbuqidebaba.github.io/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://renbuqidebaba.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/</loc>
+    <loc>https://renbuqidebaba.github.io/categories/%E7%AE%97%E6%B3%95%E6%8A%80%E6%9C%AF/</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

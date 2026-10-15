@@ -1,6 +1,548 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AI Agent 与大模型</title>
+    <url>/2026/10/15/ai-agent-llm/</url>
+    <content><![CDATA[<p>这一篇是我面试准备过程中整理的 Agent 与大模型相关笔记。和算法那批不同，这里更偏工程实践——Agent 的组件拆解、工具设计、MCP &#x2F; Skills 的运行机制、上下文工程，以及 Transformer 推理侧的几个高频问题。内容以我自己的理解为主，参考资料随文标注。</p>
+<hr>
+<h2 id="一、Agent-的骨架"><a href="#一、Agent-的骨架" class="headerlink" title="一、Agent 的骨架"></a>一、Agent 的骨架</h2><h3 id="Agent-的核心组件"><a href="#Agent-的核心组件" class="headerlink" title="Agent 的核心组件"></a>Agent 的核心组件</h3><p>我把 Agent 拆成五块，缺一块都会明显影响上限：</p>
+<ul>
+<li><strong>规划模块（Planning）</strong>——理解用户意图，把任务拆成可执行的步骤</li>
+<li><strong>工具调用（Tool Calling）</strong>——连接外部工具和 API，让模型能作用于真实世界</li>
+<li><strong>记忆管理（Memory）</strong>——短期记忆（当前会话）与长期记忆（跨会话的经验与知识）</li>
+<li><strong>反思与修正（Reflection）</strong>——根据执行结果回头看，修正下一轮策略</li>
+<li><strong>模型</strong>——选择最合适的模型做推理，不一定是最大的那个</li>
+</ul>
+<h3 id="ReAct：推理与行动交替"><a href="#ReAct：推理与行动交替" class="headerlink" title="ReAct：推理与行动交替"></a>ReAct：推理与行动交替</h3><p>ReAct（Reasoning + Acting）是一种 Agent 框架，核心是让<strong>推理</strong>和<strong>行动</strong>交替进行来完成任务，有点类似现在 plan + exec 的工作流。</p>
+<p>但我觉得原版 ReAct 缺一环：<strong>应该再叠一个反思模块</strong>，把执行结果反过来指导下一轮，让下一轮执行得更好。这也是后来 Reflexion 这类工作补上的部分。</p>
+<h3 id="上下文工程-≠-提示词工程"><a href="#上下文工程-≠-提示词工程" class="headerlink" title="上下文工程 ≠ 提示词工程"></a>上下文工程 ≠ 提示词工程</h3><p>这两个词经常被混用，我的理解是<strong>提示词工程是上下文工程的一个子集</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>提示词工程</th>
+<th>上下文工程</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>关注点</td>
+<td>如何设计问题 &#x2F; 指令本身</td>
+<td>如何构建背景信息供模型参考</td>
+</tr>
+<tr>
+<td>操作对象</td>
+<td>用户输入的查询语句</td>
+<td>系统提供的参考材料（文档、数据、历史记录）</td>
+</tr>
+<tr>
+<td>目标</td>
+<td>让模型更好地理解意图</td>
+<td>让模型基于准确、相关的信息作答</td>
+</tr>
+<tr>
+<td>技术栈</td>
+<td>角色设定、思维链、Few-shot</td>
+<td>RAG、文档切分、向量检索、重排序</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、RAG"><a href="#二、RAG" class="headerlink" title="二、RAG"></a>二、RAG</h2><h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>RAG &#x3D; Retrieval Augmented Generation，检索增强生成。拆开就是三步：</p>
+<ol>
+<li>去知识库检索相关内容</li>
+<li>把检索结果融合进 prompt，增强输入信息</li>
+<li>大模型基于增强后的输入，生成更符合事实的回答</li>
+</ol>
+<h3 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h3><p>评估 RAG 要从「找得准」和「答得对」两个维度入手，单纯看准确率是不够的。</p>
+<p><strong>检索阶段：</strong></p>
+<ul>
+<li><strong>召回率 Recall@K</strong>——最重要的指标。Top K 个结果中至少包含一个正确答案的概率，K 通常取 3 或 5。召回率低意味着知识库设计或检索策略失败</li>
+<li><strong>精确率 Precision@K</strong>——Top K 结果中相关文档的比例</li>
+<li><strong>MRR（Mean Reciprocal Rank）</strong>——衡量第一个正确答案出现的位置，越靠前得分越高</li>
+</ul>
+<p><strong>生成阶段：</strong></p>
+<ul>
+<li><strong>忠实度 Faithfulness</strong>——答案是否严格基于检索到的上下文。这是 RAG 的底线，用于防幻觉；忠实度低说明模型在胡编</li>
+<li><strong>答案相关性 Answer Relevance</strong>——生成的答案是否直接回答了问题，而非答非所问</li>
+<li><strong>引用准确率 Citation Accuracy</strong>——答案中的引用是否真的支持该论断</li>
+</ul>
+<h3 id="RAG-和微调怎么选"><a href="#RAG-和微调怎么选" class="headerlink" title="RAG 和微调怎么选"></a>RAG 和微调怎么选</h3><p>最佳实践是 <strong>RAG 为主、微调为辅</strong>：用 RAG 解决 80% 的知识问题，用微调优化剩下 20% 的特定场景。</p>
+<h3 id="Rerank-模型：原理与作用"><a href="#Rerank-模型：原理与作用" class="headerlink" title="Rerank 模型：原理与作用"></a>Rerank 模型：原理与作用</h3><p><strong>作用</strong>：对召回返回的多篇文档重新排序，把最相关的排到前面，提升 RAG 精度。</p>
+<p><strong>原理</strong>：输入是 <code>&lt;query, doc&gt;</code> 对，通过双塔或交叉注意力模型计算相关性分数，按分数重排。交叉编码器效果更强但速度慢，双塔速度快但效果略弱。</p>
+<h3 id="分块策略"><a href="#分块策略" class="headerlink" title="分块策略"></a>分块策略</h3><ul>
+<li><strong>固定长度分块</strong>——按长度机械切分</li>
+<li><strong>语义分块</strong>——按句子、段落的语义完整性拆分</li>
+<li><strong>递归分块</strong>——先切成大段，再看大小决定是否继续切小</li>
+<li><strong>基于文档结构分块</strong>——按 PDF &#x2F; Word 的标题层级划分</li>
+</ul>
+<hr>
+<h2 id="三、工具设计的哲学"><a href="#三、工具设计的哲学" class="headerlink" title="三、工具设计的哲学"></a>三、工具设计的哲学</h2><p>这部分是我觉得最容易被低估的地方。</p>
+<h3 id="Tool-的本质"><a href="#Tool-的本质" class="headerlink" title="Tool 的本质"></a>Tool 的本质</h3><p>Tool 不是简单的 API 包装，它的本质是<strong>封装了确定性的计算逻辑</strong>，把 LLM 不确定的推理能力与确定性的外部系统连接起来——是可被 LLM 理解、调用的标准化功能模块。</p>
+<p>所以设计的时候视角要换：<strong>普通函数面向程序员，Tool 面向 LLM</strong>。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># ❌ 普通函数 - 面向程序员</span>
+<span class="token keyword">def</span> <span class="token function">search_database</span><span class="token punctuation">(</span>query<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> db_connection<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>Result<span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""直接操作数据库，需要连接对象"""</span>
+
+<span class="token comment"># ✅ Tool 设计 - 面向 LLM</span>
+<span class="token keyword">def</span> <span class="token function">search_products</span><span class="token punctuation">(</span>keywords<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> category<span class="token punctuation">:</span> <span class="token builtin">str</span> <span class="token operator">=</span> <span class="token boolean">None</span><span class="token punctuation">,</span> max_results<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">str</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    根据关键词搜索产品信息
+    Args:
+        keywords: 搜索关键词，如"笔记本电脑"
+        category: 可选的产品类别，如"电子产品"
+        max_results: 最大返回数量，默认为10
+    Returns:
+        产品信息的格式化字符串
+    """</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>什么时候该做成 Tool？需要外部数据源、需要精确数据、会改变状态——这三种情况。另外<strong>每个 Tool 只管理一个领域的事情</strong>，别做万能函数。</p>
+<h3 id="元数据要写全"><a href="#元数据要写全" class="headerlink" title="元数据要写全"></a>元数据要写全</h3><p>为了让 Agent 能智能选工具，元数据得给足：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"tool_name"</span><span class="token operator">:</span> <span class="token string">"calculate_loan_repayment"</span><span class="token punctuation">,</span>
+  <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"计算贷款月供和总利息"</span><span class="token punctuation">,</span>
+  <span class="token property">"category"</span><span class="token operator">:</span> <span class="token string">"finance"</span><span class="token punctuation">,</span>
+  <span class="token property">"input_schema"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"principal"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span> <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"贷款本金"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token property">"annual_rate"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span> <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"年利率(%)"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token property">"months"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"integer"</span><span class="token punctuation">,</span> <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"贷款月数"</span><span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"output_schema"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"monthly_payment"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token property">"total_interest"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"number"</span><span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token property">"estimated_cost"</span><span class="token operator">:</span> <span class="token number">0.001</span><span class="token punctuation">,</span>   <span class="token comment">// 调用成本</span>
+  <span class="token property">"execution_time"</span><span class="token operator">:</span> <span class="token number">0.1</span><span class="token punctuation">,</span>     <span class="token comment">// 设计调用的超时时间</span>
+  <span class="token property">"success_rate"</span><span class="token operator">:</span> <span class="token number">0.99</span><span class="token punctuation">,</span>      <span class="token comment">// 历史成功率</span>
+  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"1.2"</span><span class="token punctuation">,</span>
+  <span class="token property">"last_updated"</span><span class="token operator">:</span> <span class="token string">"2024-01-15"</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>estimated_cost</code>、<code>execution_time</code>、<code>success_rate</code> 这几个字段很多人会漏，但它们才是让 Agent 能做「性价比取舍」的依据。</p>
+<hr>
+<h2 id="四、MCP、Skills、Function-Call-的区别"><a href="#四、MCP、Skills、Function-Call-的区别" class="headerlink" title="四、MCP、Skills、Function Call 的区别"></a>四、MCP、Skills、Function Call 的区别</h2><p>先把三者的层级关系摆清楚：</p>
+<ul>
+<li><strong>Function Call</strong>——模型与客户端之间的单次函数调用格式，是<strong>最小单元</strong></li>
+<li><strong>MCP 协议</strong>——AI 与外部服务之间的完整双向通信协议（连接 + 会话 + 工具 + 资源）</li>
+<li><strong>Skills 协议</strong>——技能包。每一种方式调用时都必须进行强 schema 约束</li>
+</ul>
+<h3 id="MCP-协议（2024-年-12-月）"><a href="#MCP-协议（2024-年-12-月）" class="headerlink" title="MCP 协议（2024 年 12 月）"></a>MCP 协议（2024 年 12 月）</h3><p>MCP（Model Context Protocol）定义了应用程序和 AI 模型之间交换上下文信息的方式，让开发者能以一致的方式把各种数据源、工具和功能连接到 AI 模型。定位是<strong>一个中间协议层</strong>。</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img47.png" alt="MCP 架构"></p>
+<p><strong>底层实现：</strong></p>
+<ul>
+<li>基于 <strong>JSON-RPC 2.0</strong></li>
+<li><strong>SSE</strong> 作为长连接下行通道（服务端 → 客户端推送）</li>
+<li><strong>HTTP POST</strong> 作为上行请求通道（客户端 → 服务端调用）</li>
+<li>对比 stdio：SSE 方式适合跨机器 &#x2F; 远程分布式 Agent 调用，打通网络级别的 MCP Host ↔ Server</li>
+</ul>
+<p><strong>执行流程：</strong></p>
+<ol>
+<li>客户端（Claude Desktop &#x2F; Cursor）把你的问题发送给 Claude</li>
+<li>Claude 分析可用工具，决定使用哪一个或多个</li>
+<li>客户端通过 MCP Server 执行所选工具</li>
+<li>工具执行结果送回给 Claude</li>
+<li>Claude 结合结果构造最终 prompt，生成自然语言回应</li>
+<li>回应展示给用户</li>
+</ol>
+<p>具体的调用循环长这样：</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img48.png" alt="MCP 调用循环"></p>
+<h3 id="智能体是怎么选工具的？"><a href="#智能体是怎么选工具的？" class="headerlink" title="智能体是怎么选工具的？"></a>智能体是怎么选工具的？</h3><p>答案很朴素：<strong>靠 prompt engineering</strong>。把所有工具的结构化描述和 few-shot 示例塞进 system prompt，让模型自己选。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">start</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 初始化所有的 mcp server</span>
+    <span class="token keyword">for</span> server <span class="token keyword">in</span> self<span class="token punctuation">.</span>servers<span class="token punctuation">:</span>
+        <span class="token keyword">await</span> server<span class="token punctuation">.</span>initialize<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 获取所有的 tools</span>
+    all_tools <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> server <span class="token keyword">in</span> self<span class="token punctuation">.</span>servers<span class="token punctuation">:</span>
+        tools <span class="token operator">=</span> <span class="token keyword">await</span> server<span class="token punctuation">.</span>list_tools<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        all_tools<span class="token punctuation">.</span>extend<span class="token punctuation">(</span>tools<span class="token punctuation">)</span>
+
+    <span class="token comment"># 将所有的 tools 的功能描述格式化成字符串供 LLM 使用</span>
+    tools_description <span class="token operator">=</span> <span class="token string">"\n"</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>
+        <span class="token punctuation">[</span>tool<span class="token punctuation">.</span>format_for_llm<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">for</span> tool <span class="token keyword">in</span> all_tools<span class="token punctuation">]</span>
+    <span class="token punctuation">)</span>
+
+    system_message <span class="token operator">=</span> <span class="token punctuation">(</span>
+        <span class="token string">"You are a helpful assistant with access to these tools:\n\n"</span>
+        <span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">&#123;</span>tools_description<span class="token punctuation">&#125;</span></span><span class="token string">\n"</span></span>
+        <span class="token string">"Choose the appropriate tool based on the user's question. "</span>
+        <span class="token string">"If no tool is needed, reply directly.\n\n"</span>
+        <span class="token string">"IMPORTANT: When you need to use a tool, you must ONLY respond with "</span>
+        <span class="token string">"the exact JSON object format below, nothing else:\n"</span>
+        <span class="token string">"&#123;\n"</span>
+        <span class="token string">'    "tool": "tool-name",\n'</span>
+        <span class="token string">'    "arguments": &#123;\n'</span>
+        <span class="token string">'        "argument-name": "value"\n'</span>
+        <span class="token string">"    &#125;\n"</span>
+        <span class="token string">"&#125;\n\n"</span>
+        <span class="token string">"After receiving a tool's response:\n"</span>
+        <span class="token string">"1. Transform the raw data into a natural, conversational response\n"</span>
+        <span class="token string">"2. Keep responses concise but informative\n"</span>
+        <span class="token string">"3. Focus on the most relevant information\n"</span>
+        <span class="token string">"4. Use appropriate context from the user's question\n"</span>
+        <span class="token string">"5. Avoid simply repeating the raw data\n\n"</span>
+        <span class="token string">"Please use only the tools that are explicitly defined above."</span>
+    <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>模型分析用户请求后，会决定是否需要调用工具：</p>
+<ul>
+<li><strong>无需工具</strong>——直接生成自然语言回复</li>
+<li><strong>需要工具</strong>——输出结构化 JSON 格式的调用请求</li>
+</ul>
+<p>如果回复里含工具调用请求，客户端就按这个 JSON 执行对应工具。执行结果再和 system prompt、用户消息一起发回给模型，请它生成最终回复。</p>
+<p>那如果 tool call 的 JSON 有问题、或者模型产生幻觉呢？<strong>skip 掉无效的调用请求</strong>就行。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+    messages<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">"role"</span><span class="token punctuation">:</span> <span class="token string">"user"</span><span class="token punctuation">,</span> <span class="token string">"content"</span><span class="token punctuation">:</span> user_input<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    llm_response <span class="token operator">=</span> self<span class="token punctuation">.</span>llm_client<span class="token punctuation">.</span>get_response<span class="token punctuation">(</span>messages<span class="token punctuation">)</span>
+
+    <span class="token comment"># 处理 LLM 的输出（如果有 tool call 则执行对应的工具）</span>
+    result <span class="token operator">=</span> <span class="token keyword">await</span> self<span class="token punctuation">.</span>process_llm_response<span class="token punctuation">(</span>llm_response<span class="token punctuation">)</span>
+
+    <span class="token comment"># result 与 llm_response 不同，说明执行了 tool call</span>
+    <span class="token keyword">if</span> result <span class="token operator">!=</span> llm_response<span class="token punctuation">:</span>
+        messages<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">"role"</span><span class="token punctuation">:</span> <span class="token string">"assistant"</span><span class="token punctuation">,</span> <span class="token string">"content"</span><span class="token punctuation">:</span> llm_response<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        messages<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">"role"</span><span class="token punctuation">:</span> <span class="token string">"system"</span><span class="token punctuation">,</span> <span class="token string">"content"</span><span class="token punctuation">:</span> result<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        final_response <span class="token operator">=</span> self<span class="token punctuation">.</span>llm_client<span class="token punctuation">.</span>get_response<span class="token punctuation">(</span>messages<span class="token punctuation">)</span>
+        messages<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">"role"</span><span class="token punctuation">:</span> <span class="token string">"assistant"</span><span class="token punctuation">,</span> <span class="token string">"content"</span><span class="token punctuation">:</span> final_response<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token comment"># 没有执行 tool call，直接返回</span>
+        messages<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">"role"</span><span class="token punctuation">:</span> <span class="token string">"assistant"</span><span class="token punctuation">,</span> <span class="token string">"content"</span><span class="token punctuation">:</span> llm_response<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>两个结论：</p>
+<ul>
+<li><strong>工具文档至关重要</strong>——模型通过工具描述文本来理解和选择工具，所以名称、docstring、参数说明都要精心写</li>
+<li><strong>任何模型都能适配 MCP</strong>——因为选择是基于 prompt 的，只要你能提供对应的工具描述</li>
+</ul>
+<h3 id="Claude-Skills（2025-年-10-月）"><a href="#Claude-Skills（2025-年-10-月）" class="headerlink" title="Claude Skills（2025 年 10 月）"></a>Claude Skills（2025 年 10 月）</h3><p>Skills 是 Claude 的可扩展机制。每个 Skill 本质上是一个文件夹，包含元数据、说明文档，以及可选的代码脚本和资源文件。</p>
+<p>关键在于<strong>渐进式加载</strong>——不是一次性全塞进上下文：</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img49.png" alt="Skills 渐进式加载"></p>
+<p>在系统层面，Claude 为技能运行提供安全的沙盒虚拟环境。技能文件夹就像虚拟机里的目录，Claude 可以通过 bash 命令读取和执行。</p>
+<p><strong>三级加载：</strong></p>
+<ol>
+<li><strong>一级：元数据，始终加载</strong>——<code>SKILL.md</code> 头部的名称和描述字段，启动时注入系统提示，通常只要几十个 token</li>
+<li><strong>二级：说明文档，技能触发时加载</strong>——<code>SKILL.md</code> 本身包含具体指令和示例，大约几千 token</li>
+<li><strong>三级：资源与脚本，按需加载</strong>——附加的 <code>.md</code> 文件、模板、数据库模式、可执行脚本，仅在被调用时才读取或执行</li>
+</ol>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img50.png" alt="Skills 三级结构"></p>
+<p>值得注意的一点：<strong>代码脚本通过 bash 调用，只把执行结果返回给 Claude，脚本本身的代码不会进入上下文</strong>。这让技能可以包含大量参考资料而不消耗上下文长度。</p>
+<p>一个 Skill 的解剖：</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img51.png" alt="Skill 解剖"></p>
+<p><strong>与 Function Calling &#x2F; MCP 的比较：</strong></p>
+<ul>
+<li><strong>MCP</strong> 其实就是把 function calling 这类东西做了规范化处理。以前的 function calling 每家实现都不一样，都是 API 工具供大模型调用；MCP 相当于用一个统一协议来管理这些工具</li>
+<li><strong>Skills</strong> 是技能包，指导你如何使用这些技能、以及用到了哪些工具。它是一种<strong>更高的抽象</strong>，可以支撑企业内部业务知识库</li>
+</ul>
+<h3 id="三方对比速查"><a href="#三方对比速查" class="headerlink" title="三方对比速查"></a>三方对比速查</h3><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>层级</th>
+<th>解决的问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Function Call</td>
+<td>最小单元</td>
+<td>模型如何表达「我要调某个函数」</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>通信协议</td>
+<td>工具如何被统一地发现、连接与调用</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>能力封装</td>
+<td>复杂任务的知识与流程如何按需组织</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="五、上下文工程实战：从一份客户端-Agent-源码里学到的"><a href="#五、上下文工程实战：从一份客户端-Agent-源码里学到的" class="headerlink" title="五、上下文工程实战：从一份客户端 Agent 源码里学到的"></a>五、上下文工程实战：从一份客户端 Agent 源码里学到的</h2><p>这段是我觉得整份笔记里最有价值的部分。下面这些设计思路来自对 Claude 客户端 Agent 代码的分析。</p>
+<h3 id="Agent-循环"><a href="#Agent-循环" class="headerlink" title="Agent 循环"></a>Agent 循环</h3><p>整体思想和 ReAct 一样朴素，核心就是这么一个 <code>while(true)</code>：</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token comment">// query.ts</span>
+<span class="token keyword">async</span> <span class="token keyword">function</span><span class="token operator">*</span> <span class="token function">queryLoop</span><span class="token punctuation">(</span>params<span class="token operator">:</span> QueryParams<span class="token punctuation">,</span> consumedCommandUuids<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> state<span class="token operator">:</span> State <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    messages<span class="token operator">:</span> params<span class="token punctuation">.</span>messages<span class="token punctuation">,</span>
+    toolUseContext<span class="token operator">:</span> params<span class="token punctuation">.</span>toolUseContext<span class="token punctuation">,</span>
+    autoCompactTracking<span class="token operator">:</span> <span class="token keyword">undefined</span><span class="token punctuation">,</span>
+    maxOutputTokensRecoveryCount<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    hasAttemptedReactiveCompact<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    turnCount<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token comment">// ...</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 1. 上下文压缩（防止 token 爆炸）</span>
+    <span class="token comment">// 2. 调用大模型，流式获取响应</span>
+    <span class="token comment">// 3. 解析模型返回的工具调用</span>
+    <span class="token comment">// 4. 执行工具，获取结果</span>
+    <span class="token comment">// 5. 把结果追加到对话历史</span>
+    <span class="token comment">// 6. 如果没有新的工具调用，结束；否则继续循环</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>每次循环通过 <code>queryModel</code> 函数和大模型沟通，负责发送请求、接收 SSE 流式输出、累计 token 用量。模型返回结果里如果包含 <code>tool_use</code> 类型的内容，说明还要继续干，循环接着转；没有 <code>tool_use</code> 了就结束。</p>
+<p>源码注释里还有一段被称为「巫师守则」的思考块规则，写得挺有意思：</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token comment">/**
+ * The rules of thinking are lengthy and fortuitous...
+ *
+ * The rules follow:
+ * 1. A message that contains a thinking block must be part of a query
+ *    whose max_thinking_length > 0
+ * 2. A thinking block may not be the last message in a block
+ * 3. Thinking blocks must be preserved for the duration of an assistant
+ *    trajectory
+ *
+ * Heed these rules well, young wizard. For they are the rules of thinking,
+ * and the rules of thinking are the rules of the universe. If ye does not
+ * heed these rules, ye will be punished with an entire day of debugging
+ * and hair pulling.
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="工具设计：fail-closed-的默认值"><a href="#工具设计：fail-closed-的默认值" class="headerlink" title="工具设计：fail-closed 的默认值"></a>工具设计：fail-closed 的默认值</h3><p>Claude Code 内置了 40 多个工具，全部在 <code>getAllBaseTools()</code> 里注册：</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token comment">// tools.ts — 工具注册文件</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">getAllBaseTools</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Tools <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">[</span>
+    AgentTool<span class="token punctuation">,</span>         <span class="token comment">// 子 Agent 生成</span>
+    TaskOutputTool<span class="token punctuation">,</span>    <span class="token comment">// 任务输出</span>
+    BashTool<span class="token punctuation">,</span>          <span class="token comment">// 执行终端命令</span>
+    <span class="token operator">...</span><span class="token punctuation">(</span><span class="token function">hasEmbeddedSearchTools</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token punctuation">[</span>GlobTool<span class="token punctuation">,</span> GrepTool<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    FileReadTool<span class="token punctuation">,</span>      <span class="token comment">// 读文件</span>
+    FileEditTool<span class="token punctuation">,</span>      <span class="token comment">// 编辑文件</span>
+    FileWriteTool<span class="token punctuation">,</span>     <span class="token comment">// 写文件</span>
+    NotebookEditTool<span class="token punctuation">,</span>  <span class="token comment">// 编辑 Notebook</span>
+    WebFetchTool<span class="token punctuation">,</span>      <span class="token comment">// 网络请求</span>
+    WebSearchTool<span class="token punctuation">,</span>     <span class="token comment">// 网络搜索</span>
+    TodoWriteTool<span class="token punctuation">,</span>     <span class="token comment">// 待办事项</span>
+    SkillTool<span class="token punctuation">,</span>         <span class="token comment">// 技能调用</span>
+    EnterPlanModeTool<span class="token punctuation">,</span> <span class="token comment">// 进入规划模式</span>
+    <span class="token comment">// ... 还有几十个，根据环境和 Feature Flag 动态加载</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>每个工具通过 <code>buildTool</code> 工厂函数创建，里面有个很巧妙的默认值设计：</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token comment">// Defaults (fail-closed where it matters):</span>
+<span class="token comment">// - isConcurrencySafe → false (assume not safe)</span>
+<span class="token comment">// - isReadOnly → false (assume writes)</span>
+<span class="token comment">// - isDestructive → false</span>
+<span class="token comment">// - toAutoClassifierInput → '' (skip classifier)</span>
+<span class="token keyword">const</span> <span class="token constant">TOOL_DEFAULTS</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token function-variable function">isEnabled</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">isConcurrencySafe</span><span class="token operator">:</span> <span class="token punctuation">(</span>_input<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">isReadOnly</span><span class="token operator">:</span> <span class="token punctuation">(</span>_input<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">isDestructive</span><span class="token operator">:</span> <span class="token punctuation">(</span>_input<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">toAutoClassifierInput</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token string">''</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>isConcurrencySafe</code> 和 <code>isReadOnly</code> 都默认 <code>false</code>——如果某个工具的开发者忘了声明「我只是读个文件，不会改东西」，系统就自动把它当危险操作处理，不让它并发执行。</p>
+<p>这种思路叫 <strong>fail-closed</strong>（失败时关闭），像公司门禁：你没刷卡默认进不去。反过来 fail-open 就像小区大门，谁来都让进。</p>
+<h3 id="读写分离的并发编排"><a href="#读写分离的并发编排" class="headerlink" title="读写分离的并发编排"></a>读写分离的并发编排</h3><p>工具执行编排里做了一套读写分离机制。默认最多 10 个工具并发，核心分批逻辑：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// services/tools/toolOrchestration.ts</span>
+<span class="token keyword">function</span> <span class="token function">partitionToolCalls</span><span class="token punctuation">(</span><span class="token parameter">toolUseMessages<span class="token punctuation">,</span> toolUseContext</span><span class="token punctuation">)</span><span class="token operator">:</span> Batch<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> toolUseMessages<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">acc<span class="token punctuation">,</span> toolUse</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> tool <span class="token operator">=</span> <span class="token function">findToolByName</span><span class="token punctuation">(</span>toolUseContext<span class="token punctuation">.</span>options<span class="token punctuation">.</span>tools<span class="token punctuation">,</span> toolUse<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> parsedInput <span class="token operator">=</span> tool<span class="token operator">?.</span>inputSchema<span class="token punctuation">.</span><span class="token function">safeParse</span><span class="token punctuation">(</span>toolUse<span class="token punctuation">.</span>input<span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> isConcurrencySafe <span class="token operator">=</span> parsedInput<span class="token operator">?.</span>success
+      <span class="token operator">?</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+          <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token function">Boolean</span><span class="token punctuation">(</span>tool<span class="token operator">?.</span><span class="token function">isConcurrencySafe</span><span class="token punctuation">(</span>parsedInput<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span>  <span class="token comment">// 抛异常也当不安全，又是 fail-closed</span>
+          <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token operator">:</span> <span class="token boolean">false</span>  <span class="token comment">// 解析失败也当不安全</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>isConcurrencySafe <span class="token operator">&amp;&amp;</span> acc<span class="token punctuation">[</span>acc<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">?.</span>isConcurrencySafe<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      acc<span class="token punctuation">[</span>acc<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>blocks<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>toolUse<span class="token punctuation">)</span>  <span class="token comment">// 合并到并发批次</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+      acc<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> isConcurrencySafe<span class="token punctuation">,</span> <span class="token literal-property property">blocks</span><span class="token operator">:</span> <span class="token punctuation">[</span>toolUse<span class="token punctuation">]</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>  <span class="token comment">// 新开批次</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> acc
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>连续几个只读工具可以一起跑，但一旦遇到写操作就得排队等前面完成。注意那个 <code>try-catch</code>——如果判断方法本身抛异常，也直接当不安全处理。</p>
+<p>并发执行产生的上下文修改<strong>不会立刻生效</strong>，而是先排队，等一个批次全部跑完再按顺序依次应用：</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">if</span> <span class="token punctuation">(</span>isConcurrencySafe<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> queuedContextModifiers <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+  <span class="token keyword">for</span> <span class="token keyword">await</span> <span class="token punctuation">(</span><span class="token keyword">const</span> update <span class="token keyword">of</span> <span class="token function">runToolsConcurrently</span><span class="token punctuation">(</span>blocks<span class="token punctuation">,</span> <span class="token operator">...</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>update<span class="token punctuation">.</span>contextModifier<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">// 先排队，不立即应用</span>
+      queuedContextModifiers<span class="token punctuation">[</span>toolUseID<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>modifyContext<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token comment">// 全部跑完后，按工具调用顺序依次应用</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> block <span class="token keyword">of</span> blocks<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> modifier <span class="token keyword">of</span> queuedContextModifiers<span class="token punctuation">[</span>block<span class="token punctuation">.</span>id<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      currentContext <span class="token operator">=</span> <span class="token function">modifier</span><span class="token punctuation">(</span>currentContext<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="System-Prompt-的缓存分裂"><a href="#System-Prompt-的缓存分裂" class="headerlink" title="System Prompt 的缓存分裂"></a>System Prompt 的缓存分裂</h3><p>系统提示词被一个 <code>DYNAMIC_BOUNDARY</code> 标记切成上下两半：</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">SYSTEM_PROMPT_DYNAMIC_BOUNDARY</span> <span class="token operator">=</span> <span class="token string">'__SYSTEM_PROMPT_DYNAMIC_BOUNDARY__'</span>
+
+sections <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token comment">// ...静态部分：角色定义、行为规范、工具说明、语气要求等</span>
+  <span class="token comment">// === BOUNDARY MARKER - DO NOT MOVE OR REMOVE ===</span>
+  <span class="token operator">...</span><span class="token punctuation">(</span><span class="token function">shouldUseGlobalCacheScope</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token constant">SYSTEM_PROMPT_DYNAMIC_BOUNDARY</span><span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token comment">// --- Dynamic content (registry-managed) ---</span>
+  <span class="token operator">...</span>resolvedDynamicSections<span class="token punctuation">,</span>
+  <span class="token comment">// 动态部分：当前时间、git 状态、CLAUDE.md 配置、MCP 工具等</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>上面静态部分全球几百万用户共享同一份缓存，下面动态部分每个用户各不相同、独立加载。</strong> 这一刀下去，缓存命中率能高出一大截。</p>
+<h3 id="内容检索：不用-RAG，用-Grep"><a href="#内容检索：不用-RAG，用-Grep" class="headerlink" title="内容检索：不用 RAG，用 Grep"></a>内容检索：不用 RAG，用 Grep</h3><p>不管搜记忆文件还是搜历史对话，用的都是最朴素的文本搜索：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># memdir/memdir.ts — 记忆搜索指令</span>
+const memSearch <span class="token operator">=</span> <span class="token variable"><span class="token variable">`</span><span class="token function">grep</span> <span class="token parameter variable">-rn</span> <span class="token string">"&lt;search term>"</span> $<span class="token punctuation">&#123;</span>autoMemDir<span class="token punctuation">&#125;</span> <span class="token parameter variable">--include</span><span class="token operator">=</span><span class="token string">"*.md"</span><span class="token variable">`</span></span>
+const transcriptSearch <span class="token operator">=</span> <span class="token variable"><span class="token variable">`</span><span class="token function">grep</span> <span class="token parameter variable">-rn</span> <span class="token string">"&lt;search term>"</span> $<span class="token punctuation">&#123;</span>projectDir<span class="token punctuation">&#125;</span>/ <span class="token parameter variable">--include</span><span class="token operator">=</span><span class="token string">"*.jsonl"</span><span class="token variable">`</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>让 AI 自己决定搜什么、怎么搜，效果反而远远好于 RAG。</strong> 这点挺反直觉的，但在代码这种结构化、精确匹配为主的场景下确实成立。</p>
+<h3 id="三层记忆架构"><a href="#三层记忆架构" class="headerlink" title="三层记忆架构"></a>三层记忆架构</h3><p>这是我认为整份源码里设计最精妙的部分，也是 Context Engineering 领域最值得学的案例。</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img52.png" alt="三层记忆架构"></p>
+<p><strong>第一层：MEMORY.md（热数据，常驻加载）</strong></p>
+<p><code>MEMORY.md</code> 就像一本书的目录，每次对话都会加载到上下文里。</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">ENTRYPOINT_NAME</span> <span class="token operator">=</span> <span class="token string">'MEMORY.md'</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">MAX_ENTRYPOINT_LINES</span> <span class="token operator">=</span> <span class="token number">200</span>
+<span class="token comment">// ~125 chars/line at 200 lines. At p97 today; catches long-line indexes that</span>
+<span class="token comment">// slip past the line cap (p100 observed: 197KB under 200 lines).</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">MAX_ENTRYPOINT_BYTES</span> <span class="token operator">=</span> <span class="token number">25_000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>超限时怎么截断也有讲究：</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">truncateEntrypointContent</span><span class="token punctuation">(</span>raw<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span><span class="token operator">:</span> EntrypointTruncation <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 先按行数截断</span>
+  <span class="token keyword">let</span> truncated <span class="token operator">=</span> wasLineTruncated
+    <span class="token operator">?</span> contentLines<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token constant">MAX_ENTRYPOINT_LINES</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'\n'</span><span class="token punctuation">)</span>
+    <span class="token operator">:</span> trimmed
+
+  <span class="token comment">// 再按字节数截断，在最后一个换行符处切，避免截断到一半</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>truncated<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token constant">MAX_ENTRYPOINT_BYTES</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> cutAt <span class="token operator">=</span> truncated<span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">'\n'</span><span class="token punctuation">,</span> <span class="token constant">MAX_ENTRYPOINT_BYTES</span><span class="token punctuation">)</span>
+    truncated <span class="token operator">=</span> truncated<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> cutAt <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">?</span> cutAt <span class="token operator">:</span> <span class="token constant">MAX_ENTRYPOINT_BYTES</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// 截断后追加 WARNING，让 AI 知道这个文件没加载完</span>
+  <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+    content<span class="token operator">:</span> truncated <span class="token operator">+</span>
+      <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">\n\n> WARNING: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token constant">ENTRYPOINT_NAME</span><span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string"> is </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>reason<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">. Only part of it was loaded.</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最后追加 WARNING 这个细节很关键——<strong>让模型知道自己看到的是残缺信息</strong>，避免它拿半截目录去做决策。</p>
+<p><strong>第二层：话题文件（温数据，按需加载）</strong></p>
+<p>编码偏好、项目架构约定、踩过的坑，都存在单独的话题文件里，比如 <code>user_role.md</code>、<code>feedback_testing.md</code>。</p>
+<p>新对话开始时，用 Sonnet 小模型挑选最多 5 个跟当前对话相关的文件加载：</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">const</span> <span class="token constant">SELECT_MEMORIES_SYSTEM_PROMPT</span> <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">You are selecting memories that will be
+useful to Claude Code as it processes a user's query.
+Return a list of filenames for the memories that will clearly be useful (up to 5).
+- If a list of recently-used tools is provided, do not select memories that are
+  usage reference or API documentation for those tools (Claude Code is already
+  exercising them). DO still select memories containing warnings, gotchas, or
+  known issues about those tools — active use is exactly when those matter.</span><span class="token template-punctuation string">`</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最后那条规则是 punchline：<strong>如果某个工具正在被使用，就不加载它的使用文档（你都在用了说明你会用），但一定要加载它的已知问题和坑。</strong></p>
+<p>另外——它从来不记忆代码，因为代码会发生变化。</p>
+<p><strong>第三层：历史对话（冷数据，Grep 搜索）</strong></p>
+<p>更早的历史对话存成 <code>.jsonl</code> 文件，需要时用 Grep 搜关键词。</p>
+<h3 id="五级上下文压缩"><a href="#五级上下文压缩" class="headerlink" title="五级上下文压缩"></a>五级上下文压缩</h3><p>上下文爆炸是长会话绕不开的问题，这里设计了五级策略，像漏斗一样层层过滤：</p>
+<ol>
+<li><strong>Snip 剪裁</strong>——最轻的一刀，把旧的工具调用结果只保留结构、不保留内容</li>
+<li><strong>Microcompact 微压缩</strong>——把体积大的工具执行结果卸载到缓存里。注意是<strong>卸载</strong>而不是丢掉，因为子智能体后续可能还需要</li>
+<li><strong>Context Collapse 折叠</strong>——对中间的对话做折叠摘要，只保留关键信息</li>
+<li><strong>Autocompact 自动压缩</strong>——当上下文占用超过阈值时，触发全量摘要压缩</li>
+<li><strong>Reactive Compact 应急压缩</strong>——最后兜底，当 API 返回 413「提示词太长」时紧急触发</li>
+</ol>
+<hr>
+<h2 id="六、Transformer-与推理侧高频问题"><a href="#六、Transformer-与推理侧高频问题" class="headerlink" title="六、Transformer 与推理侧高频问题"></a>六、Transformer 与推理侧高频问题</h2><h3 id="Transformer-为什么比-RNN-更适合做大模型？"><a href="#Transformer-为什么比-RNN-更适合做大模型？" class="headerlink" title="Transformer 为什么比 RNN 更适合做大模型？"></a>Transformer 为什么比 RNN 更适合做大模型？</h3><p>核心在于<strong>并行计算能力</strong>和<strong>长程依赖建模效率</strong>的巨大差异。</p>
+<ul>
+<li><strong>RNN 必须按时间步顺序处理</strong>，每个 token 的计算依赖前一个的隐藏状态。这种串行特性导致训练无法并行化，处理长文本时梯度传播路径过长容易梯度消失。即使 LSTM 缓解了这个问题，本质的串行瓶颈依然存在</li>
+<li><strong>Transformer 通过自注意力直接计算任意两个位置的关联</strong>，所有 token 可以同时处理，充分利用 GPU 并行能力。更重要的是任意两个 token 间都是一步直连，不存在梯度衰减问题，能有效学习文档级别的长距离依赖</li>
+</ul>
+<h3 id="架构与自注意力"><a href="#架构与自注意力" class="headerlink" title="架构与自注意力"></a>架构与自注意力</h3><p>Transformer 基于 Encoder-Decoder 结构，完全依靠自注意力替代 RNN 序列建模，支持并行计算。但<strong>它本身不能利用单词的顺序信息</strong>，因此需要在输入中添加位置编码。大致分为输入层、编码层、解码层、输出层。</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img53.png" alt="Transformer 整体结构"></p>
+<p><strong>大体流程：</strong></p>
+<ol>
+<li>获取每个单词的表示向量 X——由单词 Embedding 和位置 Embedding 相加得到</li>
+</ol>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img54.png" alt="词嵌入 + 位置嵌入"></p>
+<ol start="2">
+<li>将表示向量矩阵传入 Encoder，经过 6 个 Encoder block 后得到编码信息矩阵 C。单词向量矩阵用 X(n×d) 表示，n 是单词个数，d 是向量维度（论文中 d&#x3D;512）。<strong>每个 Encoder block 输出的矩阵维度与输入完全一致</strong></li>
+</ol>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img55.png" alt="Encoder 输出编码矩阵 C"></p>
+<ol start="3">
+<li>将 C 传递到 Decoder，Decoder 依次根据已翻译的单词 1~i 翻译下一个单词 i+1。翻译到 i+1 时需要通过 Mask 操作遮盖住 i+1 之后的单词</li>
+<li>Decoder 先输入翻译开始符 <code>&lt;Begin&gt;</code> 预测第一个单词，再输入 <code>&lt;Begin&gt;</code> 和已预测单词预测下一个，以此类推</li>
+</ol>
+<p><strong>关于自注意力机制：</strong></p>
+<p>红色圈中是 Multi-Head Attention，由多个 Self-Attention 组成。Encoder block 包含一个 Multi-Head Attention，Decoder block 包含两个（其中一个用到 Masked）。上方还有 Add &amp; Norm 层：</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img57.png" alt="Transformer 详细结构"></p>
+<p><strong>Add &amp; Norm</strong> 由两部分组成：</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img58.png" alt="Add &amp; Norm 公式"></p>
+<ul>
+<li><strong>Add</strong> 指 <code>X + MultiHeadAttention(X)</code>，是一种残差连接，用于解决多层网络训练的问题，让网络只关注当前差异的部分（ResNet 里经常用）</li>
+<li><strong>Norm</strong> 指 Layer Normalization，将每一层神经元的输入都转成均值方差一致的，可以加快收敛</li>
+</ul>
+<p>重点还是 QKV 的生成和计算。Self-Attention 的输入用矩阵 X 表示，通过线性变换矩阵 WQ、WK、WV 计算得到 Q、K、V（每一行都表示一个单词），然后：</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img60.png" alt="Scaled Dot-Product Attention"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img62.png" alt="Attention 公式"></p>
+<p>公式中计算矩阵 Q 和 K 每一行向量的内积，为了防止内积过大，除以 √dk。Q 乘以 K 的转置后，得到 n×n 矩阵（n 为句子单词数），表示单词之间的 attention 强度。</p>
+<p>之后用 Softmax 计算每一个单词对其他单词的 attention 系数——<strong>是对矩阵的每一行做 Softmax，即每一行的和都变为 1</strong>：</p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img64.png" alt="Softmax 归一化"></p>
+<p>Softmax 矩阵再和 V 相乘得到最终输出 Z。第 1 行表示单词 1 与其他所有单词的 attention 系数，最终单词 1 的输出 Z₁ 等于所有单词 i 的值 Vᵢ 根据 attention 系数的比例加权求和。</p>
+<h3 id="三类架构：面试精简版"><a href="#三类架构：面试精简版" class="headerlink" title="三类架构：面试精简版"></a>三类架构：面试精简版</h3><ul>
+<li><strong>Encoder-only</strong>——仅用编码器，双向注意力（可看到全文）。优点是双向上下文理解强、适合理解&#x2F;分类&#x2F;抽取任务、训练稳定推理快；缺点是不擅长生成。典型模型：BERT、RoBERTa、ALBERT、DistilBERT。适用：文本分类、情感分析、NER、语义相似度、抽取式摘要</li>
+<li><strong>Decoder-only</strong>——仅用解码器，因果自注意力（只能看当前及之前 token）。优点是生成能力极强、结构简单易扩展、适合续写对话创作；缺点是对理解类任务精度不如 encoder-only、推理逐 token 生成速度慢。典型模型：GPT 系列、LLaMA、Qwen、Mistral、Falcon。适用：对话、文案生成、代码生成、开放问答</li>
+<li><strong>Encoder-Decoder</strong>——适合翻译这类既要理解又要生成的任务</li>
+</ul>
+<h3 id="KV-Cache-是什么？"><a href="#KV-Cache-是什么？" class="headerlink" title="KV Cache 是什么？"></a>KV Cache 是什么？</h3><p>KV Cache 是 Transformer 在自回归生成时，用来存储每个 token 的 Key 和 Value 矩阵的缓存机制。</p>
+<p>推理时模型每次只生成一个新 token，但 Attention 计算需要<strong>当前 token 的 Query 与所有历史 token 的 Key 做点积</strong>得到注意力分数，再用这些分数加权所有历史 token 的 Value。如果不用缓存，每生成一个新 token 都要把之前所有 token 重新输入模型计算一遍 K 和 V——造成大量重复计算，因为<strong>历史 token 的 K、V 矩阵其实不会改变</strong>。</p>
+<h3 id="首字延迟为什么高？"><a href="#首字延迟为什么高？" class="headerlink" title="首字延迟为什么高？"></a>首字延迟为什么高？</h3><p>首字延迟高，主要是第一次生成前的初始化与计算开销远大于后续逐字生成：</p>
+<ul>
+<li><strong>KV Cache 未初始化</strong>——首字需要为整个上下文分配显存、构建 KV Cache；后续生成直接复用缓存，只需计算最后一个 token</li>
+<li><strong>上下文计算量差异极大</strong>——首字要对全部输入 tokens 做完整的 Attention + FFN 计算；后续只算新增的单个 token</li>
+</ul>
+<h3 id="大模型为什么强？是不是过拟合？"><a href="#大模型为什么强？是不是过拟合？" class="headerlink" title="大模型为什么强？是不是过拟合？"></a>大模型为什么强？是不是过拟合？</h3><p><strong>不是过拟合，恰恰相反，是强泛化的结果。</strong></p>
+<ul>
+<li>参数规模足够大，能拟合极其复杂的语言规律、知识分布和世界知识</li>
+<li>海量高质量文本预训练，从互联网、书籍、代码中学习通用语义、逻辑、常识和推理模式</li>
+<li>Transformer 全局注意力能捕捉长距离依赖</li>
+<li><strong>涌现能力 Emergent Ability</strong>——规模达到阈值后，突然出现推理、代码、对话、少样本学习等复杂能力</li>
+<li>Decoder-only 架构 + 自回归生成 + 高效训练框架，让泛化能力极强</li>
+</ul>
+<blockquote>
+<p>补充一点：我以前对这个问题的理解一直是错的，总往过拟合上想。正确的直觉是——参数巨大所以能拟合各种各样的世界规律，再加上全局注意力 + decoder-only + 预训练。</p>
+</blockquote>
+<h3 id="一次完整生成发生了什么？"><a href="#一次完整生成发生了什么？" class="headerlink" title="一次完整生成发生了什么？"></a>一次完整生成发生了什么？</h3><ol>
+<li>用户输入 → tokenizer 分词 → token 序列</li>
+<li>输入 embedding + 位置编码 → 送入 transformer</li>
+<li>每一层做多头注意力 + FFN，因果掩码确保只看前文（decoder-only）</li>
+<li>输出层映射到词表概率分布</li>
+<li>通过采样（greedy &#x2F; top-k &#x2F; top-p）选下一个 token</li>
+<li>循环自回归生成，直到结束符</li>
+<li>token 转回文本返回</li>
+</ol>
+<h3 id="Transformer-为什么对首尾字符比较敏感？"><a href="#Transformer-为什么对首尾字符比较敏感？" class="headerlink" title="Transformer 为什么对首尾字符比较敏感？"></a>Transformer 为什么对首尾字符比较敏感？</h3><p>这个问题是我面试时随口说了一句被追问原因的，自己猜的答案没想到是对的。系统梳理一下：</p>
+<ul>
+<li><strong>位置编码</strong>——开头和结尾是位置分布中最独特的编码（结尾位置编码后有折回现象）。我觉得本质是：所有 token 都会对开头做 attention，而结尾就是结束了</li>
+<li><strong>注意力分布偏好</strong>——更容易关注开头，因为开头一般是一段话的主题和主语，是上下文的锚点，同时第一个 token 会被后续所有 token 注意到；也更容易关注结尾，因为 decoder 结构专注当前和附近的 token，而结尾通常是结论这类关键语句</li>
+</ul>
+<p><strong>prompt engineering 里很多关键信息放在头尾，正是参考了这个特点。</strong></p>
+<h3 id="温度参数"><a href="#温度参数" class="headerlink" title="温度参数"></a>温度参数</h3><p>温度参数控制模型在生成下一个词时对概率分布的调整程度，决定输出更确定还是更随机。</p>
+<p>数学上，温度通过调整 softmax 实现——分子部分变成 <code>e^(Z/T)</code>（T 为温度，Z 是模型输出的原始 logits）：</p>
+<ul>
+<li><strong>低温度</strong>——高概率词概率更高、低概率词更低，模型倾向选概率最高的词，生成更保守、可预测、连贯性强</li>
+<li><strong>高温度</strong>——各词概率差异减小，随机性变大，生成更有创造性、多样性，但可能出现不连贯内容</li>
+</ul>
+<h3 id="Agent-如何降低幻觉？"><a href="#Agent-如何降低幻觉？" class="headerlink" title="Agent 如何降低幻觉？"></a>Agent 如何降低幻觉？</h3><ul>
+<li><strong>外部知识库</strong>——用 RAG 等手段，或者外挂一个知识图谱</li>
+<li><strong>强 prompt 约束</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>工程能力</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二叉树与多叉树</title>
     <url>/2026/10/15/binary-tree/</url>
     <content><![CDATA[<p>二叉树题的根基是递归——绝大多数题目都是在「对左右子树递归，然后在当前节点做点什么」。这一篇收录了我做过的二叉树题目，按题目整理思路和代码。</p>
@@ -3803,7 +4345,7 @@ mmap<span class="token punctuation">[</span>s<span class="token punctuation">[</
 </ul>
 ]]></content>
       <categories>
-        <category>编程技术</category>
+        <category>工程能力</category>
       </categories>
   </entry>
 </search>
