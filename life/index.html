@@ -86,17 +86,6 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
     <a href="/categories" class="waves-effect waves-light">
       
       <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
@@ -119,6 +108,17 @@
   
   <li class="hide-on-med-and-down nav-item">
     
+    <a href="/life" class="waves-effect waves-light">
+      
+      <i class="fas fa-heart" style="zoom: 0.6;"></i>
+      
+      <span>Life</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
     <a href="/about" class="waves-effect waves-light">
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
@@ -135,28 +135,6 @@
       <i class="fas fa-comments" style="zoom: 0.6;"></i>
       
       <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/life" class="waves-effect waves-light">
-      
-      <i class="fas fa-heart" style="zoom: 0.6;"></i>
-      
-      <span>Life</span>
     </a>
     
   </li>
@@ -203,17 +181,6 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
 		<a href="/categories" class="waves-effect waves-light">
 			
 			    <i class="fa-fw fas fa-bookmark"></i>
@@ -236,6 +203,17 @@
         
         <li class="m-nav-item">
 	  
+		<a href="/life" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-heart"></i>
+			
+			Life
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
 		<a href="/about" class="waves-effect waves-light">
 			
 			    <i class="fa-fw fas fa-user-circle"></i>
@@ -252,28 +230,6 @@
 			    <i class="fa-fw fas fa-comments"></i>
 			
 			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/life" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-heart"></i>
-			
-			Life
 		</a>
           
         </li>
@@ -436,13 +392,6 @@
 </div>
 
 
-
-<div class="statis">
-    <span class="count"><a href="/tags">3</a></span>
-    <span class="name">标签</span>
-</div>
-
-
                     </div>
                     <div class="col s12 m12 l4">
                         <div class="profile center-align">
@@ -466,16 +415,9 @@
 </div>
 
 
-
-<div class="statis">
-    <span class="count"><a href="/tags">3</a></span>
-    <span class="name">标签</span>
-</div>
-
-
                                 </div>
                                 <div class="title">lyw</div>
-                                <div class="career">lyw</div>
+                                <div class="career">南京大学 · 计算机技术硕士</div>
                                 <div class="social-link hide-on-large-only" data-aos="zoom-in-left">
                                     
     <a href="https://github.com/renbuqidebaba" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
@@ -551,7 +493,7 @@
                     </div>
                 </div>
 
-                <div class="introduction center-align" data-aos="fade-up">如果你觉得关于页面的排版或者其他地方还有需要调整的，随时告诉我！</div>
+                <div class="introduction center-align" data-aos="fade-up">记录代码与生活。目前在做知识图谱推理增强与大模型多智能体协同方向，也在持续写算法题和 Go。</div>
 
                 <style type="text/css">
                     #aboutContent {
@@ -693,9 +635,7 @@
             <div id="categories-chart"></div>
         </div>
 
-        <div class="chart col s12 m6 l4" data-aos="zoom-in-up">
-            <div id="tags-chart"></div>
-        </div>
+        
     </div>
 </div>
 
@@ -703,7 +643,8 @@
 <script>
     let postsChart = echarts.init(document.getElementById('posts-chart'));
     let categoriesChart = echarts.init(document.getElementById('categories-chart'));
-    let tagsChart = echarts.init(document.getElementById('tags-chart'));
+    let tagsChartEl = document.getElementById('tags-chart');
+    let tagsChart = tagsChartEl ? echarts.init(tagsChartEl) : null;
 
     
 
@@ -718,7 +659,7 @@
         },
         xAxis: {
             type: 'category',
-            data: ["2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05"]
+            data: ["2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09","2026-10"]
         },
         yAxis: {
             type: 'value',
@@ -770,7 +711,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"日常随笔","value":1},{"name":"编程技术","value":1},{"name":"算法技术","value":1}],
+                data: [{"name":"算法技术","value":1},{"name":"编程技术","value":1},{"name":"日常随笔","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -794,7 +735,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["日常随笔","编程技术","算法技术"]
+                data: []
             }
         ],
         yAxis: [
@@ -807,7 +748,7 @@
                 type: 'bar',
                 color: ['#82d3f4'],
                 barWidth : 18,
-                data: [1,1,1],
+                data: [],
                 markPoint: {
                     symbolSize: 45,
                     data: [{
@@ -833,7 +774,9 @@
     // render the charts
     postsChart.setOption(postsOption);
     categoriesChart.setOption(categoriesOption);
-    tagsChart.setOption(tagsOption);
+    if (tagsChart) {
+        tagsChart.setOption(tagsOption);
+    }
 </script>
 
 
@@ -848,40 +791,40 @@
         
         <div class="col s12 m6 l4" data-aos="fade-up">
             <div class="info center-align">
-                <a href="http://github.com/blinkfox/hexo-theme-matery" class="icon"
+                <a href="https://github.com/renbuqidebaba/renbuqidebaba.github.io" class="icon"
                    style="background: linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)" target="_blank">
-                    <i class="fas fa-file-alt"></i>
+                    <i class="fas fa-blog"></i>
                 </a>
                 <div class="info-title">
-                    <a href="http://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>
+                    <a href="https://github.com/renbuqidebaba/renbuqidebaba.github.io" target="_blank">本博客</a>
                 </div>
-                <div class="info-desc">This is a Hexo blog theme with &#39;Material Design&#39; and responsive design.</div>
+                <div class="info-desc">基于 Hexo + Matery 主题搭建的个人博客，负责内容组织与主题配置调整。</div>
             </div>
         </div>
         
         <div class="col s12 m6 l4" data-aos="fade-up">
             <div class="info center-align">
-                <a href="https://github.com/blinkfox/fenix" class="icon"
+                <a href="" class="icon"
                    style="background: linear-gradient(to bottom right, #F06292 0%, #EF5350 100%)" target="_blank">
-                    <i class="fas fa-database"></i>
+                    <i class="fas fa-project-diagram"></i>
                 </a>
                 <div class="info-title">
-                    <a href="https://github.com/blinkfox/fenix" target="_blank">Fenix</a>
+                    <a href="/null" target="_blank">知识图谱推理增强</a>
                 </div>
-                <div class="info-desc">这是 Spring Data JPA 复杂或动态 SQL 查询的扩展库。</div>
+                <div class="info-desc">面向大模型推理增强的知识图谱建模分析，含语义路径提取的强化学习策略与多智能体协同推理。</div>
             </div>
         </div>
         
         <div class="col s12 m6 l4" data-aos="fade-up">
             <div class="info center-align">
-                <a href="https://github.com/blinkfox/typora-vue-theme" class="icon"
+                <a href="" class="icon"
                    style="background: linear-gradient(to bottom right, #29B6F6 0%, #1E88E5 100%)" target="_blank">
-                    <i class="fas fa-file-alt"></i>
+                    <i class="fas fa-code"></i>
                 </a>
                 <div class="info-title">
-                    <a href="https://github.com/blinkfox/typora-vue-theme" target="_blank">typora-vue-theme</a>
+                    <a href="/null" target="_blank">算法题解</a>
                 </div>
-                <div class="info-desc">This is a typora theme inspired by Vue document style.</div>
+                <div class="info-desc">以 C++ / Go 双语言整理的算法刷题笔记，持续更新中。</div>
             </div>
         </div>
         
@@ -904,20 +847,20 @@
         <div class="col s12 m6 l6" data-aos="fade-up">
             <div class="skillbar">
                 <div class="skillbar-title"
-                     style="background: linear-gradient(to right, #FF0066 0%, #FF00CC 100%); width: 85%">
+                     style="background: linear-gradient(to right, #00ADD8 0%, #5DC9E2 100%); width: 80%">
+                    <span>Go</span>
+                </div>
+                <div class="skill-bar-percent">80%</div>
+            </div>
+        </div>
+        
+        
+        <div class="col s12 m6 l6" data-aos="fade-up">
+            <div class="skillbar">
+                <div class="skillbar-title"
+                     style="background: linear-gradient(to right, #FF0066 0%, #FF00CC 100%); width: 80%">
                     <span>Java</span>
                 </div>
-                <div class="skill-bar-percent">85%</div>
-            </div>
-        </div>
-        
-        
-        <div class="col s12 m6 l6" data-aos="fade-up">
-            <div class="skillbar">
-                <div class="skillbar-title"
-                     style="background: linear-gradient(to right, #9900FF 0%, #CC66FF 100%); width: 80%">
-                    <span>JavaScript</span>
-                </div>
                 <div class="skill-bar-percent">80%</div>
             </div>
         </div>
@@ -926,10 +869,10 @@
         <div class="col s12 m6 l6" data-aos="fade-up">
             <div class="skillbar">
                 <div class="skillbar-title"
-                     style="background: linear-gradient(to right, #2196F3 0%, #42A5F5 100%); width: 80%">
-                    <span>HTML5</span>
+                     style="background: linear-gradient(to right, #9900FF 0%, #CC66FF 100%); width: 75%">
+                    <span>Python</span>
                 </div>
-                <div class="skill-bar-percent">80%</div>
+                <div class="skill-bar-percent">75%</div>
             </div>
         </div>
         
@@ -937,8 +880,8 @@
         <div class="col s12 m6 l6" data-aos="fade-up">
             <div class="skillbar">
                 <div class="skillbar-title"
-                     style="background: linear-gradient(to right, #00BCD4 0%, #80DEEA 100%); width: 70%">
-                    <span>CSS</span>
+                     style="background: linear-gradient(to right, #2196F3 0%, #42A5F5 100%); width: 70%">
+                    <span>C++</span>
                 </div>
                 <div class="skill-bar-percent">70%</div>
             </div>
@@ -948,10 +891,10 @@
         <div class="col s12 m6 l6" data-aos="fade-up">
             <div class="skillbar">
                 <div class="skillbar-title"
-                     style="background: linear-gradient(to right, #4CAF50 0%, #81C784 100%); width: 90%">
+                     style="background: linear-gradient(to right, #4CAF50 0%, #81C784 100%); width: 75%">
                     <span>SQL</span>
                 </div>
-                <div class="skill-bar-percent">90%</div>
+                <div class="skill-bar-percent">75%</div>
             </div>
         </div>
         
@@ -959,10 +902,10 @@
         <div class="col s12 m6 l6" data-aos="fade-up">
             <div class="skillbar">
                 <div class="skillbar-title"
-                     style="background: linear-gradient(to right, #FFEB3B 0%, #FFF176 100%); width: 75%">
-                    <span>程序设计</span>
+                     style="background: linear-gradient(to right, #FFEB3B 0%, #FFF176 100%); width: 85%">
+                    <span>数据结构与算法</span>
                 </div>
-                <div class="skill-bar-percent">75%</div>
+                <div class="skill-bar-percent">85%</div>
             </div>
         </div>
         
@@ -971,31 +914,6 @@
 
     
 
-    
-    <div class="other-skills chip-container" data-aos="zoom-in-up">
-        <div class="sub-title center-align"><i class="fa fa-book"></i>&nbsp;&nbsp;其他技能</div>
-        <div class="tag-chips center-align">
-            
-            
-            <a href="/tags/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/">
-                <span class="chip center-align waves-effect waves-light chip-default">日常随笔</span>
-            </a>
-            
-            
-            
-            <a href="/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">
-                <span class="chip center-align waves-effect waves-light chip-default">编程技术</span>
-            </a>
-            
-            
-            
-            <a href="/tags/%E7%AE%97%E6%B3%95%E6%8A%80%E6%9C%AF/">
-                <span class="chip center-align waves-effect waves-light chip-default">算法技术</span>
-            </a>
-            
-            
-        </div>
-    </div>
     
 
 </div>
@@ -1125,7 +1043,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.3k</span>
+                        class="white-color">4.4k</span>
             
             
             
