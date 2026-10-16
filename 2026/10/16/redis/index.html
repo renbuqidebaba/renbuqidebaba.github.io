@@ -547,35 +547,35 @@
 <li>开启事务后，每次操作的命令会被<strong>插入到一个队列中，并不会真的执行</strong></li>
 <li><strong>EXEC</strong> 命令进行提交事务</li>
 </ol>
-<pre class="line-numbers language-none"><code class="language-none">127.0.0.1:6379&gt; multi
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> multi
 OK
-127.0.0.1:6379&gt; set a 1
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> <span class="token builtin class-name">set</span> a <span class="token number">1</span>
 QUEUED
-127.0.0.1:6379&gt; set b 1 2
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> <span class="token builtin class-name">set</span> b <span class="token number">1</span> <span class="token number">2</span>
 QUEUED
-127.0.0.1:6379&gt; set c 3
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> <span class="token builtin class-name">set</span> c <span class="token number">3</span>
 QUEUED
-127.0.0.1:6379&gt; exec
-1) OK
-2) (error) ERR syntax error
-3) OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> <span class="token builtin class-name">exec</span>
+<span class="token number">1</span><span class="token punctuation">)</span> OK
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR syntax error
+<span class="token number">3</span><span class="token punctuation">)</span> OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>一个事务范围内某个命令出错，不会影响其他命令的执行——所以不保证原子性。</strong></p>
 <h3 id="WATCH-命令"><a href="#WATCH-命令" class="headerlink" title="WATCH 命令"></a>WATCH 命令</h3><p><code>WATCH</code> 可以监控一个或多个键，<strong>一旦其中有一个键被修改，之后的事务就不会执行</strong>（类似于乐观锁）。执行 <code>EXEC</code> 命令之后，就会自动取消监控。</p>
-<pre class="line-numbers language-none"><code class="language-none">127.0.0.1:6379&gt; watch name
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> <span class="token function">watch</span> name
 OK
-127.0.0.1:6379&gt; set name 1
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> <span class="token builtin class-name">set</span> name <span class="token number">1</span>
 OK
-127.0.0.1:6379&gt; multi
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> multi
 OK
-127.0.0.1:6379&gt; set name 2
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> <span class="token builtin class-name">set</span> name <span class="token number">2</span>
 QUEUED
-127.0.0.1:6379&gt; set gender 1
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> <span class="token builtin class-name">set</span> gender <span class="token number">1</span>
 QUEUED
-127.0.0.1:6379&gt; exec
-(nil)
-127.0.0.1:6379&gt; get gender
-(nil)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> <span class="token builtin class-name">exec</span>
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>></span> get gender
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="支持隔离性吗？保证原子性吗？支持回滚吗？"><a href="#支持隔离性吗？保证原子性吗？支持回滚吗？" class="headerlink" title="支持隔离性吗？保证原子性吗？支持回滚吗？"></a>支持隔离性吗？保证原子性吗？支持回滚吗？</h3><p>三个问题的答案：</p>
 <ul>
@@ -732,10 +732,10 @@ QUEUED
 <li>A 执行超时、锁被 B 获取，A 执行完后 DEL → <strong>误删 B 的锁</strong></li>
 </ul>
 <p><strong>生产级方案</strong>：加过期时间（<code>ex</code> 字段）来防死锁：</p>
-<pre class="line-numbers language-none"><code class="language-none">SET lock:resource &lt;唯一标识&gt; EX 30 NX
-# EX 30: 30秒过期时间（防死锁）
-# NX: 仅当key不存在时才设置（互斥）
-# &lt;唯一标识&gt;: 通常是 UUID + 线程ID，用于验证锁归属<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">SET lock:resource <span class="token operator">&lt;</span>唯一标识<span class="token operator">></span> EX <span class="token number">30</span> NX
+<span class="token comment"># EX 30: 30秒过期时间（防死锁）</span>
+<span class="token comment"># NX: 仅当key不存在时才设置（互斥）</span>
+<span class="token comment"># &lt;唯一标识>: 通常是 UUID + 线程ID，用于验证锁归属</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>然后附带 <strong>Lua 脚本</strong>——因为 Redis 单线程执行，可以保证「验证归属 + 删除」的原子性。</p>
 <h3 id="keys-命令的问题"><a href="#keys-命令的问题" class="headerlink" title="keys 命令的问题"></a>keys 命令的问题</h3><ul>
