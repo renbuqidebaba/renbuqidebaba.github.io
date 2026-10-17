@@ -377,7 +377,10 @@
         width: 49%;
         background-color: #e7c65c;
     }
-    p{
+    /* 只作用于 valine 弹幕区块那段说明文字（它是 .card 的直接子元素 <p>）。
+       这里原本是不带作用域的 p{text-align:center}，会把留言板正文里所有段落
+       一并居中，而列表项 <li> 仍是左对齐，视觉上就成了「一段左一段中」的错位。 */
+    #contact > .card > p{
         text-align: center;
     }
 </style>
@@ -388,19 +391,21 @@
                 <div class="tag-title center-align">
                     <i class="fas fa-comments"></i>&nbsp;&nbsp;留言板
                 </div>
-                <h3 id="欢迎留言"><a href="#欢迎留言" class="headerlink" title="欢迎留言"></a>欢迎留言</h3><p>如果你有什么想说的，欢迎在这里留言！</p>
+                <h3 id="欢迎留言"><a href="#欢迎留言" class="headerlink" title="欢迎留言"></a>欢迎留言</h3><p>这里是我的留言板，想说什么都可以，不必拘谨。可以聊这些：</p>
 <ul>
-<li>关于博客的建议</li>
-<li>技术问题交流</li>
-<li>或者只是想打个招呼</li>
+<li>对博客内容的建议、勘误，或者你想看的选题</li>
+<li>技术问题交流 —— 算法、后端、分布式、大模型应用都行</li>
+<li>交换友链，或者单纯打个招呼</li>
+<li>只是路过，留个脚印也欢迎</li>
 </ul>
-<h3 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h3><p>你也可以通过以下方式联系我：</p>
+<h3 id="留言须知"><a href="#留言须知" class="headerlink" title="留言须知"></a>留言须知</h3><p>评论区基于 <strong>GitHub Discussions</strong> 搭建：<strong>浏览不需要登录，发言需要 GitHub 账号</strong>。留言数据保存在我自己的仓库里，没有第三方追踪，也没有广告。</p>
+<h3 id="联系我"><a href="#联系我" class="headerlink" title="联系我"></a>联系我</h3><p>不想登录 GitHub 的话，直接找我也一样：</p>
 <ul>
-<li><strong>GitHub</strong>: <a target="_blank" rel="noopener" href="https://github.com/renbuqidebaba">renbuqidebaba</a></li>
-<li><strong>邮箱</strong>: <a href="mailto:&#x31;&#51;&#52;&#x32;&#x34;&#54;&#x39;&#x34;&#54;&#55;&#x40;&#x71;&#113;&#46;&#99;&#111;&#x6d;">&#x31;&#51;&#52;&#x32;&#x34;&#54;&#x39;&#x34;&#54;&#55;&#x40;&#x71;&#113;&#46;&#99;&#111;&#x6d;</a></li>
+<li><strong>GitHub</strong>：<a target="_blank" rel="noopener" href="https://github.com/renbuqidebaba">renbuqidebaba</a></li>
+<li><strong>邮箱</strong>：<a href="mailto:&#49;&#51;&#52;&#50;&#x34;&#x36;&#x39;&#52;&#54;&#x37;&#x40;&#113;&#113;&#46;&#x63;&#x6f;&#109;">&#49;&#51;&#52;&#50;&#x34;&#x36;&#x39;&#52;&#54;&#x37;&#x40;&#113;&#113;&#46;&#x63;&#x6f;&#109;</a></li>
 </ul>
 <hr>
-<h3 id="开始留言吧！"><a href="#开始留言吧！" class="headerlink" title="开始留言吧！"></a>开始留言吧！</h3><p>📝 快来告诉我你的想法~</p>
+<h3 id="开始留言吧"><a href="#开始留言吧" class="headerlink" title="开始留言吧"></a>开始留言吧</h3><p>📝 往下滑，登录 GitHub 就能写下你的第一条留言。</p>
 
             </div>
             <!--valine评论弹幕-->
@@ -409,6 +414,8 @@
 
         <!--其他评论card-->
         <div class="card">
+            
+            <div class="card-content">
             
 
             
@@ -434,7 +441,7 @@
             data-category-id="DIC_kwDORbsjoM4DIpCw"
             data-mapping="pathname"
             data-strict="0"
-            data-reactions-enabled="1"
+            data-reactions-enabled="0"
             data-emit-metadata="0"
             data-input-position="top"
             data-theme="preferred_color_scheme"
@@ -488,6 +495,7 @@
             
 
             
+            </div>
 
         </div>
     </div>
