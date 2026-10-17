@@ -1,6 +1,157 @@
-/* Here is your custom css styles. */
+/* 自定义样式入口（由 _partial/main-style.ejs 在 matery.css 之后加载，同优先级下本文件生效）
+   目标：整体观感更精致，但不改主题骨架、不动结构。 */
+
+:root {
+    --brand: #42b983;
+    --brand-soft: rgba(66, 185, 131, .12);
+    --radius-card: 14px;
+    --radius-img: 10px;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC",
+                 "Noto Sans CJK SC", sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", Menlo, Consolas, "Courier New", monospace;
+}
+
+/* ---------- 1. 字体与基础排版 ---------- */
+body {
+    font-family: var(--font-sans);
+    line-height: 1.8;
+    letter-spacing: .01em;
+}
+
+::selection {
+    background: rgba(66, 185, 131, .25);
+}
+
+/* ---------- 2. 卡片：圆角 + 柔和阴影 + 悬停微浮 ---------- */
+.card {
+    border-radius: var(--radius-card) !important;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+#articles .card:hover,
+.index-card .card:hover,
+.my-projects .info:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(50, 50, 93, .16), 0 8px 20px rgba(0, 0, 0, .08) !important;
+}
+
+.card-image img {
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+/* 分类 / 归档 / 标签 的 chip，改成胶囊形 */
+.chip {
+    border-radius: 999px !important;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+.chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(50, 50, 93, .15);
+}
+
+/* ---------- 3. 正文字号与层级 ---------- */
+#articleContent {
+    font-size: 16px;
+    line-height: 1.9;
+}
+#articleContent p {
+    margin: 1.1em 0;
+}
+#articleContent h2 {
+    margin-top: 2em;
+    padding-bottom: .35em;
+    border-bottom: 1px solid rgba(0, 0, 0, .09);
+}
+#articleContent h3 {
+    margin-top: 1.7em;
+    padding-left: .6em;
+    border-left: 4px solid var(--brand);
+}
+#articleContent ul,
+#articleContent ol {
+    padding-left: 1.6em;
+}
+#articleContent li {
+    margin: .35em 0;
+}
+
+/* ---------- 4. 正文链接：下划线 + hover 高亮 ---------- */
+#articleContent a:not(.btn):not(.chip) {
+    color: var(--brand);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(66, 185, 131, .35);
+    transition: background-color .2s ease, border-color .2s ease;
+}
+#articleContent a:not(.btn):not(.chip):hover {
+    background-color: var(--brand-soft);
+    border-bottom-color: var(--brand);
+}
+
+/* ---------- 5. 表格 ---------- */
+#articleContent table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .05);
+}
+#articleContent thead th {
+    background: var(--brand-soft);
+}
+
+/* ---------- 6. 代码块 ---------- */
+.highlight,
+pre,
+pre[class*="language-"],
+code[class*="language-"] {
+    font-family: var(--font-mono);
+    border-radius: 10px;
+}
+.highlight,
+pre[class*="language-"] {
+    box-shadow: 0 2px 14px rgba(0, 0, 0, .07);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* ---------- 7. 图片 ---------- */
 #articleContent img {
     max-width: 60%;
     margin: 0 auto;
     display: block;
+    border-radius: var(--radius-img);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .1);
+}
+
+/* ---------- 8. 滚动条 ---------- */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .18);
+    background-clip: content-box;
+    border: 3px solid transparent;
+    border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, .32);
+    background-clip: content-box;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* ---------- 9. 暗色模式（主题给 body 加 .DarkMode） ---------- */
+body.DarkMode #articleContent h2 {
+    border-bottom-color: rgba(255, 255, 255, .12);
+}
+body.DarkMode #articleContent img {
+    filter: brightness(.92);
+}
+body.DarkMode #articleContent thead th {
+    background: rgba(255, 255, 255, .06);
+}
+body.DarkMode ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .22);
+    background-clip: content-box;
 }

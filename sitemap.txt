@@ -1,3 +1,4 @@
+https://renbuqidebaba.github.io/about/index.html
 https://renbuqidebaba.github.io/2023/07/10/guangzhou/
 https://renbuqidebaba.github.io/2023/07/20/nanjing/
 https://renbuqidebaba.github.io/2024/06/10/nanchang/
@@ -20,7 +21,6 @@ https://renbuqidebaba.github.io/2026/10/15/binary-search/
 https://renbuqidebaba.github.io/2026/10/15/ai-agent-llm/
 https://renbuqidebaba.github.io/2024/07/28/hello-world/
 https://renbuqidebaba.github.io/2024/04/21/Go-Learning/
-https://renbuqidebaba.github.io/about/index.html
 https://renbuqidebaba.github.io/categories/index.html
 https://renbuqidebaba.github.io/home/index.html
 https://renbuqidebaba.github.io/
