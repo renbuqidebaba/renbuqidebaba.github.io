@@ -444,7 +444,7 @@
             data-reactions-enabled="0"
             data-emit-metadata="0"
             data-input-position="top"
-            data-theme="preferred_color_scheme"
+            data-theme="light"
             data-lang="zh-CN"
             loading="lazy"
             crossorigin="anonymous"
@@ -455,35 +455,55 @@
         // 这里监听 class 变化并用 giscus 的 postMessage 接口同步 iframe 主题。
         (function () {
             var darkTheme = 'dark_dimmed';
-            var lightTheme = 'light';
-            function frame() {
-                return document.querySelector('iframe.giscus-frame');
+            var cfgTheme = 'light';
+            // 基准色：若配置仍写了 preferred_color_scheme（跟随系统），同步时的浅色基准取 light，
+            // 否则 giscus 会跟着系统变黑，而本站是手动开关、默认浅色，两边会不一致。
+            var lightTheme = (cfgTheme === 'preferred_color_scheme') ? 'light' : cfgTheme;
+
+            function want() {
+                return document.body.classList.contains('DarkMode') ? darkTheme : lightTheme;
             }
             function apply() {
-                var f = frame();
+                var f = document.querySelector('iframe.giscus-frame');
                 if (f && f.contentWindow) {
                     f.contentWindow.postMessage({
-                        giscus: {
-                            setConfig: {
-                                theme: document.body.classList.contains('DarkMode') ? darkTheme : lightTheme
-                            }
-                        }
+                        giscus: { setConfig: { theme: want() } }
                     }, 'https://giscus.app');
+                    return true;
                 }
+                return false;
             }
-            // iframe 是 client.js 异步创建的，就绪后补一次同步（覆盖「打开页面时已是暗色」的情况）
+
+            // giscus 就绪后会向父页面 postMessage，这是「可以通信」的最可靠信号
+            window.addEventListener('message', function (e) {
+                if (e.origin === 'https://giscus.app') apply();
+            });
+
+            // 兜底：client.js 是异步的，iframe 出现时间不定，分档重试几次
+            [300, 800, 1500, 2500, 4000, 6000].forEach(function (ms) {
+                setTimeout(apply, ms);
+            });
+
+            // iframe 一出现就挂 load 监听，并在其 load 完成后补一次
             var timer = setInterval(function () {
-                if (frame()) {
+                var f = document.querySelector('iframe.giscus-frame');
+                if (f) {
                     clearInterval(timer);
+                    f.addEventListener('load', function () {
+                        setTimeout(apply, 200);
+                    });
                     apply();
                 }
-            }, 600);
+            }, 400);
             setTimeout(function () {
                 clearInterval(timer);
-            }, 10000);
+            }, 12000);
+
             // 之后每次切换日夜都实时同步
             if (window.MutationObserver) {
-                new MutationObserver(apply).observe(document.body, {
+                new MutationObserver(function () {
+                    setTimeout(apply, 60);
+                }).observe(document.body, {
                     attributes: true,
                     attributeFilter: ['class']
                 });
