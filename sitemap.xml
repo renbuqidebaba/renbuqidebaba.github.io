@@ -2,6 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://renbuqidebaba.github.io/2024/06/10/nanchang/</loc>
+    
+    <lastmod>2026-10-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2023/12/15/xian/</loc>
+    
+    <lastmod>2026-10-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2023/07/20/nanjing/</loc>
+    
+    <lastmod>2026-10-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/2023/07/10/guangzhou/</loc>
+    
+    <lastmod>2026-10-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://renbuqidebaba.github.io/contact/index.html</loc>
     
     <lastmod>2026-10-17</lastmod>
@@ -182,15 +218,6 @@
   </url>
   
   <url>
-    <loc>https://renbuqidebaba.github.io/life/index.html</loc>
-    
-    <lastmod>2026-05-31</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://renbuqidebaba.github.io/home/index.html</loc>
     
     <lastmod>2026-03-01</lastmod>
@@ -207,6 +234,13 @@
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>https://renbuqidebaba.github.io/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 
   
