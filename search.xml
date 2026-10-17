@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>操作系统核心知识</title>
-    <url>//2026/10/16/os/</url>
+    <url>/2026/10/16/os/</url>
     <content><![CDATA[<p>这篇是我操作系统面试准备的整理版。原稿分「操作系统概述 &#x2F; 进程管理 &#x2F; 内存管理」三个模块，我沿用了这个划分，只在每个模块内部把散点的问答按「是什么 → 怎么做 → 为什么」的顺序排了一下。</p>
 <p>原文里成对出现的比较项（并行与并发、分页与分段、几种内存管理机制、几种页面置换算法）都还原成了表格。技术描述和数字未做改动；原稿里自己写的批注和吐槽（比如 PCB 那段的面试经历、「面试并不会问」的提醒）都保留原样。</p>
 <h2 id="一、操作系统概述"><a href="#一、操作系统概述" class="headerlink" title="一、操作系统概述"></a>一、操作系统概述</h2><h3 id="什么是用户态、内核态？如何切换的？"><a href="#什么是用户态、内核态？如何切换的？" class="headerlink" title="什么是用户态、内核态？如何切换的？"></a>什么是用户态、内核态？如何切换的？</h3><p>内核态是操作系统的核心，它能直接地操作所有系统资源，比如 CPU、内存等。如果所有的应用程序都运行在内核态上，虽然效率很高，但是同时也伴随着超高的故障风险；如果一个应用线程错误地操作了敏感资源，那么后果是十分严重的。所以就划分出了用户态，用户应用程序都运行在用户态上，这样就起到了隔离的效果，降低了内核态错误的风险。但是用户态也会在运行过程中请求操作系统资源，这个时候就会将用户态切换到内核态。</p>
@@ -235,7 +235,7 @@
   </entry>
   <entry>
     <title>计算机网络核心知识</title>
-    <url>//2026/10/16/network/</url>
+    <url>/2026/10/16/network/</url>
     <content><![CDATA[<p>这篇是我计算机网络面试准备笔记的整理版。原稿是问答式的散点记录，我按「自底向上」重排了主线：先用分层结构打底，再讲 TCP 的连接管理与传输控制，然后上到应用层的 HTTP &#x2F; HTTPS 和各种通信方式，最后是会话与解析相关的 DNS、Cookie &#x2F; Session。</p>
 <p>原文里的并列比较项（TCP 与 UDP、GET 与 POST、HTTP 与 HTTPS、HTTP&#x2F;1.1 与 2.0、几种通信方式）都还原成了表格；原稿中有一张状态码分类的截图，已按同样内容转成真表格。技术细节、协议字段和数字保持原样，未做改动。原稿里自己记的考频标注（如「（重点）」）也都保留。</p>
 <h2 id="一、网络分层结构"><a href="#一、网络分层结构" class="headerlink" title="一、网络分层结构"></a>一、网络分层结构</h2><p>TCP&#x2F;IP 五层协议：</p>
@@ -666,7 +666,7 @@
   </entry>
   <entry>
     <title>MySQL 核心知识</title>
-    <url>//2026/10/16/mysql/</url>
+    <url>/2026/10/16/mysql/</url>
     <content><![CDATA[<p>这篇是我 MySQL 面试准备的完整笔记，覆盖索引、事务、锁、分库分表、主从同步、SQL 优化和 SQL 基础七大块。</p>
 <p>原稿是一份很长的问答清单（约 2.5 万字），我按「查询为什么快（索引）→ 并发怎么控（事务 + 锁）→ 量大了怎么办（分库分表 + 主从）→ 怎么调优 → SQL 基础」这条主线重排了结构，并把散落在原文里的伪表格还原成了真表格。</p>
 <p>标注说明：带「（重点）」「（tiktok问）」「（red面试考过）」后缀的是我自己记的考频，保留了原样。</p>
@@ -1261,7 +1261,7 @@
   </entry>
   <entry>
     <title>Redis 核心知识</title>
-    <url>//2026/10/16/redis/</url>
+    <url>/2026/10/16/redis/</url>
     <content><![CDATA[<p>这篇是我 Redis 面试准备的完整笔记，从「为什么快」讲到底层数据结构、持久化、部署方案和缓存一致性。原稿是一份问答清单，我按知识依赖关系重排成了现在的结构，并把散落的命令行输出还原成了可读的代码块。</p>
 <p>标注说明：文中带「（美团二面）」「（重点问）」这类后缀的，是我自己记录的面试实际考频，保留了原样。</p>
 <hr>
@@ -1690,7 +1690,7 @@ QUEUED
   </entry>
   <entry>
     <title>AI Agent 与大模型</title>
-    <url>//2026/10/15/ai-agent-llm/</url>
+    <url>/2026/10/15/ai-agent-llm/</url>
     <content><![CDATA[<p>这一篇是我面试准备过程中整理的 Agent 与大模型相关笔记。和算法那批不同，这里更偏工程实践——Agent 的组件拆解、工具设计、MCP &#x2F; Skills 的运行机制、上下文工程，以及 Transformer 推理侧的几个高频问题。内容以我自己的理解为主，参考资料随文标注。</p>
 <hr>
 <h2 id="一、Agent-的骨架"><a href="#一、Agent-的骨架" class="headerlink" title="一、Agent 的骨架"></a>一、Agent 的骨架</h2><h3 id="Agent-的核心组件"><a href="#Agent-的核心组件" class="headerlink" title="Agent 的核心组件"></a>Agent 的核心组件</h3><p>我把 Agent 拆成五块，缺一块都会明显影响上限：</p>
@@ -2232,7 +2232,7 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
   </entry>
   <entry>
     <title>二叉树与多叉树</title>
-    <url>//2026/10/15/binary-tree/</url>
+    <url>/2026/10/15/binary-tree/</url>
     <content><![CDATA[<p>二叉树题的根基是递归——绝大多数题目都是在「对左右子树递归，然后在当前节点做点什么」。这一篇收录了我做过的二叉树题目，按题目整理思路和代码。</p>
 <p>题型大概分几类：遍历（前中后序、层序）、属性计算（深度、直径、对称）、构造与转换（翻转、展开为链表、由遍历序列还原）、二叉搜索树（验证、第 k 小、累加树）、公共祖先。</p>
 <p>写递归时我一般只问自己两件事：<strong>这个函数要返回什么</strong>，以及<strong>空节点该怎么处理</strong>。想清楚这两个，剩下的就是套。</p>
@@ -2852,7 +2852,7 @@ public:
   </entry>
   <entry>
     <title>链表</title>
-    <url>//2026/10/15/linked-list/</url>
+    <url>/2026/10/15/linked-list/</url>
     <content><![CDATA[<p>链表题的特点是<strong>思路简单、指针容易写错</strong>。这一篇收录了我做过的链表题目：反转、k 个一组翻转、两两交换、旋转、合并 k 个升序链表、删除倒数第 N 个节点等。</p>
 <p>写链表题我的习惯是先想清楚要不要 dummy 头节点——大部分涉及头节点变动的题，加个 dummy 能省掉一堆边界判断。</p>
 <h2 id="Leetcode-61-旋转链表"><a href="#Leetcode-61-旋转链表" class="headerlink" title="Leetcode 61 旋转链表"></a>Leetcode 61 旋转链表</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/**
@@ -3234,7 +3234,7 @@ Pythonimport sys
   </entry>
   <entry>
     <title>动态规划</title>
-    <url>//2026/10/15/dynamic-programming/</url>
+    <url>/2026/10/15/dynamic-programming/</url>
     <content><![CDATA[<p>DP 是我在算法上花时间最多的一块。这一篇按<strong>状态定义的形态</strong>分类整理，而不是按题号：</p>
 <ul>
 <li><strong>一维 DP</strong>——爬楼梯、打家劫舍、等差数列划分、乘积最大子数组</li>
@@ -3693,7 +3693,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
   </entry>
   <entry>
     <title>数据结构和技巧（单调栈 / 单调队列 / Trie）</title>
-    <url>//2026/10/15/data-structure-tricks/</url>
+    <url>/2026/10/15/data-structure-tricks/</url>
     <content><![CDATA[<p>这一篇是「用对了数据结构题目就秒了」的典型：单调栈、单调队列、双栈、前缀树（Trie）。</p>
 <p>单调栈解决「找左右两边第一个比它大&#x2F;小的元素」，单调队列解决「滑动窗口极值」，Trie 解决「前缀匹配」。这几样东西模板性很强，背下来就能套。</p>
 <h2 id="Acwing-830-单调栈-模板"><a href="#Acwing-830-单调栈-模板" class="headerlink" title="Acwing 830 单调栈 模板"></a>Acwing 830 单调栈 模板</h2><p>什么是单调栈：栈按照先进后出的次序保持是单调增或者减。单调栈是记录目前下一个比他小或者比他大的数。</p>
@@ -4172,7 +4172,7 @@ a <span class="token operator">=</span> a <span class="token operator">^</span> 
   </entry>
   <entry>
     <title>搜索算法（DFS / BFS / 回溯 / 拓扑排序）</title>
-    <url>//2026/10/15/search-algorithm/</url>
+    <url>/2026/10/15/search-algorithm/</url>
     <content><![CDATA[<p>搜索是算法题里覆盖面最广的一类。这一篇按题型整理了我做过的搜索题目，主要四类：</p>
 <ul>
 <li><strong>DFS 暴搜 &#x2F; 洪水填充</strong>——岛屿数量、最大面积、省份数量、水流问题</li>
@@ -4890,7 +4890,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
   </entry>
   <entry>
     <title>排序算法（快速选择 / 桶排序）</title>
-    <url>//2026/10/15/sorting-algorithm/</url>
+    <url>/2026/10/15/sorting-algorithm/</url>
     <content><![CDATA[<p>这一篇不是讲冒泡、快排这些基础排序的实现，而是收录<strong>用排序思想解题</strong>的题目：快速选择（找第 k 大）、桶排序（前 k 个高频元素）。</p>
 <p>这两道题的共同点是——不真的排完整个数组，只排到够用为止，把 O(n log n) 降到 O(n)。</p>
 <p>基本上cpp都有自己的排序算法，在这里排序算法的学习主要是为了应对面试的时候手撕算法的场景。</p>
@@ -5030,7 +5030,7 @@ c<span class="token operator">++</span><span class="token keyword">class</span> 
   </entry>
   <entry>
     <title>二分查找</title>
-    <url>//2026/10/15/binary-search/</url>
+    <url>/2026/10/15/binary-search/</url>
     <content><![CDATA[<p>二分不只是「在有序数组里找数」。只要答案具有<strong>单调性</strong>——某个条件在分界点一侧成立、另一侧不成立——就可以二分。</p>
 <p>这一篇整理了二分查找的几种写法和边界处理，都是实际做题时最容易写错的地方。</p>
 <p>二分查找时区间的左右端取开区间还是闭区间在绝大多数时候都可以。第一是尝试熟练使用一种写法，比如左闭右开（满足C++、Python 等语言的习惯）或左闭右闭（便于处理边界条件），尽量只保持这一种写法；第二是在刷题时思考如果最后区间只剩下一个数或者两个数，自己的写法是否会陷入死循环，如果某种写法无法跳出死循环，则考虑尝试另一种写法。（进行二分的时候，区间要更新到mid的下一位！！）</p>
@@ -5194,7 +5194,7 @@ c<span class="token operator">++</span><span class="token keyword">class</span> 
   </entry>
   <entry>
     <title>双指针</title>
-    <url>//2026/10/15/two-pointers/</url>
+    <url>/2026/10/15/two-pointers/</url>
     <content><![CDATA[<p>双指针是用两个下标在数组&#x2F;链表上单向扫描，把 O(n²) 的暴力降到 O(n)。常见形态有三种：左右指针（相向）、快慢指针（同向不同速）、滑动窗口（维护一段区间）。</p>
 <p>下面是按题目整理的笔记。</p>
 <p>算法的思路：有两个指针来进行索引。</p>
@@ -5490,7 +5490,7 @@ c<span class="token operator">++</span><span class="token keyword">class</span> 
   </entry>
   <entry>
     <title>贪心算法</title>
-    <url>//2026/10/15/greedy-algorithm/</url>
+    <url>/2026/10/15/greedy-algorithm/</url>
     <content><![CDATA[<p>贪心的核心就一句话：<strong>每一步都做当前最优的选择</strong>。它不保证全局最优，但在相当多的题目上有效——尤其是「先排序再比较」这一类。</p>
 <p>这一篇收录了我做过的贪心题目，按题目整理思路和代码。区间类的题占了一大半，因为区间问题基本就是排序 + 维护一个标志位。</p>
 <p>该类算法主要是大部分是使用排序后进行比较完成。</p>
@@ -5696,7 +5696,7 @@ c<span class="token operator">++</span><span class="token keyword">class</span> 
   </entry>
   <entry>
     <title>基本数据结构速查（C++ / Go / Python）</title>
-    <url>//2026/10/15/data-structure-cheatsheet/</url>
+    <url>/2026/10/15/data-structure-cheatsheet/</url>
     <content><![CDATA[<p>刷题时最烦的不是算法思路，而是「这个结构在这个语言里怎么写」。这一篇把 C++、Go、Python 三种语言里最常用的数据结构写法整理在一起——堆、图（邻接表&#x2F;邻接矩阵）、排序、链表、map&#x2F;dict、集合、队列、优先队列，随用随查。</p>
 <p>代码以可直接粘贴使用为目标，不做完整可运行保证。</p>
 <h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><h3 id="大根堆（默认）"><a href="#大根堆（默认）" class="headerlink" title="大根堆（默认）"></a>大根堆（默认）</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">priority_queue<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> heap<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -5984,7 +5984,7 @@ mmap<span class="token punctuation">[</span>s<span class="token punctuation">[</
   </entry>
   <entry>
     <title>Hello World</title>
-    <url>//2024/07/28/hello-world/</url>
+    <url>/2024/07/28/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <span id="more"></span>
 
@@ -6007,7 +6007,7 @@ mmap<span class="token punctuation">[</span>s<span class="token punctuation">[</
   </entry>
   <entry>
     <title>南昌 · 滕王阁与八一广场</title>
-    <url>//2024/06/10/nanchang/</url>
+    <url>/2024/06/10/nanchang/</url>
     <content><![CDATA[<h3 id="2024-年-6-月-·-南昌"><a href="#2024-年-6-月-·-南昌" class="headerlink" title="2024 年 6 月 · 南昌"></a>2024 年 6 月 · 南昌</h3><blockquote>
 <p>好好好！到南昌了</p>
 </blockquote>
@@ -6052,7 +6052,7 @@ mmap<span class="token punctuation">[</span>s<span class="token punctuation">[</
   </entry>
   <entry>
     <title>Go 语言核心知识</title>
-    <url>//2024/04/21/Go-Learning/</url>
+    <url>/2024/04/21/Go-Learning/</url>
     <content><![CDATA[<p>这篇是我 Go 语言的系统笔记，由两部分合并而成：博客上原有的 Runtime &#x2F; GC &#x2F; GMP 笔记，加上后来面试准备中补齐的语言基础、map、slice、channel、锁机制。原来的 Runtime 部分做了扩写和结构化，和新内容合并成一篇完整的 Go 知识梳理。</p>
 <p>全文按「语言基础 → 运行时 → 数据结构 → 并发原语 → 锁」五层组织。</p>
 <hr>
@@ -6539,7 +6539,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
   </entry>
   <entry>
     <title>西安 · 和豆豆的旅行</title>
-    <url>//2023/12/15/xian/</url>
+    <url>/2023/12/15/xian/</url>
     <content><![CDATA[<h3 id="2023-年-12-月-·-西安"><a href="#2023-年-12-月-·-西安" class="headerlink" title="2023 年 12 月 · 西安"></a>2023 年 12 月 · 西安</h3><p>这次是和重要的豆豆一起去西安旅行的，存在很多的回忆。一起坐了✈️✈️前往西安。其实15岁的时候去过一次西安，但是和不同的人去体验到的风景是不一样的！</p>
 <blockquote>
 <p>陕西考古博物馆</p>
@@ -6590,7 +6590,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
   </entry>
   <entry>
     <title>南京 · 南京大学与鸡鸣寺</title>
-    <url>//2023/07/20/nanjing/</url>
+    <url>/2023/07/20/nanjing/</url>
     <content><![CDATA[<h3 id="2023-年-7-月-·-南京"><a href="#2023-年-7-月-·-南京" class="headerlink" title="2023 年 7 月 · 南京"></a>2023 年 7 月 · 南京</h3><p>南京大学夏令营的时候来过一次南京，很喜欢南京的氛围，以及一些人文气息。</p>
 <blockquote>
 <p>南京大学</p>
@@ -6614,7 +6614,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
   </entry>
   <entry>
     <title>广州 · 中山大学与广州塔</title>
-    <url>//2023/07/10/guangzhou/</url>
+    <url>/2023/07/10/guangzhou/</url>
     <content><![CDATA[<p>这里主要是记录我的生活</p>
 <p>从哪里开始记录了，我想了很多从我开始记录的地方，之前的高中三年时期很少出自己的家乡。初中出去很多地方（但是照片在旧手机中被我丢掉了🤦‍♂️🤦‍♂️很是可惜）。所以本人决定从大学的时光记录下来。</p>
 <hr>
