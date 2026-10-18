@@ -1128,6 +1128,11 @@ a <span class="token operator">=</span> a <span class="token operator">^</span> 
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
+            /* 目录点击的滚动偏移。原主题靠 post.css 里「100px 隐藏块撑高标题」的
+               hack 来躲固定导航栏；my.css 已把那个 hack 换成 scroll-margin-top，
+               所以这里必须同步补上。tocbot 内部是 offset + rect.top，
+               所以要给负数：-80 = 标题停在导航栏下方 80px 处。 */
+            scrollSmoothOffset: -80,
             collapseDepth: Number('0'),
             headingSelector: 'h2, h3, h4'
         });

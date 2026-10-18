@@ -63,10 +63,52 @@ body {
     padding-bottom: .35em;
     border-bottom: 1px solid rgba(0, 0, 0, .09);
 }
+/* ---------- 3.1 拆掉主题的「锚点偏移 hack」 ----------
+   themes/matery/source/css/post.css 第 1~12 行给 #articleContent 下所有
+   h1~h6 塞了一个 ::before：display:block / height:100px / margin-top:-100px /
+   visibility:hidden，目的是让点目录跳转时标题不被固定导航栏盖住。
+   两个副作用：
+     ① 每个标题盒子比文字高出整整 100px（实测 125.5px = 100 + 25.5），
+        标题上方凭空多一大块死白，间距看着很怪；
+     ② 它独占了 ::before，自定义的标题强调条会被它的 height/visibility 覆盖掉。
+   这里改用现代写法 scroll-margin-top：锚点效果等价，且不再撑高盒子。
+   ⚠️ post.css 在本文件之后加载，权重相同会盖掉我，所以统一加 body 前缀提权。 */
+body #articleContent h1::before,
+body #articleContent h2::before,
+body #articleContent h4::before,
+body #articleContent h5::before,
+body #articleContent h6::before {
+    content: none;
+}
+
+/* 锚点偏移改由 scroll-margin-top 承担（导航栏实高 64px，留点余量）。
+   ⚠️ 不要再给 html 加 scroll-padding-top：两者会叠加（实测 80+80=160px）。 */
+#articleContent h1,
+#articleContent h2,
+#articleContent h3,
+#articleContent h4,
+#articleContent h5,
+#articleContent h6 {
+    scroll-margin-top: 80px;
+}
+
+/* h3 的小标题强调条：用 body 前缀压过 post.css，必须显式补回 visibility
+   （否则继承主题那条的 visibility:hidden，条子会「量和出来有、眼睛看不见」）。 */
 #articleContent h3 {
     margin-top: 1.7em;
-    padding-left: .6em;
-    border-left: 4px solid var(--brand);
+    padding-left: 0;
+    border-left: 0;
+}
+body #articleContent h3::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: .95em;
+    margin: 0 .5em 0 0;
+    background: var(--brand);
+    border-radius: 2px;
+    vertical-align: -.08em;
+    visibility: visible;
 }
 #articleContent ul,
 #articleContent ol {
@@ -111,6 +153,28 @@ pre[class*="language-"] {
     box-shadow: 0 2px 14px rgba(0, 0, 0, .07);
     font-size: 14px;
     line-height: 1.7;
+}
+
+/* ---------- 6.1 目录卡片（右侧 TOC） ----------
+   主题 matery.css 把 .toc-widget 写死 width: 345px，而 l3 栏在 1280 屏只有 ~288px，
+   卡片右边缘会溢出视口被切掉（实测 widget right=1265 > 栏 right=1191）。
+   而主题的吸顶是给 .toc-widget 加 .toc-fixed{position:fixed}，脱离文档流后
+   百分比宽度会按视口算，所以不能简单改成 width:100%。
+   办法：宽度交给 100%，吸顶挪到外层栏 #toc-aside 上。
+   为什么要挪：.row 是浮动栅格，栏本身高度只有卡片那么高（实测 801px），
+   sticky 的包含块就是它，没有滚动行程；而 .row 清浮动后是整页高度（26938px），
+   把 sticky 放到栏上才有地方"粘"。 */
+#toc-aside {
+    position: sticky;
+    top: 74px;
+}
+#toc-aside .toc-widget {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+/* 吸顶已交给外层，关掉主题在卡片上的 fixed（否则卡片会脱流、宽度失控）。 */
+#toc-aside .toc-widget.toc-fixed {
+    position: static !important;
 }
 
 /* ---------- 7. 图片 ---------- */
