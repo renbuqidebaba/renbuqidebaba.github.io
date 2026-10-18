@@ -219,3 +219,28 @@ body.DarkMode ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, .22);
     background-clip: content-box;
 }
+
+/* ---------- 10. 暗色模式下把音乐播放器按回吸底 ----------
+   主题 dark.css 第 191/214 行给播放器写了：
+       body.DarkMode .aplayer            { position: relative; ... }   ← 权重 0,2,1
+       body.DarkMode .aplayer .aplayer-body { position: relative; filter: invert(.8) }
+   而 APlayer 自己的吸底规则是 .aplayer.aplayer-fixed { position: fixed }（权重 0,2,0），
+   暗色时被压掉一级 → 播放器脱离 fixed、掉回文档流，滚到页面底部就露出一个
+   66×66 的空壳方块（narrow 模式 + autoHide 把 body 左移 -66px 裁没了），
+   封面还被 invert(.8) 翻成暗红色。
+   ⚠️ my.css 在 dark.css 之前加载（main-style.ejs 第 10 行 vs 第 11 行），
+   同权重赢不了，必须靠多一级类名提权。不要动主题的 left:-66px !important，
+   那是 autoHide 的收起逻辑。 */
+body.DarkMode .aplayer.aplayer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+}
+body.DarkMode .aplayer.aplayer-fixed .aplayer-body {
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+}
+
