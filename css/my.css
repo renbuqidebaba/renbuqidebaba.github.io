@@ -292,3 +292,38 @@ body.DarkMode .aplayer.aplayer-fixed .aplayer-body {
     margin: 0;
 }
 
+
+/* ---------- 11. 留言板「友链信息」卡片 ----------
+   这段曾经被主题塞在 theme.valine.enable 分支里，而 Valine 已关闭（评论走 Giscus），
+   导致永远不渲染。现在 contact.ejs 里已挪出来单独成卡。
+   配色全部走「继承 + 透明度」，这样亮色/暗色都自动适配，不用再写一份 DarkMode 覆盖。 */
+.friend-link-info {
+    max-width: 540px;
+    margin: 0 auto;
+    font-size: 15px;
+}
+.friend-link-info .fl-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(128, 128, 128, .25);
+}
+.friend-link-info .fl-row:last-child { border-bottom: 0; }
+.friend-link-info .fl-key {
+    flex: 0 0 68px;
+    font-size: 13px;
+    opacity: .6;
+    white-space: nowrap;
+}
+.friend-link-info .fl-val {
+    flex: 1 1 auto;
+    min-width: 0;
+    word-break: break-all;
+}
+.friend-link-info .fl-val a { color: var(--brand); }
+/* 窄屏改成上下两行，避免「博客头像」那串长 URL 把标签挤没 */
+@media (max-width: 480px) {
+    .friend-link-info .fl-row { display: block; }
+    .friend-link-info .fl-key { display: block; margin-bottom: 2px; }
+}
