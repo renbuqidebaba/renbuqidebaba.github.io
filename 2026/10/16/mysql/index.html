@@ -5,8 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="MySQL 核心知识, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="这篇是我 MySQL 面试准备的完整笔记，覆盖索引、事务、锁、分库分表、主从同步、SQL 优化和 SQL 基础七大块。
-原稿是一份很长的问答清单（约 2.5 万字），我按「查询为什么快（索引）→ 并发怎么控（事务 + 锁）→ 量大了怎么办（">
+    <meta name="description" content="索引为什么是 B+ 树而不是 B 树 / 跳表、聚簇与非聚簇、回表与索引覆盖、最左匹配，再到事务、锁、分库分表与主从同步。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -292,7 +291,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -349,7 +348,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2026-10-16
+                    2026-10-18
                 </div>
                 
 
@@ -373,6 +372,7 @@
         <hr class="clearfix">
 
         
+        
         <!-- 是否加载使用自带的 prismjs. -->
         <link rel="stylesheet" href="/libs/prism/prism.min.css">
         
@@ -380,6 +380,11 @@
         
 
         <div class="card-content article-card-content">
+            
+            <details id="mobile-toc" class="hide-on-large-only">
+                <summary><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</summary>
+                <div id="mobile-toc-content"></div>
+            </details>
             <div id="articleContent">
                 <p>这篇是我 MySQL 面试准备的完整笔记，覆盖索引、事务、锁、分库分表、主从同步、SQL 优化和 SQL 基础七大块。</p>
 <p>原稿是一份很长的问答清单（约 2.5 万字），我按「查询为什么快（索引）→ 并发怎么控（事务 + 锁）→ 量大了怎么办（分库分表 + 主从）→ 怎么调优 → SQL 基础」这条主线重排了结构，并把散落在原文里的伪表格还原成了真表格。</p>
@@ -400,7 +405,7 @@
 <h3 id="索引的数据结构"><a href="#索引的数据结构" class="headerlink" title="索引的数据结构"></a>索引的数据结构</h3><p>主要有 <strong>B+ 树</strong>和<strong>哈希表</strong>两种，对应 B+ 树索引和哈希索引。InnoDB 引擎的索引类型有 B+ 树索引和哈希索引，<strong>默认是 B+ 树索引</strong>。</p>
 <p><strong>B+ 树索引</strong></p>
 <p>所有的记录节点都是按照键值大小的顺序<strong>放在叶子节点上</strong>。</p>
-<p><img src="https://renbuqidebaba.github.io/images/mysql/m19.png" alt="B+ 树结构"></p>
+<p><img src="https://renbuqidebaba.github.io/images/mysql/m19.webp" alt="B+ 树结构" width="1212" height="428" loading="lazy" decoding="async"></p>
 <p>因为 B+ 树（多路搜索树，时间复杂度固定为 <strong>O(log n)<strong>，很好地利用了局部性原理）具有</strong>有序性</strong>，并且<strong>所有数据都存放在叶子节点</strong>，所以查找效率非常高，并且支持排序和范围查找。</p>
 <p>B+ 树的索引又可以分为<strong>主索引</strong>和<strong>辅助索引</strong>：</p>
 <ul>
@@ -408,7 +413,7 @@
 <li><strong>辅助索引</strong>即<strong>非聚簇索引</strong>，是以非主键的列作为 B+ 树索引的键值所构成的索引，<strong>叶子节点存储着主键值</strong></li>
 </ul>
 <p>所以使用非聚簇索引查询时，<strong>会先找到主键值，然后再根据聚簇索引找到主键对应的数据域</strong>。</p>
-<p><img src="https://renbuqidebaba.github.io/images/mysql/m20.png" alt="非聚簇索引结构"></p>
+<p><img src="https://renbuqidebaba.github.io/images/mysql/m20.webp" alt="非聚簇索引结构" width="1205" height="418" loading="lazy" decoding="async"></p>
 <blockquote>
 <p>上图中字母为数据的非主键列值。假设要查询该列值为 B 的信息，则需要先找到主键 7，再到聚簇索引中查询主键 7 所对应的数据域。</p>
 </blockquote>
@@ -419,7 +424,7 @@
 <li>B 树的内部节点和叶子节点<strong>均存放键和值</strong>，而 B+ 树的<strong>内部节点只有键没有值</strong>，叶子节点存放所有的键和值</li>
 <li>B+ 树的<strong>叶子节点通过指针相连</strong>，方便顺序检索</li>
 </ul>
-<p><img src="https://renbuqidebaba.github.io/images/mysql/m21.png" alt="B 树结构"></p>
+<p><img src="https://renbuqidebaba.github.io/images/mysql/m21.webp" alt="B 树结构" width="982" height="438" loading="lazy" decoding="async"></p>
 <p>四点关键差异：</p>
 <ol>
 <li><strong>B 树适用于随机检索，B+ 树适用于随机检索和顺序检索</strong></li>
@@ -441,7 +446,7 @@
 <blockquote>
 <p>为什么说辅助索引是在主索引之上创建的呢？<strong>因为辅助索引中的叶子节点存储的是主键。</strong></p>
 </blockquote>
-<p><img src="https://renbuqidebaba.github.io/images/mysql/m22.png" alt="聚簇索引与辅助索引的检索过程"></p>
+<p><img src="https://renbuqidebaba.github.io/images/mysql/m22.webp" alt="聚簇索引与辅助索引的检索过程" width="327" height="450" loading="lazy" decoding="async"></p>
 <h3 id="非聚簇索引一定会回表吗？（出现索引覆盖就不需要）"><a href="#非聚簇索引一定会回表吗？（出现索引覆盖就不需要）" class="headerlink" title="非聚簇索引一定会回表吗？（出现索引覆盖就不需要）"></a>非聚簇索引一定会回表吗？（出现索引覆盖就不需要）</h3><p><strong>答案是不一定</strong>，这里涉及<strong>索引覆盖</strong>的问题——如果查询的数据在辅助索引上完全能获取到，便不需要回表查询。</p>
 <p>举例：有一张表存储个人信息，包括 id、name、age 等字段。假设聚簇索引以 ID 为键值构建，非聚簇索引以 name 为键值构建：</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 不需要回表：通过非聚簇索引已经能全部检索出数据，这就是索引覆盖</span>
@@ -576,7 +581,7 @@
 <li><strong>事务 ID</strong>——记录最后一次修改该记录的事务 ID</li>
 <li><strong>回滚指针</strong>——指向这条记录的上一个版本</li>
 </ul>
-<p><img src="https://renbuqidebaba.github.io/images/mysql/m25.png" alt="MVCC 实现原理"></p>
+<p><img src="https://renbuqidebaba.github.io/images/mysql/m25.webp" alt="MVCC 实现原理" width="1080" height="681" loading="lazy" decoding="async"></p>
 <p>上图为例：首先 insert 语句向表 t1 中插入一条数据，a 字段为 1，b 字段为 1，ROW ID 也为 1，事务 ID 假设为 1，回滚指针假设为 null。当执行 <code>update t1 set b=666 where a=1</code> 时，大致步骤如下：</p>
 <ol>
 <li>数据库会先对满足 <code>a=1</code> 的行<strong>加排他锁</strong></li>
@@ -719,7 +724,7 @@
 <li><strong>从：io 线程</strong>——在使用 <code>start slave</code> 之后，负责从 master 上拉取 binlog 内容，放进自己的 relay log 中</li>
 <li><strong>从：sql 执行线程</strong>——执行 relay log 中的语句</li>
 </ul>
-<p><img src="https://renbuqidebaba.github.io/images/mysql/m27.png" alt="MySQL 主从复制流程"></p>
+<p><img src="https://renbuqidebaba.github.io/images/mysql/m27.webp" alt="MySQL 主从复制流程" width="733" height="526" loading="lazy" decoding="async"></p>
 <h3 id="主从同步延时问题如何解决"><a href="#主从同步延时问题如何解决" class="headerlink" title="主从同步延时问题如何解决"></a>主从同步延时问题如何解决</h3><p>MySQL 实际上有两个同步机制：一个是<strong>半同步复制</strong>，用来解决主库数据丢失问题；一个是<strong>并行复制</strong>，用来解决主从同步延时问题。</p>
 <ul>
 <li><strong>半同步复制（semi-sync）</strong>——主库写入 binlog 日志之后，<strong>会强制立即将数据同步到从库</strong>，从库将日志写入自己本地的 relay log 之后会返回一个 ack 给主库，<strong>主库接收到至少一个从库的 ack 之后才会认为写操作完成了</strong></li>
@@ -800,21 +805,21 @@
 <li><strong>Dynamic</strong>——基于 Compact 改进，<strong>5.7 之后默认</strong></li>
 <li><strong>Compressed</strong>——基于 Compact 改进</li>
 </ul>
-<p><img src="https://renbuqidebaba.github.io/images/mysql/m28.png" alt="Compact 行格式"></p>
+<p><img src="https://renbuqidebaba.github.io/images/mysql/m28.webp" alt="Compact 行格式" width="1097" height="173" loading="lazy" decoding="async"></p>
 <h3 id="几种连接查询"><a href="#几种连接查询" class="headerlink" title="几种连接查询"></a>几种连接查询</h3><p>MySQL 的连接查询主要可以分为<strong>外连接、内连接、交叉连接</strong>。</p>
 <ul>
 <li><strong>左外连接（LEFT JOIN）</strong>——显示左表中所有的数据及右表中符合条件的数据，<strong>右表中不符合条件的数据为 null</strong></li>
 </ul>
-<p><img src="https://renbuqidebaba.github.io/images/mysql/m29.png" alt="左外连接"></p>
+<p><img src="https://renbuqidebaba.github.io/images/mysql/m29.webp" alt="左外连接" width="721" height="289" loading="lazy" decoding="async"></p>
 <ul>
 <li><strong>右外连接（RIGHT JOIN）</strong>——显示右表中所有的数据及左表中符合条件的数据，<strong>左表中不符合条件的数据为 null</strong></li>
 </ul>
-<p><img src="https://renbuqidebaba.github.io/images/mysql/m30.png" alt="右外连接"></p>
+<p><img src="https://renbuqidebaba.github.io/images/mysql/m30.webp" alt="右外连接" width="729" height="314" loading="lazy" decoding="async"></p>
 <ul>
 <li><strong>内连接</strong>——只显示符合条件的数据</li>
 <li><strong>交叉连接</strong>——使用笛卡尔积的一种连接，两两组合为新的关系</li>
 </ul>
-<h3 id="SQL-语句顺序和执行顺序"><a href="#SQL-语句顺序和执行顺序" class="headerlink" title="SQL 语句顺序和执行顺序"></a>SQL 语句顺序和执行顺序</h3><p><img src="https://renbuqidebaba.github.io/images/mysql/m31.png" alt="SQL 执行顺序"></p>
+<h3 id="SQL-语句顺序和执行顺序"><a href="#SQL-语句顺序和执行顺序" class="headerlink" title="SQL 语句顺序和执行顺序"></a>SQL 语句顺序和执行顺序</h3><p><img src="https://renbuqidebaba.github.io/images/mysql/m31.webp" alt="SQL 执行顺序" width="1076" height="277" loading="lazy" decoding="async"></p>
 <ul>
 <li><strong>FROM</strong>——首先对关键字两边的表以笛卡尔积的形式执行连接，并产生虚表 V1。虚表就是视图，数据会来自多张表的执行结果</li>
 <li><strong>ON</strong>——对 FROM 连接的结果进行 ON 过滤，创建虚表 V2</li>
@@ -914,7 +919,7 @@
 <li><strong>第四范式</strong>——删除表中多对多的关系</li>
 <li><strong>第五范式</strong>——消除连接依赖</li>
 </ul>
-<h3 id="SQL-执行的过程"><a href="#SQL-执行的过程" class="headerlink" title="SQL 执行的过程"></a>SQL 执行的过程</h3><p><img src="https://renbuqidebaba.github.io/images/mysql/m32.png" alt="MySQL 架构示意图"></p>
+<h3 id="SQL-执行的过程"><a href="#SQL-执行的过程" class="headerlink" title="SQL 执行的过程"></a>SQL 执行的过程</h3><p><img src="https://renbuqidebaba.github.io/images/mysql/m32.webp" alt="MySQL 架构示意图" width="770" height="242" loading="lazy" decoding="async"></p>
 <p>SQL 执行会经历<strong>客户端、Server 层、存储引擎层</strong> 3 个部分。</p>
 <p>Server 层包含<strong>连接器、查询缓存、分析器、优化器、执行器</strong>等核心组件：</p>
 <ul>
@@ -1115,8 +1120,7 @@
                 <a href="/2026/10/16/network/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="计算机网络核心知识">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="计算机网络核心知识">
                         
                         <span class="card-title">计算机网络核心知识</span>
                     </div>
@@ -1124,7 +1128,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            从网络分层到 TCP 三次握手 / 四次挥手、TIME-WAIT 为什么是 2MSL、流量与拥塞控制，再到 IP、HTTP 与常见状态码。
                         
                     </div>
                     <div class="publish-info">
@@ -1156,8 +1160,7 @@
                 <a href="/2026/10/16/redis/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Redis 核心知识">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Redis 核心知识">
                         
                         <span class="card-title">Redis 核心知识</span>
                     </div>
@@ -1165,7 +1168,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            为什么这么快、能不能当主库、五种基本类型与底层结构、zset 为什么用跳表、事务与 WATCH、缓存三大问题、持久化与部署。
                         
                     </div>
                     <div class="publish-info">
@@ -1197,6 +1200,7 @@
 
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
 
 
   <!-- 是否加载使用自带的 prismjs. -->
@@ -1252,6 +1256,34 @@
             collapseDepth: Number('0'),
             headingSelector: 'h2, h3, h4'
         });
+
+        /* 移动端目录：tocbot 已经把列表渲染进 #toc-content（那个容器在小屏是 display:none，
+           但 DOM 还在），这里拷一份到正文顶部的 <details> 里。
+           拷过来的链接没有 tocbot 的平滑滚动，走的是原生 hash 跳转——
+           偏移由 my.css 里 #articleContent 标题的 scroll-margin-top:80px 保证。 */
+        (function () {
+            var src = document.getElementById('toc-content');
+            var dst = document.getElementById('mobile-toc-content');
+            var box = document.getElementById('mobile-toc');
+            if (!src || !dst) return;
+            var sync = function () {
+                if (!src.firstChild) return false;
+                dst.innerHTML = src.innerHTML;
+                return true;
+            };
+            if (!sync()) {
+                var timer = setInterval(function () {
+                    if (sync()) clearInterval(timer);
+                }, 300);
+                setTimeout(function () { clearInterval(timer); }, 10000);
+            }
+            if (box) {
+                // 点了目录项就把折叠收起来，别挡着正文
+                dst.addEventListener('click', function (e) {
+                    if (e.target.closest('a')) box.removeAttribute('open');
+                });
+            }
+        })();
 
         // Set scroll toc fixed.
         let tocHeight = parseInt($(window).height() * 0.4 - 64);
@@ -1383,7 +1415,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">73.8k</span>
+                        class="white-color">73.5k</span>
             
             
             
@@ -1460,6 +1492,85 @@
 
 <script type="text/javascript">
 $(function () {
+    var datas = null;          // 已加载的索引
+    var pendingValue = null;   // 索引还没回来时用户已经敲进去的字
+    var searchPath = '/search.xml';
+    var searchInputId = 'searchInput';
+    var searchResultId = 'searchResult';
+
+    var render = function (value) {
+        var $resultContent = document.getElementById(searchResultId);
+        if (!datas) { pendingValue = value; return; }   // 索引未就绪，先记下来
+        var text = (value || '').trim();
+        $resultContent.innerHTML = "";
+        if (text.length <= 0) {
+            return;
+        }
+        var keywords = text.toLowerCase().split(/[\s\-]+/);
+        var str = '<ul class=\"search-result-list\">';
+        var cnt = 0;
+        // perform local searching
+        datas.forEach(function (data) {
+            var isMatch = true;
+            var data_title = data.title.trim().toLowerCase();
+            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+            var data_url = data.url;
+            data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty titles and contents
+            if (data_title !== '' && data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if (index_title < 0 && index_content < 0) {
+                        isMatch = false;
+                    } else {
+                        if (index_content < 0) {
+                            index_content = 0;
+                        }
+                        if (i === 0) {
+                            first_occur = index_content;
+                        }
+                    }
+                });
+            }
+            // show search results
+            if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if (start < 0) {
+                        start = 0;
+                    }
+                    if (start === 0) {
+                        end = 100;
+                    }
+                    if (end > content.length) {
+                        end = content.length;
+                    }
+                    var match_content = content.substr(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function (keyword) {
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+                cnt += 1;
+            }
+        });
+        str += "</ul>";
+        str = "<p class=\"search-result-summary\">共找到" + String(cnt) + "条结果</p>" + str;
+        $resultContent.innerHTML = str;
+    };
+
     var searchFunc = function (path, search_id, content_id) {
         'use strict';
         $.ajax({
@@ -1467,86 +1578,51 @@ $(function () {
             dataType: "xml",
             success: function (xmlResponse) {
                 // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
+                datas = $("entry", xmlResponse).map(function () {
                     return {
                         title: $("title", this).text(),
                         content: $("content", this).text(),
                         url: $("url", this).text()
                     };
                 }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
-
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
+                // 拉索引期间用户可能已经敲了字，补跑一次，不丢词
+                if (pendingValue) {
+                    var v = pendingValue;
+                    pendingValue = null;
+                    render(v);
+                }
             }
+        });
+        document.getElementById(search_id).addEventListener('input', function () {
+            render(this.value);
         });
     };
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
+    /* 原来一进页面就 $.ajax 把 search.xml 全量拉下来（改 striptags 后仍有约 300KB），
+       它跟首屏渲染毫无关系，却每次访问都在抢带宽。
+       改成：第一次打开搜索弹窗时才拉。 */
+    var started = false;
+    var start = function () {
+        if (started) return;
+        started = true;
+        searchFunc(searchPath, searchInputId, searchResultId);
+    };
+    var modal = document.getElementById('searchModal');
+    if (modal) {
+        // materialize 打开弹窗时会给 #searchModal 加 class="open"
+        var observer = new MutationObserver(function () {
+            if (modal.classList.contains('open')) {
+                start();
+                observer.disconnect();
+            }
+        });
+        observer.observe(modal, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+    // 兜底：直接监听触发弹窗的那几个元素（导航栏的放大镜 + 移动端的搜索入口）
+    $(document).on('click', 'a[href="#searchModal"], #searchIcon, .modal-trigger[href="#searchModal"]', start);
+    // 再兜一层：焦点进到搜索框说明弹窗已经开了
+    var inputEl = document.getElementById(searchInputId);
+    if (inputEl) inputEl.addEventListener('focus', start);
 });
 </script>
 
@@ -1601,29 +1677,11 @@ $(function () {
     <!-- 鼠标星星特效 -->
     
 
-     
-        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-        <script src="/libs/others/TencentCaptcha.js"></script>
-        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
     
 
     <!-- Baidu Analytics -->
 
     <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
 
     
     <script src="/libs/others/clicklove.js" async="async"></script>

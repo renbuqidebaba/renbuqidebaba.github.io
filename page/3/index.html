@@ -356,8 +356,7 @@
                     <a href="/2023/07/10/guangzhou/">
                         <div class="card-image">
                             
-                            
-                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="广州 · 中山大学与广州塔">
+                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="广州 · 中山大学与广州塔">
                             
                             <span class="card-title">广州 · 中山大学与广州塔</span>
                         </div>
@@ -366,10 +365,7 @@
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                这里主要是记录我的生活
-从哪里开始记录了，我想了很多从我开始记录的地方，之前的高中三年时期很少出自己的家乡。初中出去很多地方（但是照片在旧手机中被我丢掉了🤦‍♂️🤦‍♂️很是可惜）。所以本人决定从大学的时光记录下来。
-
-2023 年 7
+                                2023 年 7 月的广州：中山大学的老校舍，和夜里亮起来的广州塔。
                             
                         </div>
                         <div class="publish-info">
@@ -505,7 +501,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">73.8k</span>
+                        class="white-color">73.5k</span>
             
             
             
@@ -582,6 +578,85 @@
 
 <script type="text/javascript">
 $(function () {
+    var datas = null;          // 已加载的索引
+    var pendingValue = null;   // 索引还没回来时用户已经敲进去的字
+    var searchPath = '/search.xml';
+    var searchInputId = 'searchInput';
+    var searchResultId = 'searchResult';
+
+    var render = function (value) {
+        var $resultContent = document.getElementById(searchResultId);
+        if (!datas) { pendingValue = value; return; }   // 索引未就绪，先记下来
+        var text = (value || '').trim();
+        $resultContent.innerHTML = "";
+        if (text.length <= 0) {
+            return;
+        }
+        var keywords = text.toLowerCase().split(/[\s\-]+/);
+        var str = '<ul class=\"search-result-list\">';
+        var cnt = 0;
+        // perform local searching
+        datas.forEach(function (data) {
+            var isMatch = true;
+            var data_title = data.title.trim().toLowerCase();
+            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+            var data_url = data.url;
+            data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty titles and contents
+            if (data_title !== '' && data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if (index_title < 0 && index_content < 0) {
+                        isMatch = false;
+                    } else {
+                        if (index_content < 0) {
+                            index_content = 0;
+                        }
+                        if (i === 0) {
+                            first_occur = index_content;
+                        }
+                    }
+                });
+            }
+            // show search results
+            if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if (start < 0) {
+                        start = 0;
+                    }
+                    if (start === 0) {
+                        end = 100;
+                    }
+                    if (end > content.length) {
+                        end = content.length;
+                    }
+                    var match_content = content.substr(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function (keyword) {
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+                cnt += 1;
+            }
+        });
+        str += "</ul>";
+        str = "<p class=\"search-result-summary\">共找到" + String(cnt) + "条结果</p>" + str;
+        $resultContent.innerHTML = str;
+    };
+
     var searchFunc = function (path, search_id, content_id) {
         'use strict';
         $.ajax({
@@ -589,86 +664,51 @@ $(function () {
             dataType: "xml",
             success: function (xmlResponse) {
                 // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
+                datas = $("entry", xmlResponse).map(function () {
                     return {
                         title: $("title", this).text(),
                         content: $("content", this).text(),
                         url: $("url", this).text()
                     };
                 }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
-
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
+                // 拉索引期间用户可能已经敲了字，补跑一次，不丢词
+                if (pendingValue) {
+                    var v = pendingValue;
+                    pendingValue = null;
+                    render(v);
+                }
             }
+        });
+        document.getElementById(search_id).addEventListener('input', function () {
+            render(this.value);
         });
     };
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
+    /* 原来一进页面就 $.ajax 把 search.xml 全量拉下来（改 striptags 后仍有约 300KB），
+       它跟首屏渲染毫无关系，却每次访问都在抢带宽。
+       改成：第一次打开搜索弹窗时才拉。 */
+    var started = false;
+    var start = function () {
+        if (started) return;
+        started = true;
+        searchFunc(searchPath, searchInputId, searchResultId);
+    };
+    var modal = document.getElementById('searchModal');
+    if (modal) {
+        // materialize 打开弹窗时会给 #searchModal 加 class="open"
+        var observer = new MutationObserver(function () {
+            if (modal.classList.contains('open')) {
+                start();
+                observer.disconnect();
+            }
+        });
+        observer.observe(modal, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+    // 兜底：直接监听触发弹窗的那几个元素（导航栏的放大镜 + 移动端的搜索入口）
+    $(document).on('click', 'a[href="#searchModal"], #searchIcon, .modal-trigger[href="#searchModal"]', start);
+    // 再兜一层：焦点进到搜索框说明弹窗已经开了
+    var inputEl = document.getElementById(searchInputId);
+    if (inputEl) inputEl.addEventListener('focus', start);
 });
 </script>
 
@@ -723,29 +763,11 @@ $(function () {
     <!-- 鼠标星星特效 -->
     
 
-     
-        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-        <script src="/libs/others/TencentCaptcha.js"></script>
-        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
     
 
     <!-- Baidu Analytics -->
 
     <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
 
     
     <script src="/libs/others/clicklove.js" async="async"></script>

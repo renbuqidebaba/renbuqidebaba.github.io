@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="AI Agent 与大模型, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="这一篇是我面试准备过程中整理的 Agent 与大模型相关笔记。和算法那批不同，这里更偏工程实践——Agent 的组件拆解、工具设计、MCP &amp;#x2F; Skills 的运行机制、上下文工程，以及 Transformer 推理侧的几个高频问">
+    <meta name="description" content="从 Agent 的骨架（核心组件、ReAct、上下文工程）讲到 RAG（分块、Rerank、与微调怎么选），再到工具设计的原则。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -291,7 +291,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -348,7 +348,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2026-10-16
+                    2026-10-18
                 </div>
                 
 
@@ -372,6 +372,7 @@
         <hr class="clearfix">
 
         
+        
         <!-- 是否加载使用自带的 prismjs. -->
         <link rel="stylesheet" href="/libs/prism/prism.min.css">
         
@@ -379,6 +380,11 @@
         
 
         <div class="card-content article-card-content">
+            
+            <details id="mobile-toc" class="hide-on-large-only">
+                <summary><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</summary>
+                <div id="mobile-toc-content"></div>
+            </details>
             <div id="articleContent">
                 <p>这一篇是我面试准备过程中整理的 Agent 与大模型相关笔记。和算法那批不同，这里更偏工程实践——Agent 的组件拆解、工具设计、MCP &#x2F; Skills 的运行机制、上下文工程，以及 Transformer 推理侧的几个高频问题。内容以我自己的理解为主，参考资料随文标注。</p>
 <hr>
@@ -502,7 +508,7 @@
 <li><strong>Skills 协议</strong>——技能包。每一种方式调用时都必须进行强 schema 约束</li>
 </ul>
 <h3 id="MCP-协议（2024-年-12-月）"><a href="#MCP-协议（2024-年-12-月）" class="headerlink" title="MCP 协议（2024 年 12 月）"></a>MCP 协议（2024 年 12 月）</h3><p>MCP（Model Context Protocol）定义了应用程序和 AI 模型之间交换上下文信息的方式，让开发者能以一致的方式把各种数据源、工具和功能连接到 AI 模型。定位是<strong>一个中间协议层</strong>。</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img47.png" alt="MCP 架构"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img47.webp" alt="MCP 架构" width="1400" height="920" loading="lazy" decoding="async"></p>
 <p><strong>底层实现：</strong></p>
 <ul>
 <li>基于 <strong>JSON-RPC 2.0</strong></li>
@@ -520,7 +526,7 @@
 <li>回应展示给用户</li>
 </ol>
 <p>具体的调用循环长这样：</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img48.png" alt="MCP 调用循环"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img48.webp" alt="MCP 调用循环" width="1600" height="953" loading="lazy" decoding="async"></p>
 <h3 id="智能体是怎么选工具的？"><a href="#智能体是怎么选工具的？" class="headerlink" title="智能体是怎么选工具的？"></a>智能体是怎么选工具的？</h3><p>答案很朴素：<strong>靠 prompt engineering</strong>。把所有工具的结构化描述和 few-shot 示例塞进 system prompt，让模型自己选。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">start</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token comment"># 初始化所有的 mcp server</span>
@@ -591,7 +597,7 @@
 </ul>
 <h3 id="Claude-Skills（2025-年-10-月）"><a href="#Claude-Skills（2025-年-10-月）" class="headerlink" title="Claude Skills（2025 年 10 月）"></a>Claude Skills（2025 年 10 月）</h3><p>Skills 是 Claude 的可扩展机制。每个 Skill 本质上是一个文件夹，包含元数据、说明文档，以及可选的代码脚本和资源文件。</p>
 <p>关键在于<strong>渐进式加载</strong>——不是一次性全塞进上下文：</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img49.png" alt="Skills 渐进式加载"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img49.webp" alt="Skills 渐进式加载" width="1080" height="606" loading="lazy" decoding="async"></p>
 <p>在系统层面，Claude 为技能运行提供安全的沙盒虚拟环境。技能文件夹就像虚拟机里的目录，Claude 可以通过 bash 命令读取和执行。</p>
 <p><strong>三级加载：</strong></p>
 <ol>
@@ -599,10 +605,10 @@
 <li><strong>二级：说明文档，技能触发时加载</strong>——<code>SKILL.md</code> 本身包含具体指令和示例，大约几千 token</li>
 <li><strong>三级：资源与脚本，按需加载</strong>——附加的 <code>.md</code> 文件、模板、数据库模式、可执行脚本，仅在被调用时才读取或执行</li>
 </ol>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img50.png" alt="Skills 三级结构"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img50.webp" alt="Skills 三级结构" width="1080" height="556" loading="lazy" decoding="async"></p>
 <p>值得注意的一点：<strong>代码脚本通过 bash 调用，只把执行结果返回给 Claude，脚本本身的代码不会进入上下文</strong>。这让技能可以包含大量参考资料而不消耗上下文长度。</p>
 <p>一个 Skill 的解剖：</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img51.png" alt="Skill 解剖"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img51.webp" alt="Skill 解剖" width="1080" height="579" loading="lazy" decoding="async"></p>
 <p><strong>与 Function Calling &#x2F; MCP 的比较：</strong></p>
 <ul>
 <li><strong>MCP</strong> 其实就是把 function calling 这类东西做了规范化处理。以前的 function calling 每家实现都不一样，都是 API 工具供大模型调用；MCP 相当于用一个统一协议来管理这些工具</li>
@@ -776,7 +782,7 @@ const transcriptSearch <span class="token operator">=</span> <span class="token 
 
 <p><strong>让 AI 自己决定搜什么、怎么搜，效果反而远远好于 RAG。</strong> 这点挺反直觉的，但在代码这种结构化、精确匹配为主的场景下确实成立。</p>
 <h3 id="三层记忆架构"><a href="#三层记忆架构" class="headerlink" title="三层记忆架构"></a>三层记忆架构</h3><p>这是我认为整份源码里设计最精妙的部分，也是 Context Engineering 领域最值得学的案例。</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img52.png" alt="三层记忆架构"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img52.webp" alt="三层记忆架构" width="1600" height="873" loading="lazy" decoding="async"></p>
 <p><strong>第一层：MEMORY.md（热数据，常驻加载）</strong></p>
 <p><code>MEMORY.md</code> 就像一本书的目录，每次对话都会加载到上下文里。</p>
 <pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">ENTRYPOINT_NAME</span> <span class="token operator">=</span> <span class="token string">'MEMORY.md'</span>
@@ -836,35 +842,35 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
 <li><strong>Transformer 通过自注意力直接计算任意两个位置的关联</strong>，所有 token 可以同时处理，充分利用 GPU 并行能力。更重要的是任意两个 token 间都是一步直连，不存在梯度衰减问题，能有效学习文档级别的长距离依赖</li>
 </ul>
 <h3 id="架构与自注意力"><a href="#架构与自注意力" class="headerlink" title="架构与自注意力"></a>架构与自注意力</h3><p>Transformer 基于 Encoder-Decoder 结构，完全依靠自注意力替代 RNN 序列建模，支持并行计算。但<strong>它本身不能利用单词的顺序信息</strong>，因此需要在输入中添加位置编码。大致分为输入层、编码层、解码层、输出层。</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img53.png" alt="Transformer 整体结构"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img53.webp" alt="Transformer 整体结构" width="640" height="438" loading="lazy" decoding="async"></p>
 <p><strong>大体流程：</strong></p>
 <ol>
 <li>获取每个单词的表示向量 X——由单词 Embedding 和位置 Embedding 相加得到</li>
 </ol>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img54.png" alt="词嵌入 + 位置嵌入"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img54.webp" alt="词嵌入 + 位置嵌入" width="640" height="263" loading="lazy" decoding="async"></p>
 <ol start="2">
 <li>将表示向量矩阵传入 Encoder，经过 6 个 Encoder block 后得到编码信息矩阵 C。单词向量矩阵用 X(n×d) 表示，n 是单词个数，d 是向量维度（论文中 d&#x3D;512）。<strong>每个 Encoder block 输出的矩阵维度与输入完全一致</strong></li>
 </ol>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img55.png" alt="Encoder 输出编码矩阵 C"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img55.webp" alt="Encoder 输出编码矩阵 C" width="640" height="900" loading="lazy" decoding="async"></p>
 <ol start="3">
 <li>将 C 传递到 Decoder，Decoder 依次根据已翻译的单词 1~i 翻译下一个单词 i+1。翻译到 i+1 时需要通过 Mask 操作遮盖住 i+1 之后的单词</li>
 <li>Decoder 先输入翻译开始符 <code>&lt;Begin&gt;</code> 预测第一个单词，再输入 <code>&lt;Begin&gt;</code> 和已预测单词预测下一个，以此类推</li>
 </ol>
 <p><strong>关于自注意力机制：</strong></p>
 <p>红色圈中是 Multi-Head Attention，由多个 Self-Attention 组成。Encoder block 包含一个 Multi-Head Attention，Decoder block 包含两个（其中一个用到 Masked）。上方还有 Add &amp; Norm 层：</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img57.png" alt="Transformer 详细结构"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img57.webp" alt="Transformer 详细结构" width="640" height="884" loading="lazy" decoding="async"></p>
 <p><strong>Add &amp; Norm</strong> 由两部分组成：</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img58.png" alt="Add &amp; Norm 公式"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img58.webp" alt="Add &amp; Norm 公式" width="640" height="107" loading="lazy" decoding="async"></p>
 <ul>
 <li><strong>Add</strong> 指 <code>X + MultiHeadAttention(X)</code>，是一种残差连接，用于解决多层网络训练的问题，让网络只关注当前差异的部分（ResNet 里经常用）</li>
 <li><strong>Norm</strong> 指 Layer Normalization，将每一层神经元的输入都转成均值方差一致的，可以加快收敛</li>
 </ul>
 <p>重点还是 QKV 的生成和计算。Self-Attention 的输入用矩阵 X 表示，通过线性变换矩阵 WQ、WK、WV 计算得到 Q、K、V（每一行都表示一个单词），然后：</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img60.png" alt="Scaled Dot-Product Attention"></p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img62.png" alt="Attention 公式"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img60.webp" alt="Scaled Dot-Product Attention" width="406" height="488" loading="lazy" decoding="async"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img62.webp" alt="Attention 公式" width="640" height="171" loading="lazy" decoding="async"></p>
 <p>公式中计算矩阵 Q 和 K 每一行向量的内积，为了防止内积过大，除以 √dk。Q 乘以 K 的转置后，得到 n×n 矩阵（n 为句子单词数），表示单词之间的 attention 强度。</p>
 <p>之后用 Softmax 计算每一个单词对其他单词的 attention 系数——<strong>是对矩阵的每一行做 Softmax，即每一行的和都变为 1</strong>：</p>
-<p><img src="https://renbuqidebaba.github.io/images/agent/img64.png" alt="Softmax 归一化"></p>
+<p><img src="https://renbuqidebaba.github.io/images/agent/img64.webp" alt="Softmax 归一化" width="640" height="247" loading="lazy" decoding="async"></p>
 <p>Softmax 矩阵再和 V 相乘得到最终输出 Z。第 1 行表示单词 1 与其他所有单词的 attention 系数，最终单词 1 的输出 Z₁ 等于所有单词 i 的值 Vᵢ 根据 attention 系数的比例加权求和。</p>
 <h3 id="三类架构：面试精简版"><a href="#三类架构：面试精简版" class="headerlink" title="三类架构：面试精简版"></a>三类架构：面试精简版</h3><ul>
 <li><strong>Encoder-only</strong>——仅用编码器，双向注意力（可看到全文）。优点是双向上下文理解强、适合理解&#x2F;分类&#x2F;抽取任务、训练稳定推理快；缺点是不擅长生成。典型模型：BERT、RoBERTa、ALBERT、DistilBERT。适用：文本分类、情感分析、NER、语义相似度、抽取式摘要</li>
@@ -1061,8 +1067,7 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
                 <a href="/2026/10/16/redis/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Redis 核心知识">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Redis 核心知识">
                         
                         <span class="card-title">Redis 核心知识</span>
                     </div>
@@ -1070,7 +1075,7 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            为什么这么快、能不能当主库、五种基本类型与底层结构、zset 为什么用跳表、事务与 WATCH、缓存三大问题、持久化与部署。
                         
                     </div>
                     <div class="publish-info">
@@ -1102,8 +1107,7 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
                 <a href="/2026/10/15/binary-tree/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="二叉树与多叉树">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="二叉树与多叉树">
                         
                         <span class="card-title">二叉树与多叉树</span>
                     </div>
@@ -1111,8 +1115,7 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            二叉树题的根基是递归——绝大多数题目都是在「对左右子树递归，然后在当前节点做点什么」。这一篇收录了我做过的二叉树题目，按题目整理思路和代码。
-题型大概分几类：遍历（前中后序、层序）、属性计算（深度、直径、对称）、构造与转换（翻转、展开为链表
+                            中序与层序遍历、二叉树的深度和直径、右视图、对称判断、BST 第 k 小与合法性验证——二叉树题的 DFS / BFS 套路。
                         
                     </div>
                     <div class="publish-info">
@@ -1144,6 +1147,7 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
 
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
 
 
   <!-- 是否加载使用自带的 prismjs. -->
@@ -1199,6 +1203,34 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
             collapseDepth: Number('0'),
             headingSelector: 'h2, h3, h4'
         });
+
+        /* 移动端目录：tocbot 已经把列表渲染进 #toc-content（那个容器在小屏是 display:none，
+           但 DOM 还在），这里拷一份到正文顶部的 <details> 里。
+           拷过来的链接没有 tocbot 的平滑滚动，走的是原生 hash 跳转——
+           偏移由 my.css 里 #articleContent 标题的 scroll-margin-top:80px 保证。 */
+        (function () {
+            var src = document.getElementById('toc-content');
+            var dst = document.getElementById('mobile-toc-content');
+            var box = document.getElementById('mobile-toc');
+            if (!src || !dst) return;
+            var sync = function () {
+                if (!src.firstChild) return false;
+                dst.innerHTML = src.innerHTML;
+                return true;
+            };
+            if (!sync()) {
+                var timer = setInterval(function () {
+                    if (sync()) clearInterval(timer);
+                }, 300);
+                setTimeout(function () { clearInterval(timer); }, 10000);
+            }
+            if (box) {
+                // 点了目录项就把折叠收起来，别挡着正文
+                dst.addEventListener('click', function (e) {
+                    if (e.target.closest('a')) box.removeAttribute('open');
+                });
+            }
+        })();
 
         // Set scroll toc fixed.
         let tocHeight = parseInt($(window).height() * 0.4 - 64);
@@ -1330,7 +1362,7 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">73.8k</span>
+                        class="white-color">73.5k</span>
             
             
             
@@ -1407,6 +1439,85 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
 
 <script type="text/javascript">
 $(function () {
+    var datas = null;          // 已加载的索引
+    var pendingValue = null;   // 索引还没回来时用户已经敲进去的字
+    var searchPath = '/search.xml';
+    var searchInputId = 'searchInput';
+    var searchResultId = 'searchResult';
+
+    var render = function (value) {
+        var $resultContent = document.getElementById(searchResultId);
+        if (!datas) { pendingValue = value; return; }   // 索引未就绪，先记下来
+        var text = (value || '').trim();
+        $resultContent.innerHTML = "";
+        if (text.length <= 0) {
+            return;
+        }
+        var keywords = text.toLowerCase().split(/[\s\-]+/);
+        var str = '<ul class=\"search-result-list\">';
+        var cnt = 0;
+        // perform local searching
+        datas.forEach(function (data) {
+            var isMatch = true;
+            var data_title = data.title.trim().toLowerCase();
+            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+            var data_url = data.url;
+            data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty titles and contents
+            if (data_title !== '' && data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if (index_title < 0 && index_content < 0) {
+                        isMatch = false;
+                    } else {
+                        if (index_content < 0) {
+                            index_content = 0;
+                        }
+                        if (i === 0) {
+                            first_occur = index_content;
+                        }
+                    }
+                });
+            }
+            // show search results
+            if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if (start < 0) {
+                        start = 0;
+                    }
+                    if (start === 0) {
+                        end = 100;
+                    }
+                    if (end > content.length) {
+                        end = content.length;
+                    }
+                    var match_content = content.substr(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function (keyword) {
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+                cnt += 1;
+            }
+        });
+        str += "</ul>";
+        str = "<p class=\"search-result-summary\">共找到" + String(cnt) + "条结果</p>" + str;
+        $resultContent.innerHTML = str;
+    };
+
     var searchFunc = function (path, search_id, content_id) {
         'use strict';
         $.ajax({
@@ -1414,86 +1525,51 @@ $(function () {
             dataType: "xml",
             success: function (xmlResponse) {
                 // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
+                datas = $("entry", xmlResponse).map(function () {
                     return {
                         title: $("title", this).text(),
                         content: $("content", this).text(),
                         url: $("url", this).text()
                     };
                 }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
-
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
+                // 拉索引期间用户可能已经敲了字，补跑一次，不丢词
+                if (pendingValue) {
+                    var v = pendingValue;
+                    pendingValue = null;
+                    render(v);
+                }
             }
+        });
+        document.getElementById(search_id).addEventListener('input', function () {
+            render(this.value);
         });
     };
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
+    /* 原来一进页面就 $.ajax 把 search.xml 全量拉下来（改 striptags 后仍有约 300KB），
+       它跟首屏渲染毫无关系，却每次访问都在抢带宽。
+       改成：第一次打开搜索弹窗时才拉。 */
+    var started = false;
+    var start = function () {
+        if (started) return;
+        started = true;
+        searchFunc(searchPath, searchInputId, searchResultId);
+    };
+    var modal = document.getElementById('searchModal');
+    if (modal) {
+        // materialize 打开弹窗时会给 #searchModal 加 class="open"
+        var observer = new MutationObserver(function () {
+            if (modal.classList.contains('open')) {
+                start();
+                observer.disconnect();
+            }
+        });
+        observer.observe(modal, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+    // 兜底：直接监听触发弹窗的那几个元素（导航栏的放大镜 + 移动端的搜索入口）
+    $(document).on('click', 'a[href="#searchModal"], #searchIcon, .modal-trigger[href="#searchModal"]', start);
+    // 再兜一层：焦点进到搜索框说明弹窗已经开了
+    var inputEl = document.getElementById(searchInputId);
+    if (inputEl) inputEl.addEventListener('focus', start);
 });
 </script>
 
@@ -1548,29 +1624,11 @@ $(function () {
     <!-- 鼠标星星特效 -->
     
 
-     
-        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-        <script src="/libs/others/TencentCaptcha.js"></script>
-        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
     
 
     <!-- Baidu Analytics -->
 
     <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
 
     
     <script src="/libs/others/clicklove.js" async="async"></script>

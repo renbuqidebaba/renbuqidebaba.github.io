@@ -5,8 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Redis 核心知识, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="这篇是我 Redis 面试准备的完整笔记，从「为什么快」讲到底层数据结构、持久化、部署方案和缓存一致性。原稿是一份问答清单，我按知识依赖关系重排成了现在的结构，并把散落的命令行输出还原成了可读的代码块。
-标注说明：文中带「（美团二面）」「（">
+    <meta name="description" content="为什么这么快、能不能当主库、五种基本类型与底层结构、zset 为什么用跳表、事务与 WATCH、缓存三大问题、持久化与部署。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -292,7 +291,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -349,7 +348,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2026-10-16
+                    2026-10-18
                 </div>
                 
 
@@ -373,6 +372,7 @@
         <hr class="clearfix">
 
         
+        
         <!-- 是否加载使用自带的 prismjs. -->
         <link rel="stylesheet" href="/libs/prism/prism.min.css">
         
@@ -380,6 +380,11 @@
         
 
         <div class="card-content article-card-content">
+            
+            <details id="mobile-toc" class="hide-on-large-only">
+                <summary><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</summary>
+                <div id="mobile-toc-content"></div>
+            </details>
             <div id="articleContent">
                 <p>这篇是我 Redis 面试准备的完整笔记，从「为什么快」讲到底层数据结构、持久化、部署方案和缓存一致性。原稿是一份问答清单，我按知识依赖关系重排成了现在的结构，并把散落的命令行输出还原成了可读的代码块。</p>
 <p>标注说明：文中带「（美团二面）」「（重点问）」这类后缀的，是我自己记录的面试实际考频，保留了原样。</p>
@@ -467,7 +472,7 @@
 <td>跳表 + 压缩列表</td>
 </tr>
 </tbody></table>
-<p><img src="https://renbuqidebaba.github.io/images/redis/r8.png" alt="数据类型与底层数据结构的对应关系"></p>
+<p><img src="https://renbuqidebaba.github.io/images/redis/r8.webp" alt="数据类型与底层数据结构的对应关系" width="1339" height="781" loading="lazy" decoding="async"></p>
 <h3 id="三种特殊类型"><a href="#三种特殊类型" class="headerlink" title="三种特殊类型"></a>三种特殊类型</h3><ul>
 <li><strong>Bitmap</strong>——位图，可以认为是一个以位为单位的数组，每个单元只能存 0 或 1，数组下标在 Bitmap 中叫做<strong>偏移量</strong>。<strong>Bitmap 的长度与集合中元素个数无关，而是与基数的上限有关</strong></li>
 <li><strong>HyperLogLog</strong>——用来做基数统计的算法。优点是在输入元素的数量或体积非常非常大时，<strong>计算基数所需的空间总是固定的、并且很小</strong>。典型场景是统计独立访客</li>
@@ -489,7 +494,7 @@
 <li><strong>惰性空间释放</strong>——SDS 缩短时<strong>不是立即回收多余内存</strong>，而是用 free 记录下多余空间，后续有变更直接复用，减少分配</li>
 </ul>
 <p><strong>跳跃表</strong>——在链表的基础上<strong>增加多级索引</strong>来提升查找效率。最底层的链表包含所有元素，上层链表包含间隔越来越大的元素，用于快速跳转。支持平均 **O(logN)**、最坏 O(N) 的节点查找，还可以通过顺序性操作批量处理节点。</p>
-<p><img src="https://renbuqidebaba.github.io/images/redis/r9.png" alt="跳跃表的多级索引结构"></p>
+<p><img src="https://renbuqidebaba.github.io/images/redis/r9.webp" alt="跳跃表的多级索引结构" width="1500" height="463" loading="lazy" decoding="async"></p>
 <p><strong>跳表的查找过程：</strong></p>
 <ol>
 <li>从跳表的最高层开始，通常从头节点（header）出发，头节点的每个层级都指向该层级的第一个节点</li>
@@ -589,7 +594,7 @@ QUEUED
 <hr>
 <h2 id="七、持久化（重点）"><a href="#七、持久化（重点）" class="headerlink" title="七、持久化（重点）"></a>七、持久化（重点）</h2><p>持久化就是把内存的数据写到磁盘中，防止服务宕机导致内存数据丢失。</p>
 <p>Redis 提供了 <strong>RDB</strong> 和 <strong>AOF</strong>（Append Only File）两种持久化机制。它的持久化文件加载流程如下：</p>
-<p><img src="https://renbuqidebaba.github.io/images/redis/r11.png" alt="Redis 启动时的持久化文件加载流程"></p>
+<p><img src="https://renbuqidebaba.github.io/images/redis/r11.webp" alt="Redis 启动时的持久化文件加载流程" width="799" height="963" loading="lazy" decoding="async"></p>
 <p><strong>RDB 一般是全量数据，AOF 一般是增量数据。</strong></p>
 <h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><p>RDB 就是把内存数据<strong>以快照的形式保存到磁盘上</strong>。</p>
 <p>具体来说，RDB 持久化是指在指定的时间间隔内，执行指定次数的写操作，将内存中的数据集快照写入磁盘。它是 <strong>Redis 默认的持久化方式</strong>。执行完后会在指定目录下生成一个 <strong>dump.rdb 文件</strong>（二进制文件），Redis 重启时通过加载 dump.rdb 文件来恢复数据。</p>
@@ -597,7 +602,7 @@ QUEUED
 <li><strong>优点</strong>——可以做到大规模的数据恢复；使用<strong>单独子进程</strong>进行持久化，主进程不会进行任何 IO 操作，保证了 Redis 的高性能</li>
 <li><strong>缺点</strong>——没有办法做到实时的持久化操作。一旦 Redis 异常退出，就会<strong>丢失最近一次持久化以后更改的数据</strong></li>
 </ul>
-<p><img src="https://renbuqidebaba.github.io/images/redis/r12.png" alt="bgsave 的执行过程"></p>
+<p><img src="https://renbuqidebaba.github.io/images/redis/r12.webp" alt="bgsave 的执行过程" width="641" height="511" loading="lazy" decoding="async"></p>
 <p><strong>bgsave 是主流的触发 RDB 持久化的方式</strong>，执行过程：</p>
 <ol>
 <li>执行 <strong>BGSAVE</strong> 命令</li>
@@ -613,7 +618,7 @@ QUEUED
 </ul>
 <h3 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h3><p>AOF（append only file）持久化采用<strong>日志</strong>的形式记录每个写操作，通过写到一个缓冲区然后追加到文件，重启时再重新执行 AOF 文件中的命令来恢复数据。<strong>它主要解决数据持久化的实时性问题。</strong></p>
 <p>开启 AOF 后每执行一条写命令，Redis 就会将该命令写进 <code>aof_buf</code> 缓冲区，AOF 缓冲区根据对应的策略向硬盘做同步操作。<strong>默认情况下系统每 30 秒会执行一次同步操作。</strong></p>
-<p><img src="https://renbuqidebaba.github.io/images/redis/r13.png" alt="AOF 的操作流程"></p>
+<p><img src="https://renbuqidebaba.github.io/images/redis/r13.webp" alt="AOF 的操作流程" width="301" height="441" loading="lazy" decoding="async"></p>
 <p><strong>AOF 操作流程：</strong></p>
 <ol>
 <li>所有的写入命令会追加到 AOF 缓冲区中</li>
@@ -639,7 +644,7 @@ QUEUED
 <li>如果主从之间网络出现故障、连接断开，会自动重连，<strong>连接之后主节点仅会将部分缺失的数据同步给从节点</strong></li>
 </ol>
 <h3 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h3><p>客户端连接 Redis 时先连接哨兵，<strong>哨兵会告诉客户端主节点的地址</strong>，然后客户端连接上进行后续操作。当主节点宕机时，哨兵监测到后会<strong>重新推选出某个表现良好的从节点成为新的主节点</strong>，然后通过发布订阅模式通知其他的从服务器，让它们切换主机。</p>
-<p><img src="https://renbuqidebaba.github.io/images/redis/r14.png" alt="哨兵模式"></p>
+<p><img src="https://renbuqidebaba.github.io/images/redis/r14.webp" alt="哨兵模式" width="631" height="431" loading="lazy" decoding="async"></p>
 <p>故障判定与转移流程：</p>
 <ol>
 <li>每个 Sentinel 以<strong>每秒钟一次</strong>的频率向它所知道的 Master、Slave 以及其他 Sentinel 实例发送一个 <strong>PING</strong> 命令</li>
@@ -655,7 +660,7 @@ QUEUED
 </ol>
 <h3 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h3><p>Redis Cluster <strong>并没有使用一致性 hash</strong>，而是采用<strong>虚拟 slot（槽）分区</strong>的概念——一共分成 <strong>16384 个槽</strong>，每个节点负责维护一部分槽以及槽所映射的键值数据。将请求发送到任意节点，接收到请求的节点会将查询请求发送到正确的节点上执行。<strong>主要针对海量数据 + 高并发 + 高可用的场景。</strong></p>
 <p>最小配置 <strong>6 个节点以上（3 主 3 从）</strong>，其中主节点提供读写操作，<strong>从节点作为备用节点不提供请求，只作为故障转移使用</strong>。</p>
-<p><img src="https://renbuqidebaba.github.io/images/redis/r15.png" alt="Cluster 槽位分配"></p>
+<p><img src="https://renbuqidebaba.github.io/images/redis/r15.webp" alt="Cluster 槽位分配" width="381" height="321" loading="lazy" decoding="async"></p>
 <ul>
 <li>通过哈希的方式将数据分片，每个节点均分存储一定哈希槽区间的数据，<strong>默认分配了 16384 个槽位</strong></li>
 <li>每份数据分片会存储在多个互为主从的多节点上</li>
@@ -689,7 +694,7 @@ QUEUED
 <p>尽可能使用散列表（hashes）——当散列表里存储的数少时使用的内存非常小，所以应该尽可能将数据模型抽象到一个散列表里面。</p>
 <hr>
 <h2 id="十、缓存一致性"><a href="#十、缓存一致性" class="headerlink" title="十、缓存一致性"></a>十、缓存一致性</h2><h3 id="日常使用哪种缓存模式"><a href="#日常使用哪种缓存模式" class="headerlink" title="日常使用哪种缓存模式"></a>日常使用哪种缓存模式</h3><p><strong>Cache Aside Pattern（旁路缓存模式）</strong>——读的时候先查缓存，不命中再查 DB 并回填；写的时候先更新 DB，再删除缓存。</p>
-<p><img src="https://renbuqidebaba.github.io/images/redis/r16.png" alt="Cache Aside Pattern"></p>
+<p><img src="https://renbuqidebaba.github.io/images/redis/r16.webp" alt="Cache Aside Pattern" width="1077" height="1112" loading="lazy" decoding="async"></p>
 <p>这里的删除，方法上也可以选择<strong>延时双删</strong>。</p>
 <h3 id="MySQL-与-Redis-如何保证双写一致性（重点）"><a href="#MySQL-与-Redis-如何保证双写一致性（重点）" class="headerlink" title="MySQL 与 Redis 如何保证双写一致性（重点）"></a>MySQL 与 Redis 如何保证双写一致性（重点）</h3><p>三种方案：</p>
 <ul>
@@ -949,8 +954,7 @@ QUEUED
                 <a href="/2026/10/16/mysql/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="MySQL 核心知识">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="MySQL 核心知识">
                         
                         <span class="card-title">MySQL 核心知识</span>
                     </div>
@@ -958,7 +962,7 @@ QUEUED
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            索引为什么是 B+ 树而不是 B 树 / 跳表、聚簇与非聚簇、回表与索引覆盖、最左匹配，再到事务、锁、分库分表与主从同步。
                         
                     </div>
                     <div class="publish-info">
@@ -990,8 +994,7 @@ QUEUED
                 <a href="/2026/10/15/ai-agent-llm/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="AI Agent 与大模型">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="AI Agent 与大模型">
                         
                         <span class="card-title">AI Agent 与大模型</span>
                     </div>
@@ -999,7 +1002,7 @@ QUEUED
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            从 Agent 的骨架（核心组件、ReAct、上下文工程）讲到 RAG（分块、Rerank、与微调怎么选），再到工具设计的原则。
                         
                     </div>
                     <div class="publish-info">
@@ -1031,6 +1034,7 @@ QUEUED
 
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
 
 
   <!-- 是否加载使用自带的 prismjs. -->
@@ -1086,6 +1090,34 @@ QUEUED
             collapseDepth: Number('0'),
             headingSelector: 'h2, h3, h4'
         });
+
+        /* 移动端目录：tocbot 已经把列表渲染进 #toc-content（那个容器在小屏是 display:none，
+           但 DOM 还在），这里拷一份到正文顶部的 <details> 里。
+           拷过来的链接没有 tocbot 的平滑滚动，走的是原生 hash 跳转——
+           偏移由 my.css 里 #articleContent 标题的 scroll-margin-top:80px 保证。 */
+        (function () {
+            var src = document.getElementById('toc-content');
+            var dst = document.getElementById('mobile-toc-content');
+            var box = document.getElementById('mobile-toc');
+            if (!src || !dst) return;
+            var sync = function () {
+                if (!src.firstChild) return false;
+                dst.innerHTML = src.innerHTML;
+                return true;
+            };
+            if (!sync()) {
+                var timer = setInterval(function () {
+                    if (sync()) clearInterval(timer);
+                }, 300);
+                setTimeout(function () { clearInterval(timer); }, 10000);
+            }
+            if (box) {
+                // 点了目录项就把折叠收起来，别挡着正文
+                dst.addEventListener('click', function (e) {
+                    if (e.target.closest('a')) box.removeAttribute('open');
+                });
+            }
+        })();
 
         // Set scroll toc fixed.
         let tocHeight = parseInt($(window).height() * 0.4 - 64);
@@ -1217,7 +1249,7 @@ QUEUED
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">73.8k</span>
+                        class="white-color">73.5k</span>
             
             
             
@@ -1294,6 +1326,85 @@ QUEUED
 
 <script type="text/javascript">
 $(function () {
+    var datas = null;          // 已加载的索引
+    var pendingValue = null;   // 索引还没回来时用户已经敲进去的字
+    var searchPath = '/search.xml';
+    var searchInputId = 'searchInput';
+    var searchResultId = 'searchResult';
+
+    var render = function (value) {
+        var $resultContent = document.getElementById(searchResultId);
+        if (!datas) { pendingValue = value; return; }   // 索引未就绪，先记下来
+        var text = (value || '').trim();
+        $resultContent.innerHTML = "";
+        if (text.length <= 0) {
+            return;
+        }
+        var keywords = text.toLowerCase().split(/[\s\-]+/);
+        var str = '<ul class=\"search-result-list\">';
+        var cnt = 0;
+        // perform local searching
+        datas.forEach(function (data) {
+            var isMatch = true;
+            var data_title = data.title.trim().toLowerCase();
+            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+            var data_url = data.url;
+            data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty titles and contents
+            if (data_title !== '' && data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if (index_title < 0 && index_content < 0) {
+                        isMatch = false;
+                    } else {
+                        if (index_content < 0) {
+                            index_content = 0;
+                        }
+                        if (i === 0) {
+                            first_occur = index_content;
+                        }
+                    }
+                });
+            }
+            // show search results
+            if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if (start < 0) {
+                        start = 0;
+                    }
+                    if (start === 0) {
+                        end = 100;
+                    }
+                    if (end > content.length) {
+                        end = content.length;
+                    }
+                    var match_content = content.substr(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function (keyword) {
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+                cnt += 1;
+            }
+        });
+        str += "</ul>";
+        str = "<p class=\"search-result-summary\">共找到" + String(cnt) + "条结果</p>" + str;
+        $resultContent.innerHTML = str;
+    };
+
     var searchFunc = function (path, search_id, content_id) {
         'use strict';
         $.ajax({
@@ -1301,86 +1412,51 @@ $(function () {
             dataType: "xml",
             success: function (xmlResponse) {
                 // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
+                datas = $("entry", xmlResponse).map(function () {
                     return {
                         title: $("title", this).text(),
                         content: $("content", this).text(),
                         url: $("url", this).text()
                     };
                 }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
-
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
+                // 拉索引期间用户可能已经敲了字，补跑一次，不丢词
+                if (pendingValue) {
+                    var v = pendingValue;
+                    pendingValue = null;
+                    render(v);
+                }
             }
+        });
+        document.getElementById(search_id).addEventListener('input', function () {
+            render(this.value);
         });
     };
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
+    /* 原来一进页面就 $.ajax 把 search.xml 全量拉下来（改 striptags 后仍有约 300KB），
+       它跟首屏渲染毫无关系，却每次访问都在抢带宽。
+       改成：第一次打开搜索弹窗时才拉。 */
+    var started = false;
+    var start = function () {
+        if (started) return;
+        started = true;
+        searchFunc(searchPath, searchInputId, searchResultId);
+    };
+    var modal = document.getElementById('searchModal');
+    if (modal) {
+        // materialize 打开弹窗时会给 #searchModal 加 class="open"
+        var observer = new MutationObserver(function () {
+            if (modal.classList.contains('open')) {
+                start();
+                observer.disconnect();
+            }
+        });
+        observer.observe(modal, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+    // 兜底：直接监听触发弹窗的那几个元素（导航栏的放大镜 + 移动端的搜索入口）
+    $(document).on('click', 'a[href="#searchModal"], #searchIcon, .modal-trigger[href="#searchModal"]', start);
+    // 再兜一层：焦点进到搜索框说明弹窗已经开了
+    var inputEl = document.getElementById(searchInputId);
+    if (inputEl) inputEl.addEventListener('focus', start);
 });
 </script>
 
@@ -1435,29 +1511,11 @@ $(function () {
     <!-- 鼠标星星特效 -->
     
 
-     
-        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-        <script src="/libs/others/TencentCaptcha.js"></script>
-        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
     
 
     <!-- Baidu Analytics -->
 
     <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
 
     
     <script src="/libs/others/clicklove.js" async="async"></script>

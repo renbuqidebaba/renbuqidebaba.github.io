@@ -5,11 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="动态规划, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="DP 是我在算法上花时间最多的一块。这一篇按状态定义的形态分类整理，而不是按题号：
-
-一维 DP——爬楼梯、打家劫舍、等差数列划分、乘积最大子数组
-子序列问题——最长递增子序列、最长公共子序列、编辑距离
-二维 DP——最小路径和、01 矩阵">
+    <meta name="description" content="一维 DP、子序列（LIS / LCS / 编辑距离）、二维 DP、分割类问题（完全平方数、解码方式、单词拆分）。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -295,7 +291,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -352,7 +348,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2026-10-16
+                    2026-10-18
                 </div>
                 
 
@@ -376,6 +372,7 @@
         <hr class="clearfix">
 
         
+        
         <!-- 是否加载使用自带的 prismjs. -->
         <link rel="stylesheet" href="/libs/prism/prism.min.css">
         
@@ -383,6 +380,11 @@
         
 
         <div class="card-content article-card-content">
+            
+            <details id="mobile-toc" class="hide-on-large-only">
+                <summary><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</summary>
+                <div id="mobile-toc-content"></div>
+            </details>
             <div id="articleContent">
                 <p>DP 是我在算法上花时间最多的一块。这一篇按<strong>状态定义的形态</strong>分类整理，而不是按题号：</p>
 <ul>
@@ -982,8 +984,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
                 <a href="/2026/10/15/linked-list/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="链表">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="链表">
                         
                         <span class="card-title">链表</span>
                     </div>
@@ -991,7 +992,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            旋转链表、删除倒数第 N 个节点、合并 K 个升序链表、反转链表与 K 个一组翻转。
                         
                     </div>
                     <div class="publish-info">
@@ -1023,8 +1024,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
                 <a href="/2026/10/15/data-structure-tricks/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="数据结构和技巧（单调栈 / 单调队列 / Trie）">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="数据结构和技巧（单调栈 / 单调队列 / Trie）">
                         
                         <span class="card-title">数据结构和技巧（单调栈 / 单调队列 / Trie）</span>
                     </div>
@@ -1032,7 +1032,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            单调栈（柱状图最大矩形、每日温度）、单调队列（滑动窗口最大值），以及用栈解字符串解码、最小栈。
                         
                     </div>
                     <div class="publish-info">
@@ -1064,6 +1064,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
 
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
 
 
   <!-- 是否加载使用自带的 prismjs. -->
@@ -1119,6 +1120,34 @@ Pythonclass Solution<span class="token punctuation">:</span>
             collapseDepth: Number('0'),
             headingSelector: 'h2, h3, h4'
         });
+
+        /* 移动端目录：tocbot 已经把列表渲染进 #toc-content（那个容器在小屏是 display:none，
+           但 DOM 还在），这里拷一份到正文顶部的 <details> 里。
+           拷过来的链接没有 tocbot 的平滑滚动，走的是原生 hash 跳转——
+           偏移由 my.css 里 #articleContent 标题的 scroll-margin-top:80px 保证。 */
+        (function () {
+            var src = document.getElementById('toc-content');
+            var dst = document.getElementById('mobile-toc-content');
+            var box = document.getElementById('mobile-toc');
+            if (!src || !dst) return;
+            var sync = function () {
+                if (!src.firstChild) return false;
+                dst.innerHTML = src.innerHTML;
+                return true;
+            };
+            if (!sync()) {
+                var timer = setInterval(function () {
+                    if (sync()) clearInterval(timer);
+                }, 300);
+                setTimeout(function () { clearInterval(timer); }, 10000);
+            }
+            if (box) {
+                // 点了目录项就把折叠收起来，别挡着正文
+                dst.addEventListener('click', function (e) {
+                    if (e.target.closest('a')) box.removeAttribute('open');
+                });
+            }
+        })();
 
         // Set scroll toc fixed.
         let tocHeight = parseInt($(window).height() * 0.4 - 64);
@@ -1250,7 +1279,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">73.8k</span>
+                        class="white-color">73.5k</span>
             
             
             
@@ -1327,6 +1356,85 @@ Pythonclass Solution<span class="token punctuation">:</span>
 
 <script type="text/javascript">
 $(function () {
+    var datas = null;          // 已加载的索引
+    var pendingValue = null;   // 索引还没回来时用户已经敲进去的字
+    var searchPath = '/search.xml';
+    var searchInputId = 'searchInput';
+    var searchResultId = 'searchResult';
+
+    var render = function (value) {
+        var $resultContent = document.getElementById(searchResultId);
+        if (!datas) { pendingValue = value; return; }   // 索引未就绪，先记下来
+        var text = (value || '').trim();
+        $resultContent.innerHTML = "";
+        if (text.length <= 0) {
+            return;
+        }
+        var keywords = text.toLowerCase().split(/[\s\-]+/);
+        var str = '<ul class=\"search-result-list\">';
+        var cnt = 0;
+        // perform local searching
+        datas.forEach(function (data) {
+            var isMatch = true;
+            var data_title = data.title.trim().toLowerCase();
+            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+            var data_url = data.url;
+            data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty titles and contents
+            if (data_title !== '' && data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if (index_title < 0 && index_content < 0) {
+                        isMatch = false;
+                    } else {
+                        if (index_content < 0) {
+                            index_content = 0;
+                        }
+                        if (i === 0) {
+                            first_occur = index_content;
+                        }
+                    }
+                });
+            }
+            // show search results
+            if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if (start < 0) {
+                        start = 0;
+                    }
+                    if (start === 0) {
+                        end = 100;
+                    }
+                    if (end > content.length) {
+                        end = content.length;
+                    }
+                    var match_content = content.substr(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function (keyword) {
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+                cnt += 1;
+            }
+        });
+        str += "</ul>";
+        str = "<p class=\"search-result-summary\">共找到" + String(cnt) + "条结果</p>" + str;
+        $resultContent.innerHTML = str;
+    };
+
     var searchFunc = function (path, search_id, content_id) {
         'use strict';
         $.ajax({
@@ -1334,86 +1442,51 @@ $(function () {
             dataType: "xml",
             success: function (xmlResponse) {
                 // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
+                datas = $("entry", xmlResponse).map(function () {
                     return {
                         title: $("title", this).text(),
                         content: $("content", this).text(),
                         url: $("url", this).text()
                     };
                 }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
-
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
+                // 拉索引期间用户可能已经敲了字，补跑一次，不丢词
+                if (pendingValue) {
+                    var v = pendingValue;
+                    pendingValue = null;
+                    render(v);
+                }
             }
+        });
+        document.getElementById(search_id).addEventListener('input', function () {
+            render(this.value);
         });
     };
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
+    /* 原来一进页面就 $.ajax 把 search.xml 全量拉下来（改 striptags 后仍有约 300KB），
+       它跟首屏渲染毫无关系，却每次访问都在抢带宽。
+       改成：第一次打开搜索弹窗时才拉。 */
+    var started = false;
+    var start = function () {
+        if (started) return;
+        started = true;
+        searchFunc(searchPath, searchInputId, searchResultId);
+    };
+    var modal = document.getElementById('searchModal');
+    if (modal) {
+        // materialize 打开弹窗时会给 #searchModal 加 class="open"
+        var observer = new MutationObserver(function () {
+            if (modal.classList.contains('open')) {
+                start();
+                observer.disconnect();
+            }
+        });
+        observer.observe(modal, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+    // 兜底：直接监听触发弹窗的那几个元素（导航栏的放大镜 + 移动端的搜索入口）
+    $(document).on('click', 'a[href="#searchModal"], #searchIcon, .modal-trigger[href="#searchModal"]', start);
+    // 再兜一层：焦点进到搜索框说明弹窗已经开了
+    var inputEl = document.getElementById(searchInputId);
+    if (inputEl) inputEl.addEventListener('focus', start);
 });
 </script>
 
@@ -1468,29 +1541,11 @@ $(function () {
     <!-- 鼠标星星特效 -->
     
 
-     
-        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-        <script src="/libs/others/TencentCaptcha.js"></script>
-        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
     
 
     <!-- Baidu Analytics -->
 
     <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
 
     
     <script src="/libs/others/clicklove.js" async="async"></script>

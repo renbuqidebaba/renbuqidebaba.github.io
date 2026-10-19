@@ -4,6 +4,7 @@
 :root {
     --brand: #42b983;
     --brand-soft: rgba(66, 185, 131, .12);
+    --text: #34495e;
     --radius-card: 14px;
     --radius-img: 10px;
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
@@ -175,6 +176,53 @@ pre[class*="language-"] {
 /* 吸顶已交给外层，关掉主题在卡片上的 fixed（否则卡片会脱流、宽度失控）。 */
 #toc-aside .toc-widget.toc-fixed {
     position: static !important;
+}
+
+/* ---------- 6.2 移动端目录（正文顶部的折叠块） ----------
+   右侧目录卡片在小屏是 display:none（主题给它挂了 hide-on-med-and-down），
+   手机上看长文没有任何导航，所以在正文开头补一个 <details> 折叠目录。 */
+#mobile-toc {
+    margin: 0 0 1.2em;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, .03);
+    border-radius: var(--radius-card);
+    font-size: 15px;
+}
+#mobile-toc > summary {
+    font-weight: 600;
+    color: var(--brand);
+    cursor: pointer;
+    list-style: none;
+}
+#mobile-toc > summary::-webkit-details-marker {
+    display: none;
+}
+#mobile-toc[open] > summary {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+#mobile-toc-content ol {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+#mobile-toc-content .toc-list-item {
+    padding: 4px 0;
+    line-height: 1.5;
+}
+#mobile-toc-content .toc-list-item .toc-list {
+    padding-left: 14px;
+}
+#mobile-toc-content .toc-link {
+    color: var(--text);
+    display: block;
+}
+body.DarkMode #mobile-toc {
+    background: rgba(255, 255, 255, .05);
+}
+body.DarkMode #mobile-toc[open] > summary {
+    border-bottom-color: rgba(255, 255, 255, .12);
 }
 
 /* ---------- 7. 图片 ---------- */

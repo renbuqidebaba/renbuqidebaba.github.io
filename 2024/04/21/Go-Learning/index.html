@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Go 语言核心知识, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="这篇是我 Go 语言的系统笔记，由两部分合并而成：博客上原有的 Runtime &amp;#x2F; GC &amp;#x2F; GMP 笔记，加上后来面试准备中补齐的语言基础、map、slice、channel、锁机制。原来的 Runtime 部分做了扩">
+    <meta name="description" content="协程与线程的区别、make / new、defer 的执行次序、结构体 tag 与反射、init 顺序——把 Go 面试里反复问到的语言细节配上代码逐条拆开讲。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -291,7 +291,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -348,7 +348,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2026-10-16
+                    2026-10-18
                 </div>
                 
 
@@ -372,6 +372,7 @@
         <hr class="clearfix">
 
         
+        
         <!-- 是否加载使用自带的 prismjs. -->
         <link rel="stylesheet" href="/libs/prism/prism.min.css">
         
@@ -379,6 +380,11 @@
         
 
         <div class="card-content article-card-content">
+            
+            <details id="mobile-toc" class="hide-on-large-only">
+                <summary><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</summary>
+                <div id="mobile-toc-content"></div>
+            </details>
             <div id="articleContent">
                 <p>这篇是我 Go 语言的系统笔记，由两部分合并而成：博客上原有的 Runtime &#x2F; GC &#x2F; GMP 笔记，加上后来面试准备中补齐的语言基础、map、slice、channel、锁机制。原来的 Runtime 部分做了扩写和结构化，和新内容合并成一篇完整的 Go 知识梳理。</p>
 <p>全文按「语言基础 → 运行时 → 数据结构 → 并发原语 → 锁」五层组织。</p>
@@ -430,7 +436,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 <p>常用场景：处理成对的操作，比如打开&#x2F;关闭、连接&#x2F;断开、加锁&#x2F;释放锁。<strong>释放资源的 defer 应该直接跟在请求资源的语句后面。</strong></p>
 <p>一个容易踩的细节：为什么下面这种写法修改不了返回值？</p>
 <p>原因是 Go 的返回机制决定了——<strong>执行完 return 后会创建一个临时变量保存返回值</strong>。但如果用的是<strong>有名返回值</strong>（比如 <code>func test() (i int)</code>），执行 return 时不会再创建临时变量保存，所以能修改成功。</p>
-<p><img src="https://renbuqidebaba.github.io/images/go1.png" alt="defer 与返回值"></p>
+<p><img src="https://renbuqidebaba.github.io/images/go1.webp" alt="defer 与返回值" width="590" height="652" loading="lazy" decoding="async"></p>
 <h3 id="结构体-tag-有什么用"><a href="#结构体-tag-有什么用" class="headerlink" title="结构体 tag 有什么用"></a>结构体 tag 有什么用</h3><p>tag 可以为结构体成员提供属性（标签）：</p>
 <ul>
 <li><code>json:</code> —— json 序列化 &#x2F; 反序列化时的字段名称</li>
@@ -598,7 +604,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 </ul>
 <hr>
 <h2 id="二、运行时（Runtime）"><a href="#二、运行时（Runtime）" class="headerlink" title="二、运行时（Runtime）"></a>二、运行时（Runtime）</h2><p>golang 的 runtime 在 golang 中的地位<strong>类似于 Java 的虚拟机</strong>，不过 go runtime 不是虚拟机。</p>
-<p><img src="https://renbuqidebaba.github.io/images/go/doc1.png" alt="Go Runtime 在系统中的位置"></p>
+<p><img src="https://renbuqidebaba.github.io/images/go/doc1.webp" alt="Go Runtime 在系统中的位置" width="470" height="632" loading="lazy" decoding="async"></p>
 <h3 id="GC-机制"><a href="#GC-机制" class="headerlink" title="GC 机制"></a>GC 机制</h3><p>Go 1.8 采用<strong>并发三色标记法 + 混合写屏障</strong>。</p>
 <p>GC 事件发生过程中会产生应用程序的停顿——停顿产生时整个应用程序线程都被暂停，没有任何响应，有点像卡死的感觉。这个停顿称为 <strong>STW</strong>（Stop The World）。</p>
 <h3 id="三色标记法"><a href="#三色标记法" class="headerlink" title="三色标记法"></a>三色标记法</h3><p>将对象标记为三种颜色：</p>
@@ -607,7 +613,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 <li><strong>黑色</strong>——存活对象</li>
 <li><strong>灰色</strong>——存活对象，但子对象待处理</li>
 </ul>
-<p><img src="https://renbuqidebaba.github.io/images/go2.png" alt="三色标记法"></p>
+<p><img src="https://renbuqidebaba.github.io/images/go2.webp" alt="三色标记法" width="430" height="360" loading="lazy" decoding="async"></p>
 <p><strong>GC 的四个阶段：</strong></p>
 <ol>
 <li>STW，开启混合写屏障，扫描栈对象</li>
@@ -635,14 +641,14 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 <li>手动触发，调用 <code>runtime.GC()</code></li>
 </ul>
 <h3 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h3><p>Go 程序在启动时会首先向系统申请一块内存（虚拟地址空间），然后自己切成小块进行管理。申请的内存分成 3 个区域：<strong>spans、bitmap、arena</strong>。</p>
-<p><img src="https://renbuqidebaba.github.io/images/go/doc2.png" alt="Go 内存区域划分"></p>
+<p><img src="https://renbuqidebaba.github.io/images/go/doc2.webp" alt="Go 内存区域划分" width="590" height="652" loading="lazy" decoding="async"></p>
 <ul>
 <li><strong>arena 区域</strong>——就是我们所谓的堆区，Go 动态分配的内存都在这个区域。它把内存分割成 8KB 大小的页，<strong>一些页组合起来称为 mspan</strong></li>
 <li><strong>bitmap</strong>——用来标记堆区使用的映射表，记录了哪些区域保存了对象、对象是否包含指针，以及 GC 的标记信息</li>
 <li><strong>spans 区域</strong>——存放 mspan 的指针，每个指针对应一页</li>
 </ul>
 <h3 id="GMP-调度机制"><a href="#GMP-调度机制" class="headerlink" title="GMP 调度机制"></a>GMP 调度机制</h3><p><strong>M 与 P 的数量没有绝对关系</strong>——一个 M 阻塞，P 就会去创建或者切换另一个 M。所以即使 P 的默认数量是 1，也有可能创建很多个 M 出来。</p>
-<p><img src="https://renbuqidebaba.github.io/images/go/doc3.png" alt="GMP 线程实现模型（M:N）"></p>
+<p><img src="https://renbuqidebaba.github.io/images/go/doc3.webp" alt="GMP 线程实现模型（M:N）" width="430" height="360" loading="lazy" decoding="async"></p>
 <p><strong>GMP 工作流程：</strong></p>
 <ol>
 <li><strong>初始化</strong>——程序启动时会创建一定数量的 P，每个 P 都有一个本地队列。同时也会创建一些 M，这些 M 会尝试获取 P 并开始执行 Goroutine</li>
@@ -650,7 +656,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 <li><strong>任务执行</strong>——M 从 P 的本地队列获取 Goroutine 并执行。如果本地队列为空，M 会尝试从全局队列或其他 P 的本地队列「窃取」Goroutine 来执行，这就是<strong>工作窃取算法</strong></li>
 <li><strong>抢占与协作</strong>——较新的 Go 版本引入了抢占式调度，确保 Goroutine 公平执行</li>
 </ol>
-<p><img src="https://renbuqidebaba.github.io/images/go/doc6.png" alt="G 在本地队列与全局队列之间的流动"></p>
+<p><img src="https://renbuqidebaba.github.io/images/go/doc6.webp" alt="G 在本地队列与全局队列之间的流动" width="508" height="488" loading="lazy" decoding="async"></p>
 <p><strong>GMP 能不能去掉 P 层？会怎么样？</strong></p>
 <p>P 层的作用有两点：</p>
 <ul>
@@ -738,7 +744,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
     <span class="token builtin">cap</span>   <span class="token builtin">int</span>            <span class="token comment">// 容量</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://renbuqidebaba.github.io/images/go3.png" alt="slice 与底层数组"></p>
+<p><img src="https://renbuqidebaba.github.io/images/go3.webp" alt="slice 与底层数组" width="640" height="329" loading="lazy" decoding="async"></p>
 <p><strong>关键特性：改变 slice，也会改变之前的数组。</strong>（因为它只是底层的视图）</p>
 <h3 id="slice-和-array-的区别"><a href="#slice-和-array-的区别" class="headerlink" title="slice 和 array 的区别"></a>slice 和 array 的区别</h3><ul>
 <li><strong>slice</strong>——切片，是<strong>引用类型</strong>，长度可变</li>
@@ -1006,8 +1012,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
                 <a href="/2024/06/10/nanchang/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="南昌 · 滕王阁与八一广场">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="南昌 · 滕王阁与八一广场">
                         
                         <span class="card-title">南昌 · 滕王阁与八一广场</span>
                     </div>
@@ -1015,7 +1020,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            2024 年 6 月的南昌：滕王阁的落霞，和八一广场的夜。
                         
                     </div>
                     <div class="publish-info">
@@ -1055,8 +1060,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
                 <a href="/2023/12/15/xian/">
                     <div class="card-image">
                         
-                        
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="西安 · 和豆豆的旅行">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="西安 · 和豆豆的旅行">
                         
                         <span class="card-title">西安 · 和豆豆的旅行</span>
                     </div>
@@ -1064,7 +1068,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            2023 年 12 月的西安，和豆豆一起走的一段路。
                         
                     </div>
                     <div class="publish-info">
@@ -1104,6 +1108,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
 
 
   <!-- 是否加载使用自带的 prismjs. -->
@@ -1159,6 +1164,34 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
             collapseDepth: Number('0'),
             headingSelector: 'h2, h3, h4'
         });
+
+        /* 移动端目录：tocbot 已经把列表渲染进 #toc-content（那个容器在小屏是 display:none，
+           但 DOM 还在），这里拷一份到正文顶部的 <details> 里。
+           拷过来的链接没有 tocbot 的平滑滚动，走的是原生 hash 跳转——
+           偏移由 my.css 里 #articleContent 标题的 scroll-margin-top:80px 保证。 */
+        (function () {
+            var src = document.getElementById('toc-content');
+            var dst = document.getElementById('mobile-toc-content');
+            var box = document.getElementById('mobile-toc');
+            if (!src || !dst) return;
+            var sync = function () {
+                if (!src.firstChild) return false;
+                dst.innerHTML = src.innerHTML;
+                return true;
+            };
+            if (!sync()) {
+                var timer = setInterval(function () {
+                    if (sync()) clearInterval(timer);
+                }, 300);
+                setTimeout(function () { clearInterval(timer); }, 10000);
+            }
+            if (box) {
+                // 点了目录项就把折叠收起来，别挡着正文
+                dst.addEventListener('click', function (e) {
+                    if (e.target.closest('a')) box.removeAttribute('open');
+                });
+            }
+        })();
 
         // Set scroll toc fixed.
         let tocHeight = parseInt($(window).height() * 0.4 - 64);
@@ -1290,7 +1323,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">73.8k</span>
+                        class="white-color">73.5k</span>
             
             
             
@@ -1367,6 +1400,85 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 
 <script type="text/javascript">
 $(function () {
+    var datas = null;          // 已加载的索引
+    var pendingValue = null;   // 索引还没回来时用户已经敲进去的字
+    var searchPath = '/search.xml';
+    var searchInputId = 'searchInput';
+    var searchResultId = 'searchResult';
+
+    var render = function (value) {
+        var $resultContent = document.getElementById(searchResultId);
+        if (!datas) { pendingValue = value; return; }   // 索引未就绪，先记下来
+        var text = (value || '').trim();
+        $resultContent.innerHTML = "";
+        if (text.length <= 0) {
+            return;
+        }
+        var keywords = text.toLowerCase().split(/[\s\-]+/);
+        var str = '<ul class=\"search-result-list\">';
+        var cnt = 0;
+        // perform local searching
+        datas.forEach(function (data) {
+            var isMatch = true;
+            var data_title = data.title.trim().toLowerCase();
+            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+            var data_url = data.url;
+            data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+            var index_title = -1;
+            var index_content = -1;
+            var first_occur = -1;
+            // only match artiles with not empty titles and contents
+            if (data_title !== '' && data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if (index_title < 0 && index_content < 0) {
+                        isMatch = false;
+                    } else {
+                        if (index_content < 0) {
+                            index_content = 0;
+                        }
+                        if (i === 0) {
+                            first_occur = index_content;
+                        }
+                    }
+                });
+            }
+            // show search results
+            if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if (start < 0) {
+                        start = 0;
+                    }
+                    if (start === 0) {
+                        end = 100;
+                    }
+                    if (end > content.length) {
+                        end = content.length;
+                    }
+                    var match_content = content.substr(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function (keyword) {
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+                cnt += 1;
+            }
+        });
+        str += "</ul>";
+        str = "<p class=\"search-result-summary\">共找到" + String(cnt) + "条结果</p>" + str;
+        $resultContent.innerHTML = str;
+    };
+
     var searchFunc = function (path, search_id, content_id) {
         'use strict';
         $.ajax({
@@ -1374,86 +1486,51 @@ $(function () {
             dataType: "xml",
             success: function (xmlResponse) {
                 // get the contents from search data
-                var datas = $("entry", xmlResponse).map(function () {
+                datas = $("entry", xmlResponse).map(function () {
                     return {
                         title: $("title", this).text(),
                         content: $("content", this).text(),
                         url: $("url", this).text()
                     };
                 }).get();
-                var $input = document.getElementById(search_id);
-                var $resultContent = document.getElementById(content_id);
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty titles and contents
-                        if (data_title !== '' && data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
-
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
+                // 拉索引期间用户可能已经敲了字，补跑一次，不丢词
+                if (pendingValue) {
+                    var v = pendingValue;
+                    pendingValue = null;
+                    render(v);
+                }
             }
+        });
+        document.getElementById(search_id).addEventListener('input', function () {
+            render(this.value);
         });
     };
 
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
+    /* 原来一进页面就 $.ajax 把 search.xml 全量拉下来（改 striptags 后仍有约 300KB），
+       它跟首屏渲染毫无关系，却每次访问都在抢带宽。
+       改成：第一次打开搜索弹窗时才拉。 */
+    var started = false;
+    var start = function () {
+        if (started) return;
+        started = true;
+        searchFunc(searchPath, searchInputId, searchResultId);
+    };
+    var modal = document.getElementById('searchModal');
+    if (modal) {
+        // materialize 打开弹窗时会给 #searchModal 加 class="open"
+        var observer = new MutationObserver(function () {
+            if (modal.classList.contains('open')) {
+                start();
+                observer.disconnect();
+            }
+        });
+        observer.observe(modal, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+    // 兜底：直接监听触发弹窗的那几个元素（导航栏的放大镜 + 移动端的搜索入口）
+    $(document).on('click', 'a[href="#searchModal"], #searchIcon, .modal-trigger[href="#searchModal"]', start);
+    // 再兜一层：焦点进到搜索框说明弹窗已经开了
+    var inputEl = document.getElementById(searchInputId);
+    if (inputEl) inputEl.addEventListener('focus', start);
 });
 </script>
 
@@ -1508,29 +1585,11 @@ $(function () {
     <!-- 鼠标星星特效 -->
     
 
-     
-        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-        <script src="/libs/others/TencentCaptcha.js"></script>
-        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
     
 
     <!-- Baidu Analytics -->
 
     <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
 
     
     <script src="/libs/others/clicklove.js" async="async"></script>
