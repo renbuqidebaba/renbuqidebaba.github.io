@@ -293,27 +293,38 @@ body.DarkMode .aplayer.aplayer-fixed .aplayer-body {
 }
 
 
-/* ---------- 11. 留言板「友链信息」卡片 ----------
+/* ---------- 11. 留言板「友链信息」 ----------
    这段曾经被主题塞在 theme.valine.enable 分支里，而 Valine 已关闭（评论走 Giscus），
-   导致永远不渲染。现在 contact.ejs 里已挪出来单独成卡。
-   配色全部走「继承 + 透明度」，这样亮色/暗色都自动适配，不用再写一份 DarkMode 覆盖。 */
-.friend-link-info {
-    max-width: 540px;
-    margin: 0 auto;
-    font-size: 15px;
+   导致永远不渲染。现在并回第一张卡末尾，紧跟「联系我」之后，用一条虚线分隔，不单独占卡。
+   配色全部走「继承 + opacity」，亮色/暗色自动适配，不用再写一份 DarkMode 覆盖。 */
+.friend-link-sep {
+    margin: 20px 0 14px;
+    border: 0;
+    border-top: 1px dashed rgba(128, 128, 128, .32);
+}
+.friend-link-info { font-size: 14px; line-height: 1.7; }
+.friend-link-info .fl-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    opacity: .75;
+}
+.friend-link-info .fl-hint {
+    margin-left: 10px;
+    font-weight: 400;
+    font-size: 12px;
+    opacity: .65;
 }
 .friend-link-info .fl-row {
     display: flex;
     align-items: baseline;
-    gap: 12px;
-    padding: 8px 0;
-    border-bottom: 1px dashed rgba(128, 128, 128, .25);
+    gap: 10px;
+    padding: 2px 0;
 }
-.friend-link-info .fl-row:last-child { border-bottom: 0; }
 .friend-link-info .fl-key {
-    flex: 0 0 68px;
+    flex: 0 0 60px;
     font-size: 13px;
-    opacity: .6;
+    opacity: .55;
     white-space: nowrap;
 }
 .friend-link-info .fl-val {
@@ -322,8 +333,9 @@ body.DarkMode .aplayer.aplayer-fixed .aplayer-body {
     word-break: break-all;
 }
 .friend-link-info .fl-val a { color: var(--brand); }
-/* 窄屏改成上下两行，避免「博客头像」那串长 URL 把标签挤没 */
+/* 窄屏：标题里的提示语换行，标签与值改成上下两行，防止长 URL 把标签挤没 */
 @media (max-width: 480px) {
+    .friend-link-info .fl-hint { display: block; margin: 2px 0 0; }
     .friend-link-info .fl-row { display: block; }
-    .friend-link-info .fl-key { display: block; margin-bottom: 2px; }
+    .friend-link-info .fl-key { display: block; opacity: .5; }
 }
