@@ -17,6 +17,10 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
+
+    
+    
+
     <title>AI Agent 与大模型 | lewenmax</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
@@ -1369,13 +1373,13 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
                 
             
             
-                <span id="busuanzi_container_site_pv">
+                <span id="busuanzi_container_site_pv" style="display:none">
                 &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
                     <span id="busuanzi_value_site_pv" class="white-color"></span>
             </span>
             
             
-                <span id="busuanzi_container_site_uv">
+                <span id="busuanzi_container_site_uv" style="display:none">
                 &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
@@ -1420,6 +1424,37 @@ Return a list of filenames for the memories that will clearly be useful (up to 5
 
 </div>
     </div>
+
+    
+    <!-- 不蒜子只在「远端计数请求成功」时才显示：请求失败（被网络拦截/后端挂了）时，
+         容器保持 display:none，避免出现「总访问量：」后面空着的坏样式。
+         成功由 busuanzi 自身的 shows() 置为 inline；这里在拿到数值后还原成 CSS 默认显示，
+         并兜底：6 秒内仍拿不到数值就维持隐藏。 -->
+    <script>
+        (function () {
+            var ids = ['busuanzi_container_site_pv', 'busuanzi_container_site_uv', 'busuanzi_container_page_pv'];
+            var deadline = Date.now() + 6000;
+            function tick() {
+                var pending = false;
+                for (var i = 0; i < ids.length; i++) {
+                    var box = document.getElementById(ids[i]);
+                    if (!box) continue;
+                    var val = box.querySelector('[id^="busuanzi_value"]');
+                    var filled = val && val.textContent.trim() !== '';
+                    if (filled) {
+                        box.style.display = '';          /* 还原 CSS 默认（span=行内, div=块级） */
+                    } else if (Date.now() < deadline) {
+                        pending = true;                  /* 还没拿到，继续等 */
+                    } else {
+                        box.style.display = 'none';      /* 超时仍未拿到，隐藏，避免空标签 */
+                    }
+                }
+                if (pending) setTimeout(tick, 400);
+            }
+            tick();
+        })();
+    </script>
+    
 </footer>
 
 <div class="progress-bar"></div>
