@@ -1,0 +1,23 @@
+/* B 版公共底层：沿用 Matery 的导航、封面和卡片，让首页与内页保持连续。 */
+body.matery-foundation { background-color: #f1f3f5; }
+body.matery-foundation.DarkMode { background-color: #1e1e1e; }
+.matery-foundation .stars-con { display: none; }
+.matery-foundation .bg-cover:after { animation: none; background: rgba(21,47,40,.2); }
+.matery-foundation .mp-cover-agent { background: linear-gradient(125deg,#34574b,#71967b); }
+.matery-foundation .mp-cover-go { background: linear-gradient(125deg,#27647c,#57a4b0); }
+.matery-foundation .mp-cover-storage { background: linear-gradient(125deg,#337e70,#73a999); }
+.matery-foundation .mp-cover-system { background: linear-gradient(125deg,#425976,#7995b0); }
+.matery-foundation .mp-cover-algorithm { background: linear-gradient(125deg,#665d85,#a197ba); }
+.matery-foundation .mp-article-cover { min-height: 320px; max-height: 440px; }
+.matery-foundation .mp-article-cover:after { background: linear-gradient(20deg,rgba(15,34,42,.15),transparent); }
+.matery-foundation .mp-article-cover .container { padding-top: 30px; }
+.matery-foundation .mp-article-subject { display: block; font: 12px var(--font-mono); letter-spacing: 3px; margin-bottom: 12px; color: #e8f1ed; }
+body.matery-foundation .mp-article-cover .post-title { font-size: 32px; font-weight: 550; color: #fff; line-height: 1.5; }
+body.matery-foundation .mp-article-caption { color: #e0ece7; font: 10px var(--font-mono); letter-spacing: 1.5px; margin-top: 14px; }
+body.matery-foundation.DarkMode .mp-article-cover .post-title { color: #fff; }
+body.matery-foundation.DarkMode .mp-article-caption { color: #e0ece7; }
+@media (max-width: 680px) {
+    .matery-foundation .mp-article-cover { min-height: 300px; }
+    body.matery-foundation .mp-article-cover .post-title { font-size: 26px; }
+    body.matery-foundation .mp-article-caption { font-size: 8px; letter-spacing: .5px; }
+}

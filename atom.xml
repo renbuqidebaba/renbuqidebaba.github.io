@@ -8,9 +8,9 @@
   <link href="https://renbuqidebaba.github.io/" rel="alternate"/>
   <link href="https://renbuqidebaba.github.io/atom.xml" rel="self"/>
   <rights>All rights reserved 2026, 托马斯回旋</rights>
-  <subtitle>奔赴下一个美好</subtitle>
+  <subtitle>工程与研究手记</subtitle>
   <title>lewenmax</title>
-  <updated>2026-10-18T15:39:19.928Z</updated>
+  <updated>2026-10-30T14:47:43.372Z</updated>
   <entry>
     <author>
       <name>托马斯回旋</name>
@@ -27,7 +27,7 @@
 <p>原文里成对出现的比较项（并行与并发、分页与分段]]>
     </summary>
     <title>操作系统核心知识</title>
-    <updated>2026-10-18T15:39:19.928Z</updated>
+    <updated>2026-10-30T14:47:43.372Z</updated>
   </entry>
   <entry>
     <author>
@@ -44,7 +44,7 @@
       <![CDATA[<p>这篇是我计算机网络面试准备笔记的整理版。原稿是问答式的散点记录，我按「自底向上」重排了主线：先用分层结构打底，再讲 TCP 的连接管理与传输控制，然后上到应用层的 HTTP &#x2F; HTTPS 和各种通信方式，最后是会话与解析相关的 DNS、Cookie &#x2F;]]>
     </summary>
     <title>计算机网络核心知识</title>
-    <updated>2026-10-18T15:39:19.928Z</updated>
+    <updated>2026-10-30T14:47:43.372Z</updated>
   </entry>
   <entry>
     <author>
@@ -62,7 +62,7 @@
 <p>原稿是一份很长的问答清单（约 2.5 万字），我按「查询为什么快（索引）→ 并发怎么控（事务 + 锁）→ 量大了怎么办（分库分表 + 主从）]]>
     </summary>
     <title>MySQL 核心知识</title>
-    <updated>2026-10-18T15:39:19.928Z</updated>
+    <updated>2026-10-31T03:10:33.507Z</updated>
   </entry>
   <entry>
     <author>
@@ -80,7 +80,7 @@
 <p>标注说明：文中带「（美团二面）」「（重点问）」这类后缀的]]>
     </summary>
     <title>Redis 核心知识</title>
-    <updated>2026-10-18T15:39:19.928Z</updated>
+    <updated>2026-10-30T14:47:43.373Z</updated>
   </entry>
   <entry>
     <author>
@@ -97,7 +97,7 @@
       <![CDATA[<p>这一篇是我面试准备过程中整理的 Agent 与大模型相关笔记。和算法那批不同，这里更偏工程实践——Agent 的组件拆解、工具设计、MCP &#x2F; Skills 的运行机制、上下文工程，以及 Transformer 推理侧的几个高频问题。内容以我自己的理解为主，参考资]]>
     </summary>
     <title>AI Agent 与大模型</title>
-    <updated>2026-10-18T15:39:19.896Z</updated>
+    <updated>2026-10-30T14:47:43.368Z</updated>
   </entry>
   <entry>
     <author>
@@ -117,7 +117,7 @@
 <p>在这里分享我的算法技术，一开始自己是用cpp进行刷题，后面自己会逐渐更新go的刷题版本！！希望go的发展越来越好，岗位越来越多！</p>]]>
     </summary>
     <title>二叉树与多叉树</title>
-    <updated>2026-10-18T15:39:19.896Z</updated>
+    <updated>2026-10-30T14:47:43.369Z</updated>
   </entry>
   <entry>
     <author>
@@ -135,7 +135,7 @@
 <p>写链表题我的习惯是先想清楚要不要 dummy 头节点——大部分涉及头节]]>
     </summary>
     <title>链表</title>
-    <updated>2026-10-18T15:39:19.928Z</updated>
+    <updated>2026-10-30T14:47:43.371Z</updated>
   </entry>
   <entry>
     <author>
@@ -155,7 +155,7 @@
 <li><strong>]]>
     </summary>
     <title>动态规划</title>
-    <updated>2026-10-18T15:39:19.913Z</updated>
+    <updated>2026-10-30T14:47:43.370Z</updated>
   </entry>
   <entry>
     <author>
@@ -174,7 +174,7 @@
 <h2]]>
     </summary>
     <title>数据结构和技巧（单调栈 / 单调队列 / Trie）</title>
-    <updated>2026-10-18T15:39:19.910Z</updated>
+    <updated>2026-10-30T14:47:43.369Z</updated>
   </entry>
   <entry>
     <author>
@@ -194,7 +194,7 @@
 <li><strong>BFS 最短路</s]]>
     </summary>
     <title>搜索算法（DFS / BFS / 回溯 / 拓扑排序）</title>
-    <updated>2026-10-18T15:39:19.944Z</updated>
+    <updated>2026-10-30T14:47:43.373Z</updated>
   </entry>
   <entry>
     <author>
@@ -212,7 +212,7 @@
 <p>这两道题的共同点是——不真的排完整个数组，只排到够用为止，把 O(n log n) 降到 O(n]]>
     </summary>
     <title>排序算法（快速选择 / 桶排序）</title>
-    <updated>2026-10-18T15:39:19.944Z</updated>
+    <updated>2026-10-30T14:47:43.373Z</updated>
   </entry>
   <entry>
     <author>
@@ -231,7 +231,7 @@
 <p>二分查找时区间的左右端取开]]>
     </summary>
     <title>二分查找</title>
-    <updated>2026-10-18T15:39:19.896Z</updated>
+    <updated>2026-10-30T14:47:43.368Z</updated>
   </entry>
   <entry>
     <author>
@@ -250,7 +250,7 @@
 <p>算法的思路：有两个指针来进行索引。</p>]]>
     </summary>
     <title>双指针</title>
-    <updated>2026-10-18T15:39:19.944Z</updated>
+    <updated>2026-10-30T14:47:43.373Z</updated>
   </entry>
   <entry>
     <author>
@@ -268,7 +268,7 @@
 <p>这一篇收录了我做过的贪心题目，按题目整理思路和代码。区间类的题占了一大半，因为区间问题基本就是排序 +]]>
     </summary>
     <title>贪心算法</title>
-    <updated>2026-10-18T15:39:19.913Z</updated>
+    <updated>2026-10-30T14:47:43.370Z</updated>
   </entry>
   <entry>
     <author>
@@ -286,7 +286,7 @@
 <p>代码]]>
     </summary>
     <title>基本数据结构速查（C++ / Go / Python）</title>
-    <updated>2026-10-18T15:39:19.896Z</updated>
+    <updated>2026-10-30T14:47:43.369Z</updated>
   </entry>
   <entry>
     <author>
@@ -304,7 +304,7 @@
       <![CDATA[<h3 id="2025-年-3-月-·-杭州"><a href="#2025-年-3-月-·-杭州" class="headerlink" title="2025 年 3 月 · 杭州"></a>2025 年 3 月 · 杭州</h3><p>其实 3 月 7 号就开始规划了！！]]>
     </summary>
     <title>杭州 · 西湖与灵隐寺</title>
-    <updated>2026-10-21T05:10:30.671Z</updated>
+    <updated>2026-10-30T14:47:43.370Z</updated>
   </entry>
   <entry>
     <author>
@@ -322,7 +322,7 @@
       <![CDATA[<h3 id="2024-年-10-月-·-无锡"><a href="#2024-年-10-月-·-无锡" class="headerlink" title="2024 年 10 月 · 无锡"></a>2024 年 10 月 · 无锡</h3><p>其实 9 月 17 号就开始]]>
     </summary>
     <title>无锡 · 鼋头渚与惠山古镇</title>
-    <updated>2026-10-21T05:10:57.587Z</updated>
+    <updated>2026-10-30T14:47:43.374Z</updated>
   </entry>
   <entry>
     <author>
@@ -339,7 +339,7 @@
       <![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>]]>
     </summary>
     <title>Hello World</title>
-    <updated>2026-10-18T15:39:19.913Z</updated>
+    <updated>2026-10-30T14:47:43.371Z</updated>
   </entry>
   <entry>
     <author>
@@ -358,7 +358,7 @@
 <p>好好好！到]]>
     </summary>
     <title>南昌 · 滕王阁与八一广场</title>
-    <updated>2026-10-18T15:39:19.928Z</updated>
+    <updated>2026-10-30T14:47:43.372Z</updated>
   </entry>
   <entry>
     <author>
@@ -375,6 +375,6 @@
       <![CDATA[<p>这篇是我 Go 语言的系统笔记，由两部分合并而成：博客上原有的 Runtime &#x2F; GC &#x2F; GMP 笔记，加上后来面试准备中补齐的语言基础、map、slice、channel、锁机制。原来的 Runtime 部分做了扩写和结构化，和新内容合并成一篇完整]]>
     </summary>
     <title>Go 语言核心知识</title>
-    <updated>2026-10-18T15:39:19.886Z</updated>
+    <updated>2026-10-31T03:10:33.507Z</updated>
   </entry>
 </feed>

@@ -54,14 +54,24 @@
 
 
 
+
+<link rel="stylesheet" href="/css/matery-foundation.css">
+
+
+
+<link rel="stylesheet" href="/css/article-reading.css">
+
+
+
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
 <meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="lewenmax" type="application/atom+xml">
 </head>
 
 
-<body>
-    <header class="navbar-fixed">
+<body class="matery-foundation technical-article">
+    
+<header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -74,7 +84,7 @@
             </div>
             
 
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse" aria-label="打开导航菜单"><i class="fas fa-bars"></i></a>
 <ul class="right nav-menu">
   
   <li class="hide-on-med-and-down nav-item">
@@ -133,12 +143,12 @@
   </li>
   
   <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light" aria-label="搜索文章">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
   <li>
-    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" aria-label="切换深色或浅色模式" >
       <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
     </a>
   </li>
@@ -154,7 +164,7 @@
         <div class="logo-name">lewenmax</div>
         <div class="logo-desc">
             
-            心有所向, 无问东西
+            lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。
             
         </div>
     </div>
@@ -217,13 +227,6 @@
         </li>
         
         
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
-                <i class="fab fa-github-square fa-fw"></i>Fork Me
-            </a>
-        </li>
-        
     </ul>
 </div>
 
@@ -231,81 +234,21 @@
         </div>
 
         
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #0f9d58;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
-        
     </nav>
 
 </header>
+
 
     
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">MySQL 核心知识</h1>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+<div class="bg-cover pd-header post-cover mp-article-cover mp-cover-go">
+    <div class="container center-align"><span class="mp-article-subject">MySQL</span><h1 class="post-title">MySQL 核心知识</h1><p class="mp-article-caption">INDEX · TRANSACTION · STORAGE</p></div>
 </div>
+
 
 
 
@@ -318,61 +261,19 @@
         <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" class="post-category">
-                                工程能力
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
+        
+        <div class="card-content article-info reading-info">
+    <div class="reading-meta-top"><div class="reading-categories"><a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/"><i class="fas fa-bookmark" aria-hidden="true"></i> 工程能力</a></div><span class="reading-author">手记 / 托马斯回旋</span></div>
+    <div class="post-info reading-meta">
+        <span>发布于 <time datetime="2026-10-16">2026-10-16</time></span>
+        <span>更新于 <time datetime="2026-10-31">2026-10-31</time></span>
+        <span>12.1k 字</span>
+        <span><i class="far fa-clock" aria-hidden="true"></i> 约 42 分钟</span>
+        
+    </div>
+</div>
 
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2026-10-16
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2026-10-18
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    12.1k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    42 分
-                </div>
-                
-
-                
-            </div>
-        </div>
+        
         <hr class="clearfix">
 
         
@@ -385,10 +286,19 @@
 
         <div class="card-content article-card-content">
             
+<aside class="reading-guide" aria-label="阅读导览">
+    <div class="reading-guide-title"><i class="far fa-compass" aria-hidden="true"></i> 这篇怎么读</div>
+    <dl><div><dt>适合谁读</dt><dd>正在整理 MySQL 基础，或准备数据库相关面试的读者。</dd></div><div><dt>阅读建议</dt><dd>从索引理解查询，再看事务与锁；之后按需阅读分库分表、主从同步、优化和 SQL 基础。</dd></div></dl>
+</aside>
+
+
+            
+            
             <details id="mobile-toc" class="hide-on-large-only">
                 <summary><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</summary>
                 <div id="mobile-toc-content"></div>
             </details>
+            
             <div id="articleContent">
                 <p>这篇是我 MySQL 面试准备的完整笔记，覆盖索引、事务、锁、分库分表、主从同步、SQL 优化和 SQL 基础七大块。</p>
 <p>原稿是一份很长的问答清单（约 2.5 万字），我按「查询为什么快（索引）→ 并发怎么控（事务 + 锁）→ 量大了怎么办（分库分表 + 主从）→ 怎么调优 → SQL 基础」这条主线重排了结构，并把散落在原文里的伪表格还原成了真表格。</p>
@@ -1039,10 +949,6 @@
             <div class="tag_share" style="display: block;">
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
-                        <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                        </div>
-                    
                 </div>
                 <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
                     <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
@@ -1113,125 +1019,38 @@
     
 
     
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2026/10/16/network/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="计算机网络核心知识">
-                        
-                        <span class="card-title">计算机网络核心知识</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            从网络分层到 TCP 三次握手 / 四次挥手、TIME-WAIT 为什么是 2MSL、流量与拥塞控制，再到 IP、HTTP 与常见状态码。
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2026-10-16
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" class="post-category">
-                                    工程能力
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2026/10/16/redis/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Redis 核心知识">
-                        
-                        <span class="card-title">Redis 核心知识</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            为什么这么快、能不能当主库、五种基本类型与底层结构、zset 为什么用跳表、事务与 WATCH、缓存三大问题、持久化与部署。
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-16
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" class="post-category">
-                                    工程能力
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
+    
+<section class="card reading-related" aria-labelledby="reading-related-title">
+    <div class="card-content"><div class="reading-related-heading"><h2 id="reading-related-title">继续读，把知识连起来</h2><span>从这篇出发，再往前走一点。</span></div>
+    <div class="reading-related-grid"><a href="/2026/10/16/redis/" class="reading-related-link"><span class="reading-related-kind">工程能力</span><h3>Redis 核心知识<span aria-hidden="true">↗</span></h3><p>看完数据库，再把缓存、持久化与一致性串起来。</p></a><a href="/2026/10/16/os/" class="reading-related-link"><span class="reading-related-kind">工程能力</span><h3>操作系统核心知识<span aria-hidden="true">↗</span></h3><p>回到进程与内存管理，补齐理解存储系统的基础。</p></a></div>
     </div>
-</article>
+</section>
+<div class="reading-chronology" role="navigation" aria-label="按发布时间浏览"><a href="/2026/10/16/network/"><span>← 按时间 · 上一篇</span>计算机网络核心知识</a><a href="/2026/10/16/redis/"><span>按时间 · 下一篇 →</span>Redis 核心知识</a></div>
 
+    
+<button type="button" class="reading-toc-button hide-on-large-only" aria-haspopup="dialog" aria-controls="reading-toc-dialog" hidden><i class="fas fa-list-ul" aria-hidden="true"></i> 目录</button>
+<dialog id="reading-toc-dialog" class="reading-toc-dialog" aria-labelledby="reading-toc-title"><div class="reading-toc-header"><h2 id="reading-toc-title">文章目录</h2><button type="button" class="reading-toc-close" aria-label="关闭文章目录">×</button></div><p>跳到想读的章节</p><nav class="reading-dialog-nav" aria-label="文章章节"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%B4%A2%E5%BC%95"><span class="toc-text">一、索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%B4%A2%E5%BC%95%EF%BC%8C%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">什么是索引，有什么优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">索引的数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-B-%E6%A0%91%E8%80%8C%E4%B8%8D%E6%98%AF-B-%E6%A0%91%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-text">为什么用 B+ 树而不是 B 树（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-B-%E6%A0%91%E8%80%8C%E4%B8%8D%E6%98%AF-Redis-%E7%9A%84%E8%B7%B3%E8%A1%A8%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-text">为什么用 B+ 树而不是 Redis 的跳表（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E4%B8%8E%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95"><span class="toc-text">聚簇索引与非聚簇索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E4%B8%80%E5%AE%9A%E4%BC%9A%E5%9B%9E%E8%A1%A8%E5%90%97%EF%BC%9F%EF%BC%88%E5%87%BA%E7%8E%B0%E7%B4%A2%E5%BC%95%E8%A6%86%E7%9B%96%E5%B0%B1%E4%B8%8D%E9%9C%80%E8%A6%81%EF%BC%89"><span class="toc-text">非聚簇索引一定会回表吗？（出现索引覆盖就不需要）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">索引的使用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="toc-text">索引设计原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95"><span class="toc-text">什么是前缀索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AF%B9%E7%B4%A2%E5%BC%95%E8%BF%9B%E8%A1%8C%E4%BC%98%E5%8C%96"><span class="toc-text">如何对索引进行优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B7%A6%E5%8C%B9%E9%85%8D%E5%8E%9F%E5%88%99"><span class="toc-text">最左匹配原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%88%97%E7%B4%A2%E5%BC%95%E5%92%8C%E7%BB%84%E5%90%88%E7%B4%A2%E5%BC%95"><span class="toc-text">单列索引和组合索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E5%A4%B1%E6%95%88%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-text">索引什么情况下会失效（重点）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BA%8B%E5%8A%A1"><span class="toc-text">二、事务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1"><span class="toc-text">什么是数据库事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%89%B9%E5%BE%81%EF%BC%88ACID%EF%BC%89"><span class="toc-text">事务的四个特征（ACID）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E7%9A%84%E5%9B%9B%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-text">MySQL 的四种隔离级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%8F%E8%AF%BB-%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB-%E5%B9%BB%E8%AF%BB"><span class="toc-text">脏读 &#x2F; 不可重复读 &#x2F; 幻读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%9Aredo-log-%E4%B8%8E-undo-log%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-text">事务的实现原理：redo log 与 undo log（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-binlog"><span class="toc-text">什么是 binlog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E4%B8%AD%E5%8F%AF%E4%BB%A5%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E5%90%97"><span class="toc-text">事务中可以混合使用存储引擎吗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB"><span class="toc-text">MySQL 如何实现事务隔离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MVCC-%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-text">MVCC 及其实现原理（重点）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%94%81"><span class="toc-text">三、锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8A%A0%E9%94%81"><span class="toc-text">为什么要加锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%94%81%E7%9A%84%E7%B2%92%E5%BA%A6%E5%88%86"><span class="toc-text">按锁的粒度分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E9%94%81%E7%9A%84%E7%B1%BB%E5%88%AB%E5%88%86"><span class="toc-text">从锁的类别分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81"><span class="toc-text">乐观锁和悲观锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%B4%E9%9A%99%E9%94%81"><span class="toc-text">间隙锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%B4%E9%9A%99%E9%94%81%E7%9A%84%E5%8A%A0%E9%94%81%E8%A7%84%E5%88%99"><span class="toc-text">间隙锁的加锁规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB-%E7%9A%84%E8%A1%8C%E9%94%81%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%8C%E6%9C%89%E5%87%A0%E7%B1%BB"><span class="toc-text">InnoDB 的行锁是怎么实现的，有几类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%84%8F%E5%90%91%E9%94%81%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8"><span class="toc-text">意向锁有什么作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E7%85%A7%E8%AF%BB%E4%B8%8E%E5%BD%93%E5%89%8D%E8%AF%BB%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">快照读与当前读的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%BB%E9%94%81%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3"><span class="toc-text">什么是死锁，怎么解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%B8%8E%E9%94%81%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">隔离级别与锁的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E9%94%81%E6%96%B9%E9%9D%A2%E7%9A%84%E5%BB%BA%E8%AE%AE"><span class="toc-text">优化锁方面的建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8"><span class="toc-text">四、分库分表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8"><span class="toc-text">为什么要分库分表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9E%82%E7%9B%B4%E6%8B%86%E5%88%86%E4%B8%8E%E6%B0%B4%E5%B9%B3%E6%8B%86%E5%88%86"><span class="toc-text">垂直拆分与水平拆分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-text">两种分库分表的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E4%B8%8E%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5"><span class="toc-text">五、读写分离与主从同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-MySQL-%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5"><span class="toc-text">什么是 MySQL 主从同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5"><span class="toc-text">为什么要做主从同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E7%9A%84%E6%B5%81%E7%A8%8B%E5%92%8C%E5%8E%9F%E7%90%86"><span class="toc-text">主从复制的流程和原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5%E5%BB%B6%E6%97%B6%E9%97%AE%E9%A2%98%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="toc-text">主从同步延时问题如何解决</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81MySQL-%E4%BC%98%E5%8C%96"><span class="toc-text">六、MySQL 优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9A%E4%BD%8D%E5%8F%8A%E4%BC%98%E5%8C%96-SQL-%E8%AF%AD%E5%8F%A5%E7%9A%84%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">如何定位及优化 SQL 语句的性能问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%80%8E%E4%B9%88%E4%BC%98%E5%8C%96%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-text">大表查询怎么优化（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%80%8E%E4%B9%88%E4%BC%98%E5%8C%96%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-text">慢查询怎么优化（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96"><span class="toc-text">数据库结构优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2"><span class="toc-text">如何优化关联查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E6%95%B0%E6%8D%AE%E5%BA%93-CPU-%E9%A3%99%E5%8D%87%E5%88%B0-100-%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86"><span class="toc-text">MySQL 数据库 CPU 飙升到 100% 怎么处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E-MySQL-%E8%AF%BB%E5%8F%96-100w-%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E5%A4%84%E7%90%86%EF%BC%8C%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%81%9A"><span class="toc-text">从 MySQL 读取 100w 数据进行处理，应该怎么做</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81SQL-%E5%9F%BA%E7%A1%80"><span class="toc-text">七、SQL 基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL-%E7%BA%A6%E6%9D%9F%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-text">SQL 约束有哪些</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Compact-%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="toc-text">Compact 行格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="toc-text">几种连接查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL-%E8%AF%AD%E5%8F%A5%E9%A1%BA%E5%BA%8F%E5%92%8C%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-text">SQL 语句顺序和执行顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%B4%E6%97%B6%E8%A1%A8"><span class="toc-text">什么是临时表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-text">数据库存储引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="toc-text">什么是子查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#where-%E5%92%8C-in-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">where 和 in 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#in-%E5%92%8C-exists-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">in 和 exists 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#int-10-%E3%80%81char-10-%E3%80%81varchar-10-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">int(10)、char(10)、varchar(10) 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%88red-%E9%9D%A2%E8%AF%95%E8%80%83%E8%BF%87%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%89"><span class="toc-text">几个数据类型的区别（red 面试考过数据结构）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-text">触发器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8C%83%E5%BC%8F"><span class="toc-text">范式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL-%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">SQL 执行的过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E7%94%A8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%8D%E8%A1%8C%E5%90%97%EF%BC%88tiktok-%E9%97%AE%EF%BC%89"><span class="toc-text">为什么我们需要数据库，用文件系统不行吗（tiktok 问）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></nav></dialog>
+
+
+    
 </div>
 
 
 
 <!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+<script src="/libs/prism/prism.min.js"></script>
 
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
-
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+<script src="/js/article-reading.js" data-reading-controls data-copy="true" data-lang="true" data-shrink="true" defer></script>
 
 
 
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card" style="background-color: white;">
+        <div class="toc-widget card">
             <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
+            <div id="toc-content" role="navigation" aria-label="文章目录" tabindex="0"></div>
         </div>
     </div>
 </div>
@@ -1239,9 +1058,9 @@
 <!-- TOC 悬浮按钮. -->
 
 <div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
+    <button type="button" class="btn-floating btn-large bg-color" aria-label="显示或隐藏文章目录" aria-expanded="true" aria-controls="toc-aside">
         <i class="fas fa-list-ul"></i>
-    </a>
+    </button>
 </div>
 
 
@@ -1251,7 +1070,8 @@
         tocbot.init({
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
+            headingsOffset: 80,
+            scrollSmooth: false,
             /* 目录点击的滚动偏移。原主题靠 post.css 里「100px 隐藏块撑高标题」的
                hack 来躲固定导航栏；my.css 已把那个 hack 换成 scroll-margin-top，
                所以这里必须同步补上。tocbot 内部是 offset + rect.top，
@@ -1273,6 +1093,10 @@
             var sync = function () {
                 if (!src.firstChild) return false;
                 dst.innerHTML = src.innerHTML;
+                
+                // 手机目录始终列出全部章节，不沿用桌面当前的折叠状态。
+                dst.querySelectorAll('.is-collapsed').forEach(function (list) { list.classList.remove('is-collapsed'); });
+                
                 return true;
             };
             if (!sync()) {
@@ -1331,9 +1155,11 @@
             if ($tocAside.hasClass(expandedClass)) {
                 $tocAside.removeClass(expandedClass).hide();
                 $mainContent.removeClass('l9');
+                this.setAttribute('aria-expanded', 'false');
             } else {
                 $tocAside.addClass(expandedClass).show();
                 $mainContent.addClass('l9');
+                this.setAttribute('aria-expanded', 'true');
             }
             fixPostCardWidth('artDetail', 'prenext-posts');
         });
@@ -1348,61 +1174,8 @@
 
 
 
-    <footer class="page-footer bg-color">
     
-        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
-<style>
-    .aplayer .aplayer-lrc p {
-        
-        display: none;
-        
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px !important;
-    }
-
-    .aplayer .aplayer-lrc p.aplayer-lrc-current {
-        
-        display: none;
-        
-        font-size: 15px;
-        color: #42b983;
-    }
-
-    
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-        left: -66px !important;
-    }
-
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-        left: 0px !important;
-    }
-
-    
-</style>
-<div class="">
-    
-    <div class="row">
-        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
-                   server="netease"
-                   type="playlist"
-                   id="503838841"
-                   fixed='true'
-                   autoplay='false'
-                   theme='#42b983'
-                   loop='all'
-                   order='random'
-                   preload='auto'
-                   volume='0.7'
-                   list-folded='true'
-        >
-        </meting-js>
-    </div>
-</div>
-
-<script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="/libs/aplayer/Meting.min.js"></script>
-
+<footer class="page-footer bg-color">
     
 
     <div class="container row center-align"
@@ -1513,6 +1286,7 @@
 <div class="progress-bar"></div>
 
 
+
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">
     <div class="modal-content">
@@ -1588,10 +1362,11 @@ $(function () {
                     if (end > content.length) {
                         end = content.length;
                     }
-                    var match_content = content.substr(start, end);
+                    var match_content = content.slice(start, end);
                     // highlight all keywords
                     keywords.forEach(function (keyword) {
-                        var regS = new RegExp(keyword, "gi");
+                        // C++、括号等按普通搜索词匹配，避免被当成正则语法。
+                        var regS = new RegExp(keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), "gi");
                         match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
                     });
 
@@ -1670,6 +1445,17 @@ $(function () {
 
 <script>
     function switchNightMode() {
+        // 两个比较方案直接切换，沿用持久化设置，避免全屏动画打断阅读。
+        if (document.body.classList.contains('journal-home') || document.body.classList.contains('matery-foundation')) {
+            var dark = document.body.classList.toggle('DarkMode');
+            localStorage.setItem('isDark', dark ? '1' : '0');
+            var icon = document.getElementById('sum-moon-icon');
+            if (icon) {
+                icon.classList.toggle('fa-sun', dark);
+                icon.classList.toggle('fa-moon', !dark);
+            }
+            return;
+        }
         $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
         setTimeout(function () {
             $('body').hasClass('DarkMode') 
@@ -1718,8 +1504,6 @@ $(function () {
 
     <!-- Baidu Push -->
 
-    
-    <script src="/libs/others/clicklove.js" async="async"></script>
     
     
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>

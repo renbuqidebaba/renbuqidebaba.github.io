@@ -1,0 +1,147 @@
+/* B 版技术文章：保留 Matery 卡片与目录骨架，集中调整长文阅读体验。 */
+body.technical-article {
+    --reading-text: #34495e;
+    --reading-muted: #78878d;
+    --reading-panel: #fff;
+    --reading-rule: #e6ece8;
+    --reading-soft: #f2f7f4;
+    --reading-accent: #158b63;
+}
+body.technical-article.DarkMode {
+    --reading-text: #dce5e3;
+    --reading-muted: #a3b2b6;
+    --reading-panel: #293137;
+    --reading-rule: #414d52;
+    --reading-soft: #263d35;
+    --reading-accent: #84cfae;
+}
+.technical-article [hidden] { display: none !important; }
+.technical-article #artDetail > .card,
+.technical-article #artDetail .reading-related { background: var(--reading-panel); color: var(--reading-text); box-shadow: 0 5px 22px rgba(37,58,49,.06); }
+.technical-article #artDetail .reading-info { padding: 25px 40px 18px; margin: 0; }
+.technical-article .reading-meta-top { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+.technical-article .reading-categories { display: flex; flex-wrap: wrap; gap: 8px; }
+.technical-article .reading-categories a { background: var(--reading-soft); color: var(--reading-accent); border-radius: 15px; padding: 3px 12px; font-size: 12px; }
+.technical-article .reading-categories i { font-size: 10px; margin-right: 3px; }
+.technical-article .reading-author { color: var(--reading-muted); font-size: 11px; }
+.technical-article #artDetail .reading-meta { display: flex; gap: 8px 19px; flex-wrap: wrap; font-size: 11px; line-height: 1.7; color: var(--reading-muted); margin-top: 15px; }
+.technical-article .reading-meta i { font-size: 11px; }
+.technical-article #artDetail > .card > hr.clearfix { margin: 0 40px; border: 0; border-top: 1px solid var(--reading-rule); }
+.technical-article #artDetail .article-card-content { padding: 25px 40px 30px; }
+.technical-article #articleContent { font-size: 16px; line-height: 1.95; color: var(--reading-text); max-width: 800px; margin-inline: auto; overflow-wrap: break-word; }
+body.technical-article #articleContent p,
+body.technical-article #articleContent li { font-size: inherit; line-height: inherit; color: var(--reading-text); }
+.technical-article #articleContent p { margin: 1.05em 0; }
+.technical-article #articleContent li { margin-block: .4em; }
+.technical-article #articleContent :is(h1,h2,h3,h4,h5,h6) { color: var(--reading-text); scroll-margin-top: 80px; line-height: 1.6; }
+.technical-article #articleContent h2 { font-size: 25px; margin: 2em 0 .9em; padding-bottom: .45em; border-color: var(--reading-rule); }
+.technical-article #articleContent h3 { font-size: 20px; margin: 1.7em 0 .7em; }
+.technical-article #articleContent h4 { font-size: 17px; margin: 1.5em 0 .6em; }
+.technical-article #articleContent :is(strong, b) { color: inherit; filter: none; }
+.technical-article #articleContent :is(a,button,pre,.reading-table):focus-visible { outline: 2px solid var(--reading-accent); outline-offset: 3px; }
+.technical-article #articleContent a { color: var(--reading-accent); text-underline-offset: 4px; }
+.technical-article #articleContent p > code,
+.technical-article #articleContent li > code,
+.technical-article #articleContent td > code { background: var(--reading-soft); color: var(--reading-accent); font-size: .87em; padding: 2px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.technical-article #articleContent blockquote { background: var(--reading-soft); border-color: var(--reading-accent); padding: 8px 18px; }
+.technical-article #articleContent blockquote p { margin: .5em 0; }
+.technical-article .reading-guide { border: 1px solid var(--reading-rule); border-left: 3px solid var(--reading-accent); background: var(--reading-soft); border-radius: 9px; padding: 18px 21px; margin-bottom: 25px; }
+.technical-article .reading-guide-title { color: var(--reading-accent); font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+.technical-article .reading-guide-title i { margin-right: 5px; }
+.technical-article .reading-guide dl { margin: 0; }
+.technical-article .reading-guide dl > div { display: flex; gap: 13px; margin-top: 6px; }
+.technical-article .reading-guide dt { color: var(--reading-muted); font-size: 11px; flex: 0 0 48px; padding-top: 1px; }
+.technical-article .reading-guide dd { color: var(--reading-text); font-size: 12px; line-height: 1.9; margin: 0; }
+.technical-article #articleContent .img-item { margin-block: 24px; }
+.technical-article #articleContent img { max-width: 100%; height: auto; border: 1px solid var(--reading-rule); background: #fff; border-radius: 8px; box-shadow: none; }
+body.technical-article.DarkMode #articleContent img { filter: brightness(.94) !important; }
+.technical-article #articleContent .caption { color: var(--reading-muted); font-size: 12px; margin-top: 10px; }
+.technical-article #articleContent .reading-table { overflow-x: auto; overscroll-behavior-x: contain; margin: 22px 0; border: 1px solid var(--reading-rule); border-radius: 9px; scrollbar-width: thin; }
+.technical-article #articleContent .reading-table[data-overflow="true"]::before { content: '左右滑动查看完整表格'; display: block; position: sticky; left: 0; width: max-content; color: var(--reading-muted); font-size: 10px; padding: 6px 12px; }
+.technical-article #articleContent .reading-table table { display: table; min-width: 480px; width: 100%; margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+.technical-article #articleContent .reading-table :is(th,td) { color: var(--reading-text); border: 1px solid var(--reading-rule); font-size: 13px; line-height: 1.85; padding: 11px 14px; }
+.technical-article #articleContent .reading-table th { background: var(--reading-soft); font-weight: 600; text-align: left; }
+.technical-article #articleContent .reading-table td { background: var(--reading-panel); }
+.technical-article #articleContent .reading-table tr:nth-child(even) td { background: var(--reading-soft); }
+.technical-article #articleContent .reading-code { margin: 24px 0; border-radius: 10px; overflow: hidden; background: #253039; }
+.technical-article #articleContent .reading-code::after { display: none; }
+.technical-article .reading-code-toolbar { display: flex; align-items: center; gap: 14px; min-height: 42px; padding: 6px 14px; background: #303e47; color: #cbd8dc; font-size: 11px; }
+.technical-article .reading-code-language { font: 11px var(--font-mono); color: #d5e6dd; }
+.technical-article .reading-copy-status { margin-left: auto; font-size: 10px; color: #a5dcbe; }
+.technical-article .reading-code-toolbar button { flex-shrink: 0; min-width: 44px; min-height: 28px; border: 1px solid #64737b; border-radius: 4px; padding: 3px 8px; color: #e2e9eb; background: transparent; font: inherit; cursor: pointer; line-height: 1.6; }
+.technical-article .reading-code-toolbar button:hover { background: #425660; }
+.technical-article .reading-code-toolbar button:disabled { opacity: .6; }
+.technical-article #articleContent .reading-code pre { padding: 18px 20px !important; margin: 0; border-radius: 0; box-shadow: none; background: #253039; color: #e1e7ea; font: 13px/1.8 var(--font-mono); overflow: auto; overscroll-behavior-x: contain; white-space: pre; }
+.technical-article #articleContent .reading-code pre.line-numbers { padding-left: 3.8em !important; }
+.technical-article #articleContent .reading-code code { display: block; padding: 0; background: transparent; color: #e1e7ea; font: inherit; white-space: inherit; border-radius: 0; top: auto !important; }
+.technical-article #toc-aside { top: 80px; }
+.technical-article #toc-aside .toc-widget { padding: 0; background: var(--reading-panel); color: var(--reading-text); filter: none; box-shadow: 0 5px 22px rgba(37,58,49,.06); }
+.technical-article #toc-aside .toc-title { color: var(--reading-text); padding: 22px 22px 16px; font-size: 17px; font-weight: 550; }
+.technical-article #toc-content { max-height: calc(100dvh - 170px); padding: 0 17px 20px; overscroll-behavior: contain; scrollbar-width: thin; font-size: 12px; line-height: 1.8; }
+.technical-article #toc-content .toc-link { display: block; color: var(--reading-muted); padding: 4px 0; }
+.technical-article #toc-content .is-active-link { color: var(--reading-accent); }
+.technical-article #toc-content .is-collapsible:not(.is-collapsed) { max-height: none; }
+.technical-article #toc-content .toc-link::before { display: none; }
+.technical-article #floating-toc-btn button { border: 0; cursor: pointer; }
+.technical-article #mobile-toc { background: var(--reading-soft); scroll-margin-top: 80px; padding: 12px 16px; }
+.technical-article #mobile-toc summary { font-size: 13px; color: var(--reading-accent); }
+.technical-article #mobile-toc-content { max-height: 50dvh; overflow: auto; overscroll-behavior: contain; }
+.technical-article #mobile-toc-content .toc-link { font-size: 12px; color: var(--reading-text); }
+.technical-article #mobile-toc-content .is-collapsible { max-height: none; }
+.technical-article .reading-toc-button { position: fixed; bottom: 84px; right: 18px; z-index: 990; display: inline-flex; gap: 7px; align-items: center; background: var(--reading-accent); color: var(--reading-panel); border: 0; border-radius: 24px; box-shadow: 0 3px 14px #193d352e; padding: 11px 16px; font-size: 12px; cursor: pointer; }
+.technical-article .reading-toc-dialog { width: min(90vw,520px); max-height: calc(100dvh - 70px); padding: 23px; border: 1px solid var(--reading-rule); border-radius: 15px; background: var(--reading-panel); color: var(--reading-text); }
+.technical-article .reading-toc-dialog::backdrop { background: rgba(16,30,28,.55); }
+.technical-article .reading-toc-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.technical-article .reading-toc-header h2 { margin: 0; font-size: 19px; color: var(--reading-text); }
+.technical-article .reading-toc-close { border: 0; background: transparent; color: var(--reading-muted); font-size: 25px; padding: 0 6px; cursor: pointer; }
+.technical-article .reading-toc-dialog > p { font-size: 11px; color: var(--reading-muted); margin: 6px 0 17px; }
+.technical-article .reading-dialog-nav { height: auto; max-height: 58dvh; overflow: auto; overscroll-behavior: contain; background: none; box-shadow: none; color: var(--reading-text); line-height: 1.8; }
+.technical-article .reading-dialog-nav ol { margin: 0; padding-left: 15px; list-style: none; }
+.technical-article .reading-dialog-nav > ol { padding-left: 0; }
+.technical-article .reading-dialog-nav a { display: block; color: var(--reading-text); font-size: 12px; padding: 6px 0; }
+.technical-article .reading-dialog-nav .toc-level-2 > a { color: var(--reading-accent); font-weight: 600; }
+.technical-article #artDetail .reading-related { margin-top: 26px; }
+.technical-article .reading-related > .card-content { padding: 26px 32px; }
+.technical-article .reading-related-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; margin-bottom: 18px; }
+.technical-article .reading-related-heading h2 { color: var(--reading-text); font-size: 19px; line-height: 1.6; margin: 0; font-weight: 550; }
+.technical-article .reading-related-heading > span { color: var(--reading-muted); font-size: 10px; }
+.technical-article .reading-related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+.technical-article .reading-related-link { display: block; border: 1px solid var(--reading-rule); border-radius: 9px; padding: 18px; }
+.technical-article .reading-related-link:hover { background: var(--reading-soft); }
+.technical-article .reading-related-kind { font-size: 10px; color: var(--reading-accent); }
+.technical-article .reading-related-link h3 { display: flex; justify-content: space-between; gap: 10px; color: var(--reading-text); font-size: 16px; line-height: 1.6; font-weight: 550; margin: 7px 0; }
+.technical-article .reading-related-link h3 span { font-weight: 400; color: var(--reading-muted); }
+body.technical-article .reading-related-link p { color: var(--reading-muted); font-size: 11px; line-height: 1.9; margin: 0; }
+.technical-article .reading-chronology { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 6px 7px 20px; }
+.technical-article .reading-chronology a { color: var(--reading-muted); font-size: 12px; }
+.technical-article .reading-chronology a:last-child { text-align: right; }
+.technical-article .reading-chronology span { display: block; margin-bottom: 3px; font-size: 10px; }
+@media (max-width: 992px) {
+    .technical-article #artDetail .reading-info { padding: 22px 28px 17px; }
+    .technical-article #artDetail .article-card-content { padding: 22px 28px 26px; }
+    .technical-article #artDetail > .card > hr.clearfix { margin-inline: 28px; }
+}
+@media (max-width: 600px) {
+    .technical-article .post-container { width: calc(100% - 20px); }
+    .technical-article #artDetail .reading-info { padding: 20px 20px 16px; }
+    .technical-article #artDetail .article-card-content { padding: 20px 20px 26px; }
+    .technical-article #artDetail > .card > hr.clearfix { margin-inline: 20px; }
+    .technical-article .reading-meta-top { gap: 10px; }
+    .technical-article .reading-author { font-size: 10px; }
+    .technical-article #artDetail .reading-meta { gap: 5px 12px; font-size: 10px; }
+    .technical-article .reading-guide { padding: 14px 15px; margin-bottom: 20px; }
+    .technical-article .reading-guide dl > div { display: block; margin-top: 9px; }
+    .technical-article .reading-guide dt { margin-bottom: 3px; }
+    .technical-article .reading-guide dd { font-size: 11px; }
+    .technical-article #articleContent h2 { font-size: 23px; }
+    .technical-article #articleContent h3 { font-size: 19px; }
+    .technical-article #articleContent .reading-code { margin-inline: -4px; }
+    .technical-article #articleContent .reading-code pre { font-size: 12px; }
+    .technical-article .reading-code-toolbar { gap: 9px; padding-inline: 10px; }
+    .technical-article .reading-copy-status { max-width: 110px; font-size: 9px; }
+    .technical-article .reading-related > .card-content { padding: 22px; }
+    .technical-article .reading-related-heading { display: block; }
+    .technical-article .reading-related-heading > span { display: block; margin-top: 5px; }
+    .technical-article .reading-related-grid { grid-template-columns: 1fr; }
+    .technical-article .reading-chronology { gap: 16px; }
+}

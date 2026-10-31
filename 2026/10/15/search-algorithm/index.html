@@ -54,14 +54,24 @@
 
 
 
+
+<link rel="stylesheet" href="/css/matery-foundation.css">
+
+
+
+<link rel="stylesheet" href="/css/article-reading.css">
+
+
+
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
 <meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="lewenmax" type="application/atom+xml">
 </head>
 
 
-<body>
-    <header class="navbar-fixed">
+<body class="matery-foundation technical-article">
+    
+<header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -74,7 +84,7 @@
             </div>
             
 
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse" aria-label="打开导航菜单"><i class="fas fa-bars"></i></a>
 <ul class="right nav-menu">
   
   <li class="hide-on-med-and-down nav-item">
@@ -133,12 +143,12 @@
   </li>
   
   <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light" aria-label="搜索文章">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
     </a>
   </li>
   <li>
-    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" aria-label="切换深色或浅色模式" >
       <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
     </a>
   </li>
@@ -154,7 +164,7 @@
         <div class="logo-name">lewenmax</div>
         <div class="logo-desc">
             
-            心有所向, 无问东西
+            lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。
             
         </div>
     </div>
@@ -217,13 +227,6 @@
         </li>
         
         
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
-                <i class="fab fa-github-square fa-fw"></i>Fork Me
-            </a>
-        </li>
-        
     </ul>
 </div>
 
@@ -231,81 +234,21 @@
         </div>
 
         
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #0f9d58;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
-        
     </nav>
 
 </header>
+
 
     
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">搜索算法（DFS / BFS / 回溯 / 拓扑排序）</h1>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+<div class="bg-cover pd-header post-cover mp-article-cover mp-cover-algorithm">
+    <div class="container center-align"><span class="mp-article-subject">ALGO</span><h1 class="post-title">搜索算法（DFS / BFS / 回溯 / 拓扑排序）</h1><p class="mp-article-caption">DATA STRUCTURES · PROBLEM SOLVING</p></div>
 </div>
+
 
 
 
@@ -318,61 +261,19 @@
         <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                算法心得
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
+        
+        <div class="card-content article-info reading-info">
+    <div class="reading-meta-top"><div class="reading-categories"><a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/"><i class="fas fa-bookmark" aria-hidden="true"></i> 算法心得</a></div><span class="reading-author">手记 / 托马斯回旋</span></div>
+    <div class="post-info reading-meta">
+        <span>发布于 <time datetime="2026-10-15">2026-10-15</time></span>
+        <span>更新于 <time datetime="2026-10-30">2026-10-30</time></span>
+        <span>5.7k 字</span>
+        <span><i class="far fa-clock" aria-hidden="true"></i> 约 28 分钟</span>
+        
+    </div>
+</div>
 
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2026-10-15
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2026-10-18
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.7k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    28 分
-                </div>
-                
-
-                
-            </div>
-        </div>
+        
         <hr class="clearfix">
 
         
@@ -385,10 +286,14 @@
 
         <div class="card-content article-card-content">
             
+
+            
+            
             <details id="mobile-toc" class="hide-on-large-only">
                 <summary><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</summary>
                 <div id="mobile-toc-content"></div>
             </details>
+            
             <div id="articleContent">
                 <p>搜索是算法题里覆盖面最广的一类。这一篇按题型整理了我做过的搜索题目，主要四类：</p>
 <ul>
@@ -1162,10 +1067,6 @@ Pythonclass Solution<span class="token punctuation">:</span>
             <div class="tag_share" style="display: block;">
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
-                        <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                        </div>
-                    
                 </div>
                 <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
                     <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
@@ -1236,125 +1137,38 @@ Pythonclass Solution<span class="token punctuation">:</span>
     
 
     
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2026/10/15/data-structure-tricks/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="数据结构和技巧（单调栈 / 单调队列 / Trie）">
-                        
-                        <span class="card-title">数据结构和技巧（单调栈 / 单调队列 / Trie）</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            单调栈（柱状图最大矩形、每日温度）、单调队列（滑动窗口最大值），以及用栈解字符串解码、最小栈。
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2026/10/15/sorting-algorithm/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="排序算法（快速选择 / 桶排序）">
-                        
-                        <span class="card-title">排序算法（快速选择 / 桶排序）</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            不讲冒泡快排怎么写，只收「用排序思想解题」的两道：快速选择找第 k 大、桶排序求前 k 个高频元素。
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
+    
+<section class="card reading-related" aria-labelledby="reading-related-title">
+    <div class="card-content"><div class="reading-related-heading"><h2 id="reading-related-title">继续读，把知识连起来</h2><span>从这篇出发，再往前走一点。</span></div>
+    <div class="reading-related-grid"><a href="/2026/10/15/binary-tree/" class="reading-related-link"><span class="reading-related-kind">算法心得</span><h3>二叉树与多叉树<span aria-hidden="true">↗</span></h3><p>中序与层序遍历、二叉树的深度和直径、右视图、对称判断、BST 第 k 小与合法性验证——二叉树题的 DFS / BFS 套路。</p></a><a href="/2026/10/15/linked-list/" class="reading-related-link"><span class="reading-related-kind">算法心得</span><h3>链表<span aria-hidden="true">↗</span></h3><p>旋转链表、删除倒数第 N 个节点、合并 K 个升序链表、反转链表与 K 个一组翻转。</p></a></div>
     </div>
-</article>
+</section>
+<div class="reading-chronology" role="navigation" aria-label="按发布时间浏览"><a href="/2026/10/15/data-structure-tricks/"><span>← 按时间 · 上一篇</span>数据结构和技巧（单调栈 / 单调队列 / Trie）</a><a href="/2026/10/15/sorting-algorithm/"><span>按时间 · 下一篇 →</span>排序算法（快速选择 / 桶排序）</a></div>
 
+    
+<button type="button" class="reading-toc-button hide-on-large-only" aria-haspopup="dialog" aria-controls="reading-toc-dialog" hidden><i class="fas fa-list-ul" aria-hidden="true"></i> 目录</button>
+<dialog id="reading-toc-dialog" class="reading-toc-dialog" aria-labelledby="reading-toc-title"><div class="reading-toc-header"><h2 id="reading-toc-title">文章目录</h2><button type="button" class="reading-toc-close" aria-label="关闭文章目录">×</button></div><p>跳到想读的章节</p><nav class="reading-dialog-nav" aria-label="文章章节"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-695-%E5%B2%9B%E5%B1%BF%E6%9C%80%E5%A4%A7%E7%9A%84%E9%9D%A2%E7%A7%AF-mid-dfs%E6%9A%B4%E6%90%9C"><span class="toc-text">Leetcode 695 岛屿最大的面积 mid   dfs暴搜</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-547-%E7%9C%81%E4%BB%BD%E7%9A%84%E6%95%B0%E9%87%8F-mid-%E5%B9%B6%E6%9F%A5%E9%9B%86or-dfs%E9%82%BB%E6%8E%A5%E8%A1%A8%EF%BC%89"><span class="toc-text">Leetcode 547 省份的数量 mid (并查集or dfs邻接表）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-417-%E5%A4%AA%E5%B9%B3%E6%B4%8B%E5%A4%A7%E8%A5%BF%E6%B4%8B%E6%B0%B4%E6%B5%81%E9%97%AE%E9%A2%98-mid-dfs"><span class="toc-text">Leetcode 417 太平洋大西洋水流问题 mid (dfs)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-hot-46-%E5%85%A8%E6%8E%92%E5%88%97-mid-%E5%9B%9E%E6%BA%AF"><span class="toc-text">Leetcode hot 46 全排列 mid 回溯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-77-%E7%BB%84%E5%90%88-mid-%E5%9B%9E%E6%BA%AF"><span class="toc-text">Leetcode 77 组合 mid 回溯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-79-%E5%8D%95%E8%AF%8D%E6%90%9C%E7%B4%A2-mid-%E5%9B%9E%E6%BA%AF"><span class="toc-text">Leetcode 79 单词搜索 mid 回溯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-1091-%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84-mid-bfs"><span class="toc-text">Leetcode 1091  二进制矩阵中的最短路径 mid bfs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-934-%E6%9C%80%E7%9F%AD%E7%9A%84%E6%A1%A5-mid-%EF%BC%88dfs-bfs%EF%BC%89"><span class="toc-text">Leetcode 934 最短的桥 mid （dfs+bfs）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-257-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84-easy"><span class="toc-text">Leetcode 257 二叉树的所有路径 easy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-hot-39-%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C-mid-%EF%BC%88%E9%87%8D%E5%A4%8D%E9%80%89%E6%95%B0%E7%9A%84%E5%9B%9E%E6%BA%AF%EF%BC%89"><span class="toc-text">Leetcode hot 39 组合总和 mid （重复选数的回溯）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-hot-78-%E5%AD%90%E9%9B%86-mid"><span class="toc-text">Leetcode hot 78 子集 mid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-22-%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90-mid-%E5%9B%9E%E6%BA%AF"><span class="toc-text">Leetcode 22 括号生成 mid 回溯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-105-%E4%BB%8E%E5%89%8D%E5%BA%8F%E5%92%8C%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E6%9E%84%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">Leetcode 105 从前序和中序遍历构建二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2-mid"><span class="toc-text">Leetcode 131 分割回文串 mid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-51-n%E7%9A%87%E5%90%8E-hard"><span class="toc-text">Leetcode 51 n皇后 hard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-hot-207-%E8%AF%BE%E7%A8%8B%E8%A1%A8-mid-%EF%BC%88top%E6%8E%92%E5%BA%8F-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%EF%BC%89"><span class="toc-text">Leetcode hot 207 课程表 mid （top排序+三色标记）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leetcode-200-%E5%B2%9B%E5%B1%BF%E6%95%B0%E9%87%8F-mid"><span class="toc-text">Leetcode 200 岛屿数量 mid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codefun-4020-%E8%85%90%E7%83%82%E6%A9%98%E5%AD%90-bfs"><span class="toc-text">Codefun 4020 腐烂橘子 bfs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E8%85%BE%E8%AE%AF%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98-%E4%BB%8E%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9E%84%E5%BB%BA%E6%9C%80%E5%A4%A7%E4%B8%8D%E8%B6%85%E8%BF%87n%E7%9A%84%E6%95%B0"><span class="toc-text">字节腾讯常见面试题 从数组中构建最大不超过n的数</span></a></li></ol></nav></dialog>
+
+
+    
 </div>
 
 
 
 <!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+<script src="/libs/prism/prism.min.js"></script>
 
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
-
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+<script src="/js/article-reading.js" data-reading-controls data-copy="true" data-lang="true" data-shrink="true" defer></script>
 
 
 
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card" style="background-color: white;">
+        <div class="toc-widget card">
             <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
+            <div id="toc-content" role="navigation" aria-label="文章目录" tabindex="0"></div>
         </div>
     </div>
 </div>
@@ -1362,9 +1176,9 @@ Pythonclass Solution<span class="token punctuation">:</span>
 <!-- TOC 悬浮按钮. -->
 
 <div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
+    <button type="button" class="btn-floating btn-large bg-color" aria-label="显示或隐藏文章目录" aria-expanded="true" aria-controls="toc-aside">
         <i class="fas fa-list-ul"></i>
-    </a>
+    </button>
 </div>
 
 
@@ -1374,7 +1188,8 @@ Pythonclass Solution<span class="token punctuation">:</span>
         tocbot.init({
             tocSelector: '#toc-content',
             contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
+            headingsOffset: 80,
+            scrollSmooth: false,
             /* 目录点击的滚动偏移。原主题靠 post.css 里「100px 隐藏块撑高标题」的
                hack 来躲固定导航栏；my.css 已把那个 hack 换成 scroll-margin-top，
                所以这里必须同步补上。tocbot 内部是 offset + rect.top，
@@ -1396,6 +1211,10 @@ Pythonclass Solution<span class="token punctuation">:</span>
             var sync = function () {
                 if (!src.firstChild) return false;
                 dst.innerHTML = src.innerHTML;
+                
+                // 手机目录始终列出全部章节，不沿用桌面当前的折叠状态。
+                dst.querySelectorAll('.is-collapsed').forEach(function (list) { list.classList.remove('is-collapsed'); });
+                
                 return true;
             };
             if (!sync()) {
@@ -1454,9 +1273,11 @@ Pythonclass Solution<span class="token punctuation">:</span>
             if ($tocAside.hasClass(expandedClass)) {
                 $tocAside.removeClass(expandedClass).hide();
                 $mainContent.removeClass('l9');
+                this.setAttribute('aria-expanded', 'false');
             } else {
                 $tocAside.addClass(expandedClass).show();
                 $mainContent.addClass('l9');
+                this.setAttribute('aria-expanded', 'true');
             }
             fixPostCardWidth('artDetail', 'prenext-posts');
         });
@@ -1471,61 +1292,8 @@ Pythonclass Solution<span class="token punctuation">:</span>
 
 
 
-    <footer class="page-footer bg-color">
     
-        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
-<style>
-    .aplayer .aplayer-lrc p {
-        
-        display: none;
-        
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px !important;
-    }
-
-    .aplayer .aplayer-lrc p.aplayer-lrc-current {
-        
-        display: none;
-        
-        font-size: 15px;
-        color: #42b983;
-    }
-
-    
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-        left: -66px !important;
-    }
-
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-        left: 0px !important;
-    }
-
-    
-</style>
-<div class="">
-    
-    <div class="row">
-        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
-                   server="netease"
-                   type="playlist"
-                   id="503838841"
-                   fixed='true'
-                   autoplay='false'
-                   theme='#42b983'
-                   loop='all'
-                   order='random'
-                   preload='auto'
-                   volume='0.7'
-                   list-folded='true'
-        >
-        </meting-js>
-    </div>
-</div>
-
-<script src="/libs/aplayer/APlayer.min.js"></script>
-<script src="/libs/aplayer/Meting.min.js"></script>
-
+<footer class="page-footer bg-color">
     
 
     <div class="container row center-align"
@@ -1636,6 +1404,7 @@ Pythonclass Solution<span class="token punctuation">:</span>
 <div class="progress-bar"></div>
 
 
+
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">
     <div class="modal-content">
@@ -1711,10 +1480,11 @@ $(function () {
                     if (end > content.length) {
                         end = content.length;
                     }
-                    var match_content = content.substr(start, end);
+                    var match_content = content.slice(start, end);
                     // highlight all keywords
                     keywords.forEach(function (keyword) {
-                        var regS = new RegExp(keyword, "gi");
+                        // C++、括号等按普通搜索词匹配，避免被当成正则语法。
+                        var regS = new RegExp(keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), "gi");
                         match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
                     });
 
@@ -1793,6 +1563,17 @@ $(function () {
 
 <script>
     function switchNightMode() {
+        // 两个比较方案直接切换，沿用持久化设置，避免全屏动画打断阅读。
+        if (document.body.classList.contains('journal-home') || document.body.classList.contains('matery-foundation')) {
+            var dark = document.body.classList.toggle('DarkMode');
+            localStorage.setItem('isDark', dark ? '1' : '0');
+            var icon = document.getElementById('sum-moon-icon');
+            if (icon) {
+                icon.classList.toggle('fa-sun', dark);
+                icon.classList.toggle('fa-moon', !dark);
+            }
+            return;
+        }
         $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
         setTimeout(function () {
             $('body').hasClass('DarkMode') 
@@ -1841,8 +1622,6 @@ $(function () {
 
     <!-- Baidu Push -->
 
-    
-    <script src="/libs/others/clicklove.js" async="async"></script>
     
     
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>
