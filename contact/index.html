@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="留言板, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。">
+    <meta name="keywords" content="留言板, lewenmax,托马斯回旋,Agent Infra,Go,后端工程,工程手记,生活探索">
+    <meta name="description" content="lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -56,6 +56,7 @@
 
 
 <link rel="stylesheet" href="/css/matery-foundation.css">
+
 
 
 
@@ -162,7 +163,7 @@
         <div class="logo-name">lewenmax</div>
         <div class="logo-desc">
             
-            lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。
+            lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。
             
         </div>
     </div>
@@ -330,7 +331,7 @@
 <h3 id="联系我"><a href="#联系我" class="headerlink" title="联系我"></a>联系我</h3><p>不想登录 GitHub 的话，直接找我也一样：</p>
 <ul>
 <li><strong>GitHub</strong>：<a target="_blank" rel="noopener" href="https://github.com/renbuqidebaba">renbuqidebaba</a></li>
-<li><strong>邮箱</strong>：<a href="mailto:&#49;&#x33;&#x34;&#x32;&#52;&#54;&#57;&#52;&#54;&#x37;&#64;&#113;&#x71;&#46;&#x63;&#111;&#109;">&#49;&#x33;&#x34;&#x32;&#52;&#54;&#57;&#52;&#54;&#x37;&#64;&#113;&#x71;&#46;&#x63;&#111;&#109;</a></li>
+<li><strong>邮箱</strong>：<a href="mailto:&#49;&#51;&#52;&#x32;&#52;&#54;&#57;&#x34;&#x36;&#x37;&#x40;&#113;&#x71;&#46;&#99;&#111;&#x6d;">&#49;&#51;&#52;&#x32;&#52;&#54;&#57;&#x34;&#x36;&#x37;&#x40;&#113;&#x71;&#46;&#99;&#111;&#x6d;</a></li>
 </ul>
 <hr>
 <h3 id="开始留言吧"><a href="#开始留言吧" class="headerlink" title="开始留言吧"></a>开始留言吧</h3><p>📝 往下滑，登录 GitHub 就能写下你的第一条留言。</p>
@@ -357,7 +358,7 @@
                     </div>
                     <div class="fl-row">
                         <span class="fl-key">博客介绍</span>
-                        <span class="fl-val">lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。</span>
+                        <span class="fl-val">lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。</span>
                     </div>
                 </div>
             </div>
@@ -511,6 +512,9 @@
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
             
+            
+            <span id="visit-statistics-status" class="visit-statistics-status" role="status" aria-live="polite">访问统计加载中…</span>
+            
             <br>
 
             <!-- 运行天数提醒. -->
@@ -552,36 +556,6 @@
 </div>
     </div>
 
-    
-    <!-- 不蒜子只在「远端计数请求成功」时才显示：请求失败（被网络拦截/后端挂了）时，
-         容器保持 display:none，避免出现「总访问量：」后面空着的坏样式。
-         成功由 busuanzi 自身的 shows() 置为 inline；这里在拿到数值后还原成 CSS 默认显示，
-         并兜底：6 秒内仍拿不到数值就维持隐藏。 -->
-    <script>
-        (function () {
-            var ids = ['busuanzi_container_site_pv', 'busuanzi_container_site_uv', 'busuanzi_container_page_pv'];
-            var deadline = Date.now() + 6000;
-            function tick() {
-                var pending = false;
-                for (var i = 0; i < ids.length; i++) {
-                    var box = document.getElementById(ids[i]);
-                    if (!box) continue;
-                    var val = box.querySelector('[id^="busuanzi_value"]');
-                    var filled = val && val.textContent.trim() !== '';
-                    if (filled) {
-                        box.style.display = '';          /* 还原 CSS 默认（span=行内, div=块级） */
-                    } else if (Date.now() < deadline) {
-                        pending = true;                  /* 还没拿到，继续等 */
-                    } else {
-                        box.style.display = 'none';      /* 超时仍未拿到，隐藏，避免空标签 */
-                    }
-                }
-                if (pending) setTimeout(tick, 400);
-            }
-            tick();
-        })();
-    </script>
-    
 </footer>
 
 <div class="progress-bar"></div>
@@ -807,7 +781,7 @@ $(function () {
 
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script defer src="/js/visit-statistics.js" data-api="https://busuanzi.9420.ltd/api" data-site="https://renbuqidebaba.github.io" data-since="2026-10-31"></script>
     
 
     

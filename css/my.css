@@ -339,3 +339,6 @@ body.DarkMode .aplayer.aplayer-fixed .aplayer-body {
     .friend-link-info .fl-row { display: block; }
     .friend-link-info .fl-key { display: block; opacity: .5; }
 }
+
+/* 计数失败或使用缓存时，给出明确状态，避免数字无声消失。 */
+.visit-statistics-status { display: block; font-size: 11px; line-height: 1.8; opacity: .8; }

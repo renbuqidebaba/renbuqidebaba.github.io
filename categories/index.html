@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。">
+    <meta name="keywords" content="分类, lewenmax,托马斯回旋,Agent Infra,Go,后端工程,工程手记,生活探索">
+    <meta name="description" content="lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -60,6 +60,9 @@
 
 
 
+<link rel="stylesheet" href="/css/browse.css">
+
+
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -67,7 +70,7 @@
 </head>
 
 
-<body class="matery-foundation">
+<body class="matery-foundation browse-page">
     
 <header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
@@ -162,7 +165,7 @@
         <div class="logo-name">lewenmax</div>
         <div class="logo-desc">
             
-            lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。
+            lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。
             
         </div>
     </div>
@@ -237,168 +240,296 @@
 </header>
 
 
-    <div class="bg-cover pd-header about-cover">
-    <div class="container">
-    <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                工程与研究手记
-                
-            </div>
+    
 
-            <div class="description center-align">
-                
-                <span id="subtitle"></span>
-                <script src="/libs/typed/typed.js"></script>
-                <script>
-                    var typed = new Typed("#subtitle", {
-                        strings: [ 
-                            
-                                "从来没有真正的绝境, 只有心灵的迷途",
-                            
-                                "Never really desperate, only the lost of the soul",
-                            
-                        ],
-                        startDelay: 300,
-                        typeSpeed: 100,
-                        loop: true,
-                        backSpeed: 50,
-                        showCursor: true
-                    });
-                </script>
-                
-            </div>
-        </div>
-    </div>
+<section class="bg-cover pd-header browse-cover mp-cover-agent" >
+    <div class="container center-align">
+<div class="browse-breadcrumb">
+<a href="/">首页</a>
+<span>/</span>
+
+<span>
+分类与专题
+</span>
+</div>
+<h1>
+分类与专题
+</h1>
+<p>
+按兴趣找到文章，也沿着一个问题读下去。
+</p>
+</div>
+</section>
+
+<main class="content browse-main">
+<div class="container">
+    <div class="card browse-nav-card">
+<div class="card-content browse-nav" role="navigation" aria-label="内容栏目">
+<a href="/categories/" aria-current="page">分类总览</a>
+
+<a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" >
+<i class="fas fa-code" aria-hidden="true">
+</i>
+工程能力
+<span>
+6
+</span>
+</a>
+
+<a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" >
+<i class="fas fa-project-diagram" aria-hidden="true">
+</i>
+算法心得
+<span>
+10
+</span>
+</a>
+
+<a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" >
+<i class="fas fa-camera-retro" aria-hidden="true">
+</i>
+日常随笔
+<span>
+7
+</span>
+</a>
+
+<a href="/archives/" class="browse-nav-archive" >按时间归档 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</a>
+</div>
 </div>
 
-
-<script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-</script>
-<script>
-    
-      var bannerUrl = "/medias/featureimages/" + Math.floor(Math.random() * 24) + '.jpg';
-    
-    $('.bg-cover.about-cover').css('background-image', 'url(' + bannerUrl + ')');
-
-</script>
-
-
-    </div>
+    <section aria-labelledby="browse-sections-title">
+<div class="browse-heading">
+<div>
+<span class="browse-eyebrow">CATEGORIES</span>
+<h2 id="browse-sections-title">技术与生活，分开慢慢读</h2>
 </div>
-
-<main class="content">
-
-    
-
-<div id="category-cloud" class="container chip-container">
-    <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
-            </div>
-            <div class="tag-chips">
-                
-                
-                
-                <a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" title="工程能力: 6">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">工程能力
-                        <span class="tag-length">6</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" title="算法心得: 10">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">算法心得
-                        <span class="tag-length">10</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" title="日常随笔: 7">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D5F5E3;">日常随笔
-                        <span class="tag-length">7</span>
-                    </span>
-                </a>
-                
-                
-            </div>
-        </div>
-    </div>
+<p>
+23 篇记录，慢慢积累。</p>
 </div>
+    <div class="browse-grid">
 
-
-    
-    <style type="text/css">
-    #category-radar {
-        width: 100%;
-        height: 360px;
-    }
-</style>
-
-<div class="container" data-aos="fade-up">
-    <div class="card">
-        <div id="category-radar" class="card-content"></div>
-    </div>
+<a class="card browse-section-card" href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/">
+<div class="browse-section-cover mp-cover-go" >
+<span class="browse-cover-word">
+BUILD
+</span>
+<span class="browse-cover-count">
+6 篇手记</span>
 </div>
+<div class="card-content">
+<h3>
+<i class="fas fa-code" aria-hidden="true">
+</i>
+工程能力
+<span aria-hidden="true">↗</span>
+</h3>
+<p>
+从 Go 后端走向 Agent Infra，把系统原理、工程实践与新的尝试串起来。
+</p>
+<span class="browse-enter">翻开这个栏目 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</span>
+</div>
+</a>
 
-<script type="text/javascript" src="/libs/echarts/echarts.min.js"></script>
-<script type="text/javascript">
-    let radarChart = echarts.init(document.getElementById('category-radar'));
+<a class="card browse-section-card" href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/">
+<div class="browse-section-cover mp-cover-algorithm" >
+<span class="browse-cover-word">
+ALGO
+</span>
+<span class="browse-cover-count">
+10 篇手记</span>
+</div>
+<div class="card-content">
+<h3>
+<i class="fas fa-project-diagram" aria-hidden="true">
+</i>
+算法心得
+<span aria-hidden="true">↗</span>
+</h3>
+<p>
+整理数据结构、解题思路与常用模板，慢慢建立自己的工具箱。
+</p>
+<span class="browse-enter">翻开这个栏目 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</span>
+</div>
+</a>
 
-    
+<a class="card browse-section-card" href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/">
+<div class="browse-section-cover mp-cover-agent" style="background-image: url('/images/life7.webp')">
+<span class="browse-cover-word">
+LIFE
+</span>
+<span class="browse-cover-count">
+7 篇手记</span>
+</div>
+<div class="card-content">
+<h3>
+<i class="fas fa-camera-retro" aria-hidden="true">
+</i>
+日常随笔
+<span aria-hidden="true">↗</span>
+</h3>
+<p>
+留下走过的城市、出游的计划，以及代码之外的日常。
+</p>
+<span class="browse-enter">翻开这个栏目 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</span>
+</div>
+</a>
 
-    let option = {
-        title: {
-            left: 'center',
-            text: '文章分类雷达图',
-            textStyle: {
-                fontWeight: 500,
-                fontSize: 22
-            }
-        },
-        tooltip: {},
-        radar: {
-            name: {
-                textStyle: {
-                    color: '#3C4858'
-                }
-            },
-            indicator: [{"name":"工程能力","max":16},{"name":"算法心得","max":16},{"name":"日常随笔","max":16}],
-            nameGap: 5,
-            center: ['50%','55%'],
-            radius: '66%'
-        },
-        series: [{
-            type: 'radar',
-            color: ['#3ecf8e'],
-            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data : [
-                {
-                    value : [6,10,7],
-                    name : '文章分类数量'
-                }
-            ]
-        }]
-    };
+</div>
+</section>
+    <section class="browse-topics" aria-labelledby="browse-topics-title">
+<div class="browse-heading">
+<div>
+<span class="browse-eyebrow">TOPICS</span>
+<h2 id="browse-topics-title">从一个方向，深入一点</h2>
+</div>
+<p>把零散的文章，连成自己的理解。</p>
+</div>
+<div class="browse-grid">
 
-    radarChart.setOption(option);
-</script>
+<article class="card browse-topic-card">
+<div class="card-content">
+<div class="browse-topic-icon">
+<i class="fas fa-layer-group" aria-hidden="true">
+</i>
+<span>
+5 篇</span>
+</div>
+<h3>
+后端基础
+</h3>
+<p>
+语言、存储、网络与操作系统，一起理解后端系统怎样工作。
+</p>
+<ul>
 
-    
+<li>
+<a href="/2024/04/21/Go-Learning/">
+Go 语言核心知识
+<span aria-hidden="true">↗</span>
+</a>
+</li>
 
+<li>
+<a href="/2026/10/16/mysql/">
+MySQL 核心知识
+<span aria-hidden="true">↗</span>
+</a>
+</li>
+
+<li>
+<a href="/2026/10/16/redis/">
+Redis 核心知识
+<span aria-hidden="true">↗</span>
+</a>
+</li>
+
+</ul>
+<a class="browse-topic-enter" href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/#topic-backend">进入专题 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</a>
+</div>
+</article>
+
+<article class="card browse-topic-card">
+<div class="card-content">
+<div class="browse-topic-icon">
+<i class="fas fa-project-diagram" aria-hidden="true">
+</i>
+<span>
+1 篇</span>
+</div>
+<h3>
+Agent 与推理
+</h3>
+<p>
+从 Agent 的组件与上下文出发，梳理工具调用、RAG 与推理。
+</p>
+<ul>
+
+<li>
+<a href="/2026/10/15/ai-agent-llm/">
+AI Agent 与大模型
+<span aria-hidden="true">↗</span>
+</a>
+</li>
+
+</ul>
+<a class="browse-topic-enter" href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/#topic-agent">进入专题 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</a>
+</div>
+</article>
+
+<article class="card browse-topic-card">
+<div class="card-content">
+<div class="browse-topic-icon">
+<i class="fas fa-code-branch" aria-hidden="true">
+</i>
+<span>
+10 篇</span>
+</div>
+<h3>
+算法工具箱
+</h3>
+<p>
+先选对数据结构，再积累搜索、贪心与动态规划的解题方法。
+</p>
+<ul>
+
+<li>
+<a href="/2026/10/15/data-structure-cheatsheet/">
+基本数据结构速查（C++ / Go / Python）
+<span aria-hidden="true">↗</span>
+</a>
+</li>
+
+<li>
+<a href="/2026/10/15/two-pointers/">
+双指针
+<span aria-hidden="true">↗</span>
+</a>
+</li>
+
+<li>
+<a href="/2026/10/15/binary-search/">
+二分查找
+<span aria-hidden="true">↗</span>
+</a>
+</li>
+
+</ul>
+<a class="browse-topic-enter" href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/#topic-algorithms">进入专题 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</a>
+</div>
+</article>
+
+</div>
+</section>
+    <aside class="card browse-footnote">
+<div class="card-content">
+<div>
+<h2>也可以，顺着时间翻一翻。</h2>
+<p>技术笔记、生活照片和出游计划，都在归档里。</p>
+</div>
+<a href="/archives/" class="btn bg-color waves-effect waves-light">完整归档 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</a>
+</div>
+</aside>
+</div>
 </main>
+
+
 
 
     
@@ -436,6 +567,9 @@
                 &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
+            
+            
+            <span id="visit-statistics-status" class="visit-statistics-status" role="status" aria-live="polite">访问统计加载中…</span>
             
             <br>
 
@@ -478,36 +612,6 @@
 </div>
     </div>
 
-    
-    <!-- 不蒜子只在「远端计数请求成功」时才显示：请求失败（被网络拦截/后端挂了）时，
-         容器保持 display:none，避免出现「总访问量：」后面空着的坏样式。
-         成功由 busuanzi 自身的 shows() 置为 inline；这里在拿到数值后还原成 CSS 默认显示，
-         并兜底：6 秒内仍拿不到数值就维持隐藏。 -->
-    <script>
-        (function () {
-            var ids = ['busuanzi_container_site_pv', 'busuanzi_container_site_uv', 'busuanzi_container_page_pv'];
-            var deadline = Date.now() + 6000;
-            function tick() {
-                var pending = false;
-                for (var i = 0; i < ids.length; i++) {
-                    var box = document.getElementById(ids[i]);
-                    if (!box) continue;
-                    var val = box.querySelector('[id^="busuanzi_value"]');
-                    var filled = val && val.textContent.trim() !== '';
-                    if (filled) {
-                        box.style.display = '';          /* 还原 CSS 默认（span=行内, div=块级） */
-                    } else if (Date.now() < deadline) {
-                        pending = true;                  /* 还没拿到，继续等 */
-                    } else {
-                        box.style.display = 'none';      /* 超时仍未拿到，隐藏，避免空标签 */
-                    }
-                }
-                if (pending) setTimeout(tick, 400);
-            }
-            tick();
-        })();
-    </script>
-    
 </footer>
 
 <div class="progress-bar"></div>
@@ -733,7 +837,7 @@ $(function () {
 
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script defer src="/js/visit-statistics.js" data-api="https://busuanzi.9420.ltd/api" data-site="https://renbuqidebaba.github.io" data-since="2026-10-31"></script>
     
 
     

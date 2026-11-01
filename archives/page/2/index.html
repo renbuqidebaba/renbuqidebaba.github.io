@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="归档, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。">
+    <meta name="keywords" content="归档, lewenmax,托马斯回旋,Agent Infra,Go,后端工程,工程手记,生活探索">
+    <meta name="description" content="lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -60,6 +60,9 @@
 
 
 
+<link rel="stylesheet" href="/css/browse.css">
+
+
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -67,7 +70,7 @@
 </head>
 
 
-<body class="matery-foundation">
+<body class="matery-foundation browse-page">
     
 <header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
@@ -162,7 +165,7 @@
         <div class="logo-name">lewenmax</div>
         <div class="logo-desc">
             
-            lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。
+            lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。
             
         </div>
     </div>
@@ -237,764 +240,360 @@
 </header>
 
 
-    <div class="bg-cover pd-header about-cover">
-    <div class="container">
-    <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                工程与研究手记
-                
-            </div>
+    
 
-            <div class="description center-align">
-                
-                <span id="subtitle"></span>
-                <script src="/libs/typed/typed.js"></script>
-                <script>
-                    var typed = new Typed("#subtitle", {
-                        strings: [ 
-                            
-                                "从来没有真正的绝境, 只有心灵的迷途",
-                            
-                                "Never really desperate, only the lost of the soul",
-                            
-                        ],
-                        startDelay: 300,
-                        typeSpeed: 100,
-                        loop: true,
-                        backSpeed: 50,
-                        showCursor: true
-                    });
-                </script>
-                
-            </div>
-        </div>
-    </div>
+<section class="bg-cover pd-header browse-cover mp-cover-agent" >
+    <div class="container center-align">
+<div class="browse-breadcrumb">
+<a href="/">首页</a>
+<span>/</span>
+
+<span>
+文章归档
+</span>
+</div>
+<h1>
+文章归档
+</h1>
+<p>
+把写过的东西，按时间收好。
+</p>
+</div>
+</section>
+
+<main class="content browse-main">
+<div class="container">
+    <div class="card browse-nav-card">
+<div class="card-content browse-nav" role="navigation" aria-label="内容栏目">
+<a href="/categories/" >分类总览</a>
+
+<a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" >
+<i class="fas fa-code" aria-hidden="true">
+</i>
+工程能力
+<span>
+6
+</span>
+</a>
+
+<a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" >
+<i class="fas fa-project-diagram" aria-hidden="true">
+</i>
+算法心得
+<span>
+10
+</span>
+</a>
+
+<a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" >
+<i class="fas fa-camera-retro" aria-hidden="true">
+</i>
+日常随笔
+<span>
+7
+</span>
+</a>
+
+<a href="/archives/" class="browse-nav-archive" aria-current="page">按时间归档 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</a>
+</div>
+</div>
+
+    <div class="browse-archive-layout">
+<section class="card browse-timeline" aria-labelledby="browse-archive-title">
+<div class="card-content">
+<div class="browse-archive-heading">
+<div>
+<span class="browse-eyebrow">ARCHIVE</span>
+<h2 id="browse-archive-title">
+全部归档
+</h2>
+</div>
+<p>共 23 篇 · 按发布时间倒序</p>
+</div>
+    
+<section class="browse-year" aria-labelledby="archive-year-2026">
+<div class="browse-year-heading">
+<h3 id="archive-year-2026">
+<a href="/archives/2026/">
+2026
+</a>
+</h3>
+<span>本页 5 篇</span>
+</div>
+<ol>
+
+<li class="browse-archive-row">
+<time datetime="2026-10-15">
+10.15
+</time>
+<a class="browse-archive-post" href="/2026/10/15/sorting-algorithm/">
+排序算法（快速选择 / 桶排序）
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/">
+算法心得
+</a>
+
+</span>
+</li>
+
+<li class="browse-archive-row">
+<time datetime="2026-10-15">
+10.15
+</time>
+<a class="browse-archive-post" href="/2026/10/15/binary-search/">
+二分查找
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/">
+算法心得
+</a>
+
+</span>
+</li>
+
+<li class="browse-archive-row">
+<time datetime="2026-10-15">
+10.15
+</time>
+<a class="browse-archive-post" href="/2026/10/15/two-pointers/">
+双指针
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/">
+算法心得
+</a>
+
+</span>
+</li>
+
+<li class="browse-archive-row">
+<time datetime="2026-10-15">
+10.15
+</time>
+<a class="browse-archive-post" href="/2026/10/15/greedy-algorithm/">
+贪心算法
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/">
+算法心得
+</a>
+
+</span>
+</li>
+
+<li class="browse-archive-row">
+<time datetime="2026-10-15">
+10.15
+</time>
+<a class="browse-archive-post" href="/2026/10/15/data-structure-cheatsheet/">
+基本数据结构速查（C++ / Go / Python）
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/">
+算法心得
+</a>
+
+</span>
+</li>
+
+</ol>
+</section>
+
+<section class="browse-year" aria-labelledby="archive-year-2025">
+<div class="browse-year-heading">
+<h3 id="archive-year-2025">
+<a href="/archives/2025/">
+2025
+</a>
+</h3>
+<span>本页 1 篇</span>
+</div>
+<ol>
+
+<li class="browse-archive-row">
+<time datetime="2025-03-13">
+03.13
+</time>
+<a class="browse-archive-post" href="/2025/03/13/hangzhou/">
+杭州 · 西湖与灵隐寺
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/">
+日常随笔
+</a>
+
+</span>
+</li>
+
+</ol>
+</section>
+
+<section class="browse-year" aria-labelledby="archive-year-2024">
+<div class="browse-year-heading">
+<h3 id="archive-year-2024">
+<a href="/archives/2024/">
+2024
+</a>
+</h3>
+<span>本页 4 篇</span>
+</div>
+<ol>
+
+<li class="browse-archive-row">
+<time datetime="2024-10-02">
+10.02
+</time>
+<a class="browse-archive-post" href="/2024/10/02/wuxi/">
+无锡 · 鼋头渚与惠山古镇
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/">
+日常随笔
+</a>
+
+</span>
+</li>
+
+<li class="browse-archive-row">
+<time datetime="2024-07-28">
+07.28
+</time>
+<a class="browse-archive-post" href="/2024/07/28/hello-world/">
+Hello World
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/">
+日常随笔
+</a>
+
+</span>
+</li>
+
+<li class="browse-archive-row">
+<time datetime="2024-06-10">
+06.10
+</time>
+<a class="browse-archive-post" href="/2024/06/10/nanchang/">
+南昌 · 滕王阁与八一广场
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/">
+日常随笔
+</a>
+
+</span>
+</li>
+
+<li class="browse-archive-row">
+<time datetime="2024-04-21">
+04.21
+</time>
+<a class="browse-archive-post" href="/2024/04/21/Go-Learning/">
+Go 语言核心知识
+</a>
+<span class="browse-archive-category">
+
+<a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/">
+工程能力
+</a>
+
+</span>
+</li>
+
+</ol>
+</section>
+
+    
+<div class="browse-pagination" role="navigation" aria-label="文章分页">
+
+<a href="/archives/" rel="prev">← 上一页</a>
+
+<span>第 2 / 3 页</span>
+
+<a href="/archives/page/3/" rel="next">下一页 →</a>
+
 </div>
 
 
-<script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-</script>
-<script>
-    
-      var bannerUrl = "/medias/featureimages/" + Math.floor(Math.random() * 24) + '.jpg';
-    
-    $('.bg-cover.about-cover').css('background-image', 'url(' + bannerUrl + ')');
-
-</script>
-
-
     </div>
+</section>
+<aside class="browse-archive-aside">
+<div class="card">
+<div class="card-content">
+<h2>年份索引</h2>
+<div class="browse-years" role="navigation" aria-label="按年份浏览">
+<a href="/archives/" aria-current="page">
+<span>全部记录</span>
+<span>
+23
+</span>
+</a>
+
+<a href="/archives/2026/" >
+<span>
+2026
+</span>
+<span>
+15
+</span>
+</a>
+
+<a href="/archives/2025/" >
+<span>
+2025
+</span>
+<span>
+1
+</span>
+</a>
+
+<a href="/archives/2024/" >
+<span>
+2024
+</span>
+<span>
+4
+</span>
+</a>
+
+<a href="/archives/2023/" >
+<span>
+2023
+</span>
+<span>
+3
+</span>
+</a>
+
+</div>
+</div>
 </div>
 
-<main class="content">
-
-    
-    <div class="container archive-calendar">
-    <div class="card">
-        <div id="post-calendar" class="card-content"></div>
-    </div>
+<div class="card browse-archive-tip">
+<div class="card-content">
+<h2>想按主题阅读？</h2>
+<p>去分类页，从后端基础、Agent 或算法工具箱开始。</p>
+<a href="/categories/">看看分类与专题 <span aria-hidden="true">↗</span>
+</a>
+</div>
 </div>
 
-<script type="text/javascript" src="/libs/echarts/echarts.min.js"></script>
-<script type="text/javascript">
-    let myChart = echarts.init(document.getElementById('post-calendar'));
-
-    
-
-    let option = {
-        title: {
-            top: 0,
-            text: '文章日历',
-            left: 'center',
-            textStyle: {
-                color: '#3C4858'
-            }
-        },
-        tooltip: {
-            padding: 10,
-            backgroundColor: '#555',
-            borderColor: '#777',
-            borderWidth: 1,
-            formatter: function (obj) {
-                var value = obj.value;
-                return '<div style="font-size: 14px;">' + value[0] + '：' + value[1] + '</div>';
-            }
-        },
-        visualMap: {
-            show: true,
-            showLabel: true,
-            categories: [0, 1, 2, 3, 4],
-            calculable: true,
-            inRange: {
-                symbol: 'rect',
-                color: ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127']
-            },
-            itemWidth: 12,
-            itemHeight: 12,
-            orient: 'horizontal',
-            left: 'center',
-            bottom: 0
-        },
-        calendar: [{
-            left: 'center',
-            range: ["2025-10-31", "2026-10-31"],
-            cellSize: [13, 13],
-            splitLine: {
-                show: false
-            },
-            itemStyle: {
-                color: '#196127',
-                borderColor: '#fff',
-                borderWidth: 2
-            },
-            yearLabel: {
-                show: false
-            },
-            monthLabel: {
-                nameMap: 'cn',
-                fontSize: 11
-            },
-            dayLabel: {
-                formatter: '{start}  1st',
-                nameMap: 'cn',
-                fontSize: 11
-            }
-        }],
-        series: [{
-            type: 'heatmap',
-            coordinateSystem: 'calendar',
-            calendarIndex: 0,
-            data: [["2025-10-31", 0], ["2025-11-01", 0], ["2025-11-02", 0], ["2025-11-03", 0], ["2025-11-04", 0], ["2025-11-05", 0], ["2025-11-06", 0], ["2025-11-07", 0], ["2025-11-08", 0], ["2025-11-09", 0], ["2025-11-10", 0], ["2025-11-11", 0], ["2025-11-12", 0], ["2025-11-13", 0], ["2025-11-14", 0], ["2025-11-15", 0], ["2025-11-16", 0], ["2025-11-17", 0], ["2025-11-18", 0], ["2025-11-19", 0], ["2025-11-20", 0], ["2025-11-21", 0], ["2025-11-22", 0], ["2025-11-23", 0], ["2025-11-24", 0], ["2025-11-25", 0], ["2025-11-26", 0], ["2025-11-27", 0], ["2025-11-28", 0], ["2025-11-29", 0], ["2025-11-30", 0], ["2025-12-01", 0], ["2025-12-02", 0], ["2025-12-03", 0], ["2025-12-04", 0], ["2025-12-05", 0], ["2025-12-06", 0], ["2025-12-07", 0], ["2025-12-08", 0], ["2025-12-09", 0], ["2025-12-10", 0], ["2025-12-11", 0], ["2025-12-12", 0], ["2025-12-13", 0], ["2025-12-14", 0], ["2025-12-15", 0], ["2025-12-16", 0], ["2025-12-17", 0], ["2025-12-18", 0], ["2025-12-19", 0], ["2025-12-20", 0], ["2025-12-21", 0], ["2025-12-22", 0], ["2025-12-23", 0], ["2025-12-24", 0], ["2025-12-25", 0], ["2025-12-26", 0], ["2025-12-27", 0], ["2025-12-28", 0], ["2025-12-29", 0], ["2025-12-30", 0], ["2025-12-31", 0], ["2026-01-01", 0], ["2026-01-02", 0], ["2026-01-03", 0], ["2026-01-04", 0], ["2026-01-05", 0], ["2026-01-06", 0], ["2026-01-07", 0], ["2026-01-08", 0], ["2026-01-09", 0], ["2026-01-10", 0], ["2026-01-11", 0], ["2026-01-12", 0], ["2026-01-13", 0], ["2026-01-14", 0], ["2026-01-15", 0], ["2026-01-16", 0], ["2026-01-17", 0], ["2026-01-18", 0], ["2026-01-19", 0], ["2026-01-20", 0], ["2026-01-21", 0], ["2026-01-22", 0], ["2026-01-23", 0], ["2026-01-24", 0], ["2026-01-25", 0], ["2026-01-26", 0], ["2026-01-27", 0], ["2026-01-28", 0], ["2026-01-29", 0], ["2026-01-30", 0], ["2026-01-31", 0], ["2026-02-01", 0], ["2026-02-02", 0], ["2026-02-03", 0], ["2026-02-04", 0], ["2026-02-05", 0], ["2026-02-06", 0], ["2026-02-07", 0], ["2026-02-08", 0], ["2026-02-09", 0], ["2026-02-10", 0], ["2026-02-11", 0], ["2026-02-12", 0], ["2026-02-13", 0], ["2026-02-14", 0], ["2026-02-15", 0], ["2026-02-16", 0], ["2026-02-17", 0], ["2026-02-18", 0], ["2026-02-19", 0], ["2026-02-20", 0], ["2026-02-21", 0], ["2026-02-22", 0], ["2026-02-23", 0], ["2026-02-24", 0], ["2026-02-25", 0], ["2026-02-26", 0], ["2026-02-27", 0], ["2026-02-28", 0], ["2026-03-01", 0], ["2026-03-02", 0], ["2026-03-03", 0], ["2026-03-04", 0], ["2026-03-05", 0], ["2026-03-06", 0], ["2026-03-07", 0], ["2026-03-08", 0], ["2026-03-09", 0], ["2026-03-10", 0], ["2026-03-11", 0], ["2026-03-12", 0], ["2026-03-13", 0], ["2026-03-14", 0], ["2026-03-15", 0], ["2026-03-16", 0], ["2026-03-17", 0], ["2026-03-18", 0], ["2026-03-19", 0], ["2026-03-20", 0], ["2026-03-21", 0], ["2026-03-22", 0], ["2026-03-23", 0], ["2026-03-24", 0], ["2026-03-25", 0], ["2026-03-26", 0], ["2026-03-27", 0], ["2026-03-28", 0], ["2026-03-29", 0], ["2026-03-30", 0], ["2026-03-31", 0], ["2026-04-01", 0], ["2026-04-02", 0], ["2026-04-03", 0], ["2026-04-04", 0], ["2026-04-05", 0], ["2026-04-06", 0], ["2026-04-07", 0], ["2026-04-08", 0], ["2026-04-09", 0], ["2026-04-10", 0], ["2026-04-11", 0], ["2026-04-12", 0], ["2026-04-13", 0], ["2026-04-14", 0], ["2026-04-15", 0], ["2026-04-16", 0], ["2026-04-17", 0], ["2026-04-18", 0], ["2026-04-19", 0], ["2026-04-20", 0], ["2026-04-21", 0], ["2026-04-22", 0], ["2026-04-23", 0], ["2026-04-24", 0], ["2026-04-25", 0], ["2026-04-26", 0], ["2026-04-27", 0], ["2026-04-28", 0], ["2026-04-29", 0], ["2026-04-30", 0], ["2026-05-01", 0], ["2026-05-02", 0], ["2026-05-03", 0], ["2026-05-04", 0], ["2026-05-05", 0], ["2026-05-06", 0], ["2026-05-07", 0], ["2026-05-08", 0], ["2026-05-09", 0], ["2026-05-10", 0], ["2026-05-11", 0], ["2026-05-12", 0], ["2026-05-13", 0], ["2026-05-14", 0], ["2026-05-15", 0], ["2026-05-16", 0], ["2026-05-17", 0], ["2026-05-18", 0], ["2026-05-19", 0], ["2026-05-20", 0], ["2026-05-21", 0], ["2026-05-22", 0], ["2026-05-23", 0], ["2026-05-24", 0], ["2026-05-25", 0], ["2026-05-26", 0], ["2026-05-27", 0], ["2026-05-28", 0], ["2026-05-29", 0], ["2026-05-30", 0], ["2026-05-31", 0], ["2026-06-01", 0], ["2026-06-02", 0], ["2026-06-03", 0], ["2026-06-04", 0], ["2026-06-05", 0], ["2026-06-06", 0], ["2026-06-07", 0], ["2026-06-08", 0], ["2026-06-09", 0], ["2026-06-10", 0], ["2026-06-11", 0], ["2026-06-12", 0], ["2026-06-13", 0], ["2026-06-14", 0], ["2026-06-15", 0], ["2026-06-16", 0], ["2026-06-17", 0], ["2026-06-18", 0], ["2026-06-19", 0], ["2026-06-20", 0], ["2026-06-21", 0], ["2026-06-22", 0], ["2026-06-23", 0], ["2026-06-24", 0], ["2026-06-25", 0], ["2026-06-26", 0], ["2026-06-27", 0], ["2026-06-28", 0], ["2026-06-29", 0], ["2026-06-30", 0], ["2026-07-01", 0], ["2026-07-02", 0], ["2026-07-03", 0], ["2026-07-04", 0], ["2026-07-05", 0], ["2026-07-06", 0], ["2026-07-07", 0], ["2026-07-08", 0], ["2026-07-09", 0], ["2026-07-10", 0], ["2026-07-11", 0], ["2026-07-12", 0], ["2026-07-13", 0], ["2026-07-14", 0], ["2026-07-15", 0], ["2026-07-16", 0], ["2026-07-17", 0], ["2026-07-18", 0], ["2026-07-19", 0], ["2026-07-20", 0], ["2026-07-21", 0], ["2026-07-22", 0], ["2026-07-23", 0], ["2026-07-24", 0], ["2026-07-25", 0], ["2026-07-26", 0], ["2026-07-27", 0], ["2026-07-28", 0], ["2026-07-29", 0], ["2026-07-30", 0], ["2026-07-31", 0], ["2026-08-01", 0], ["2026-08-02", 0], ["2026-08-03", 0], ["2026-08-04", 0], ["2026-08-05", 0], ["2026-08-06", 0], ["2026-08-07", 0], ["2026-08-08", 0], ["2026-08-09", 0], ["2026-08-10", 0], ["2026-08-11", 0], ["2026-08-12", 0], ["2026-08-13", 0], ["2026-08-14", 0], ["2026-08-15", 0], ["2026-08-16", 0], ["2026-08-17", 0], ["2026-08-18", 0], ["2026-08-19", 0], ["2026-08-20", 0], ["2026-08-21", 0], ["2026-08-22", 0], ["2026-08-23", 0], ["2026-08-24", 0], ["2026-08-25", 0], ["2026-08-26", 0], ["2026-08-27", 0], ["2026-08-28", 0], ["2026-08-29", 0], ["2026-08-30", 0], ["2026-08-31", 0], ["2026-09-01", 0], ["2026-09-02", 0], ["2026-09-03", 0], ["2026-09-04", 0], ["2026-09-05", 0], ["2026-09-06", 0], ["2026-09-07", 0], ["2026-09-08", 0], ["2026-09-09", 0], ["2026-09-10", 0], ["2026-09-11", 0], ["2026-09-12", 0], ["2026-09-13", 0], ["2026-09-14", 0], ["2026-09-15", 0], ["2026-09-16", 0], ["2026-09-17", 0], ["2026-09-18", 0], ["2026-09-19", 0], ["2026-09-20", 0], ["2026-09-21", 0], ["2026-09-22", 0], ["2026-09-23", 0], ["2026-09-24", 0], ["2026-09-25", 0], ["2026-09-26", 0], ["2026-09-27", 0], ["2026-09-28", 0], ["2026-09-29", 0], ["2026-09-30", 0], ["2026-10-01", 0], ["2026-10-02", 0], ["2026-10-03", 0], ["2026-10-04", 0], ["2026-10-05", 0], ["2026-10-06", 0], ["2026-10-07", 0], ["2026-10-08", 0], ["2026-10-09", 0], ["2026-10-10", 0], ["2026-10-11", 0], ["2026-10-12", 0], ["2026-10-13", 0], ["2026-10-14", 0], ["2026-10-15", 11], ["2026-10-16", 4], ["2026-10-17", 0], ["2026-10-18", 0], ["2026-10-19", 0], ["2026-10-20", 0], ["2026-10-21", 0], ["2026-10-22", 0], ["2026-10-23", 0], ["2026-10-24", 0], ["2026-10-25", 0], ["2026-10-26", 0], ["2026-10-27", 0], ["2026-10-28", 0], ["2026-10-29", 0], ["2026-10-30", 0], ["2026-10-31", 0]]
-        }]
-
-    };
-
-    myChart.setOption(option);
-</script>
-
-    
-
-    
-
-    <div id="cd-timeline" class="container">
-        
-        <div class="cd-timeline-block">
-
-            
-            
-            
-            <div class="cd-timeline-img year" data-aos="zoom-in-up">
-                <a href="/archives/2026">2026</a>
-            </div>
-            
-
-            
-            
-            
-            <div class="cd-timeline-img month" data-aos="zoom-in-up">
-                <a href="/archives/2026/10">10</a>
-            </div>
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>15</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2026/10/15/sorting-algorithm/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="排序算法（快速选择 / 桶排序）">
-                                
-                                <span class="card-title">排序算法（快速选择 / 桶排序）</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    不讲冒泡快排怎么写，只收「用排序思想解题」的两道：快速选择找第 k 大、桶排序求前 k 个高频元素。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>15</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2026/10/15/binary-search/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="二分查找">
-                                
-                                <span class="card-title">二分查找</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    二分不只是「在有序数组里找数」：只要答案具有单调性就能二分。收录区间二分的两种写法、旋转数组与峰值查找。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>15</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2026/10/15/two-pointers/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="双指针">
-                                
-                                <span class="card-title">双指针</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    双指针的三种形态——左右指针、快慢指针、滑动窗口，把 O(n²) 的暴力降到 O(n)。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>15</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2026/10/15/greedy-algorithm/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="贪心算法">
-                                
-                                <span class="card-title">贪心算法</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    分饼干、分糖果、无重叠区间、合并区间、跳跃游戏、买卖股票——每道题的贪心选择是什么、为什么成立。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>15</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2026/10/15/data-structure-cheatsheet/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="基本数据结构速查（C++ / Go / Python）">
-                                
-                                <span class="card-title">基本数据结构速查（C++ / Go / Python）</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    堆、图、排序、链表、map 在 C++ / Go / Python 三门语言里的写法对照，刷题时随手查。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-            
-            <div class="cd-timeline-img year" data-aos="zoom-in-up">
-                <a href="/archives/2025">2025</a>
-            </div>
-            
-
-            
-            
-            
-            <div class="cd-timeline-img month" data-aos="zoom-in-up">
-                <a href="/archives/2025/03">03</a>
-            </div>
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>13</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2025/03/13/hangzhou/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="杭州 · 西湖与灵隐寺">
-                                
-                                <span class="card-title">杭州 · 西湖与灵隐寺</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    2025 年 3 月的杭州，我俩的第五次出游：西湖、灵隐寺、苏堤走一遍，再补上大运河和博物馆。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2025-03-13
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                        <div class="card-action article-tags">
-                            
-                            <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/"><span class="chip bg-color">生活记录</span></a>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-            
-            <div class="cd-timeline-img year" data-aos="zoom-in-up">
-                <a href="/archives/2024">2024</a>
-            </div>
-            
-
-            
-            
-            
-            <div class="cd-timeline-img month" data-aos="zoom-in-up">
-                <a href="/archives/2024/10">10</a>
-            </div>
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>02</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2024/10/02/wuxi/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="无锡 · 鼋头渚与惠山古镇">
-                                
-                                <span class="card-title">无锡 · 鼋头渚与惠山古镇</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    2024 年 10 月的无锡，我俩的第三次出游：鼋头渚的烟花大会、惠山古镇与梅园打铁花，还有运河博物馆。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2024-10-02
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                        <div class="card-action article-tags">
-                            
-                            <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/"><span class="chip bg-color">生活记录</span></a>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-            
-            <div class="cd-timeline-img month" data-aos="zoom-in-up">
-                <a href="/archives/2024/07">07</a>
-            </div>
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>28</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2024/07/28/hello-world/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Hello World">
-                                
-                                <span class="card-title">Hello World</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    博客开张的第一篇，记一下 Hexo 建站最常敲的那几条命令。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2024-07-28
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-            
-            <div class="cd-timeline-img month" data-aos="zoom-in-up">
-                <a href="/archives/2024/06">06</a>
-            </div>
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>10</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2024/06/10/nanchang/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="南昌 · 滕王阁与八一广场">
-                                
-                                <span class="card-title">南昌 · 滕王阁与八一广场</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    2024 年 6 月的南昌：滕王阁的落霞，和八一广场的夜。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2024-06-10
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                        <div class="card-action article-tags">
-                            
-                            <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/"><span class="chip bg-color">生活记录</span></a>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-            
-            <div class="cd-timeline-img month" data-aos="zoom-in-up">
-                <a href="/archives/2024/04">04</a>
-            </div>
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>21</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2024/04/21/Go-Learning/">
-                            <div class="card-image">
-                                
-                                <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Go 语言核心知识">
-                                
-                                <span class="card-title">Go 语言核心知识</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    协程与线程的区别、make / new、defer 的执行次序、结构体 tag 与反射、init 顺序——把 Go 面试里反复问到的语言细节配上代码逐条拆开讲。
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2024-04-21
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" class="post-category">
-                                    工程能力
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
-    </div>
-
+</aside>
+</div>
+</div>
 </main>
-
-
-<div class="container paging">
-    <div class="row">
-        <div class="col s6 m4 l4">
-            
-            <a href="/archives/"
-               class="left btn-floating btn-large waves-effect waves-light bg-color">
-                <i class="fas fa-angle-left"></i>
-            </a>
-            
-        </div>
-        <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">2 / 3</div>
-        </div>
-        <div class="col s6 m4 l4">
-            
-            <a href="/archives/page/3/"
-               class="right btn-floating btn-large waves-effect waves-light bg-color">
-                <i class="fas fa-angle-right"></i>
-            </a>
-            
-        </div>
-    </div>
-</div>
 
 
 
@@ -1034,6 +633,9 @@
                 &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
+            
+            
+            <span id="visit-statistics-status" class="visit-statistics-status" role="status" aria-live="polite">访问统计加载中…</span>
             
             <br>
 
@@ -1076,36 +678,6 @@
 </div>
     </div>
 
-    
-    <!-- 不蒜子只在「远端计数请求成功」时才显示：请求失败（被网络拦截/后端挂了）时，
-         容器保持 display:none，避免出现「总访问量：」后面空着的坏样式。
-         成功由 busuanzi 自身的 shows() 置为 inline；这里在拿到数值后还原成 CSS 默认显示，
-         并兜底：6 秒内仍拿不到数值就维持隐藏。 -->
-    <script>
-        (function () {
-            var ids = ['busuanzi_container_site_pv', 'busuanzi_container_site_uv', 'busuanzi_container_page_pv'];
-            var deadline = Date.now() + 6000;
-            function tick() {
-                var pending = false;
-                for (var i = 0; i < ids.length; i++) {
-                    var box = document.getElementById(ids[i]);
-                    if (!box) continue;
-                    var val = box.querySelector('[id^="busuanzi_value"]');
-                    var filled = val && val.textContent.trim() !== '';
-                    if (filled) {
-                        box.style.display = '';          /* 还原 CSS 默认（span=行内, div=块级） */
-                    } else if (Date.now() < deadline) {
-                        pending = true;                  /* 还没拿到，继续等 */
-                    } else {
-                        box.style.display = 'none';      /* 超时仍未拿到，隐藏，避免空标签 */
-                    }
-                }
-                if (pending) setTimeout(tick, 400);
-            }
-            tick();
-        })();
-    </script>
-    
 </footer>
 
 <div class="progress-bar"></div>
@@ -1331,7 +903,7 @@ $(function () {
 
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script defer src="/js/visit-statistics.js" data-api="https://busuanzi.9420.ltd/api" data-site="https://renbuqidebaba.github.io" data-since="2026-10-31"></script>
     
 
     

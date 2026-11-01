@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL 核心知识, Go语言,Docker,后端开发,算法爱写的小菜鸡">
+    <meta name="keywords" content="MySQL 核心知识, lewenmax,托马斯回旋,Agent Infra,Go,后端工程,工程手记,生活探索">
     <meta name="description" content="索引为什么是 B+ 树而不是 B 树 / 跳表、聚簇与非聚簇、回表与索引覆盖、最左匹配，再到事务、锁、分库分表与主从同步。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -60,6 +60,7 @@
 
 
 <link rel="stylesheet" href="/css/article-reading.css">
+
 
 
 
@@ -164,7 +165,7 @@
         <div class="logo-name">lewenmax</div>
         <div class="logo-desc">
             
-            lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。
+            lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。
             
         </div>
     </div>
@@ -269,7 +270,7 @@
         <span>更新于 <time datetime="2026-10-31">2026-10-31</time></span>
         <span>12.1k 字</span>
         <span><i class="far fa-clock" aria-hidden="true"></i> 约 42 分钟</span>
-        
+        <span id="busuanzi_container_page_pv" style="display:none">阅读 <span id="busuanzi_value_page_pv"></span> 次</span>
     </div>
 </div>
 
@@ -1210,6 +1211,9 @@
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
             
+            
+            <span id="visit-statistics-status" class="visit-statistics-status" role="status" aria-live="polite">访问统计加载中…</span>
+            
             <br>
 
             <!-- 运行天数提醒. -->
@@ -1251,36 +1255,6 @@
 </div>
     </div>
 
-    
-    <!-- 不蒜子只在「远端计数请求成功」时才显示：请求失败（被网络拦截/后端挂了）时，
-         容器保持 display:none，避免出现「总访问量：」后面空着的坏样式。
-         成功由 busuanzi 自身的 shows() 置为 inline；这里在拿到数值后还原成 CSS 默认显示，
-         并兜底：6 秒内仍拿不到数值就维持隐藏。 -->
-    <script>
-        (function () {
-            var ids = ['busuanzi_container_site_pv', 'busuanzi_container_site_uv', 'busuanzi_container_page_pv'];
-            var deadline = Date.now() + 6000;
-            function tick() {
-                var pending = false;
-                for (var i = 0; i < ids.length; i++) {
-                    var box = document.getElementById(ids[i]);
-                    if (!box) continue;
-                    var val = box.querySelector('[id^="busuanzi_value"]');
-                    var filled = val && val.textContent.trim() !== '';
-                    if (filled) {
-                        box.style.display = '';          /* 还原 CSS 默认（span=行内, div=块级） */
-                    } else if (Date.now() < deadline) {
-                        pending = true;                  /* 还没拿到，继续等 */
-                    } else {
-                        box.style.display = 'none';      /* 超时仍未拿到，隐藏，避免空标签 */
-                    }
-                }
-                if (pending) setTimeout(tick, 400);
-            }
-            tick();
-        })();
-    </script>
-    
 </footer>
 
 <div class="progress-bar"></div>
@@ -1506,7 +1480,7 @@ $(function () {
 
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script defer src="/js/visit-statistics.js" data-api="https://busuanzi.9420.ltd/api" data-site="https://renbuqidebaba.github.io" data-since="2026-10-31"></script>
     
 
     

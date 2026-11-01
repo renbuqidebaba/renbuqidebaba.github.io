@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。">
+    <meta name="keywords" content="lewenmax,托马斯回旋,Agent Infra,Go,后端工程,工程手记,生活探索">
+    <meta name="description" content="lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -96,6 +96,7 @@
 
 
 <link rel="stylesheet" href="/css/matery-personal.css">
+
 
 
 
@@ -201,7 +202,7 @@
         <div class="logo-name">lewenmax</div>
         <div class="logo-desc">
             
-            lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。
+            lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。
             
         </div>
     </div>
@@ -284,7 +285,7 @@
         <div class="mp-hero-label">工程 · 研究 · 生活</div>
         <h1 id="mp-title">lewenmax</h1>
         <p class="mp-hero-name">托马斯回旋的工程研究手记</p>
-        <p class="mp-hero-description">把系统拆开看，把问题想清楚。<br>记录 Go 与后端工程、知识图谱与 Agent 推理，也记录路上的风景。</p>
+        <p class="mp-hero-description">从 Go 后端，走向 Agent Infra。<br>记录工程与研究，也探索人生更多的可能性。</p>
         <div class="mp-hero-actions"><a href="#notes" class="btn waves-effect waves-light bg-color"><i class="fas fa-book-open" aria-hidden="true"></i> 开始阅读</a><a href="#life" class="btn waves-effect waves-light mp-outline-btn"><i class="fas fa-camera" aria-hidden="true"></i> 看看生活</a></div>
     </div>
     <a class="mp-photo-credit" href="/2023/07/20/nanjing/"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 南京大学 · 2023 年夏</a>
@@ -293,7 +294,7 @@
 <main class="content mp-main">
     <div class="container">
         <section class="card mp-profile" aria-label="关于作者">
-            <div class="card-content mp-profile-inner"><img src="/medias/avatar.jpg" width="64" height="64" alt="托马斯回旋的头像" class="mp-avatar"><div class="mp-profile-copy"><h2>你好，我是托马斯回旋 <span>/ lewenmax</span></h2><p>日常写 Go 和 Python，关注后端系统与大模型推理。这里是我的笔记本，也是生活的存档。</p></div><a href="/about/" class="mp-about-link">认识一下 <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+            <div class="card-content mp-profile-inner"><img src="/medias/avatar.jpg" width="64" height="64" alt="托马斯回旋的头像" class="mp-avatar"><div class="mp-profile-copy"><h2>你好，我是托马斯回旋 <span>/ lewenmax</span></h2><p>曾做 Go 后端开发，现在是一名 Agent Infra 工程师。写代码，也去体验生活，在熟悉的边界之外继续探索。</p></div><a href="/about/" class="mp-about-link">认识一下 <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
         </section>
 
         <section class="mp-selected" aria-labelledby="mp-selected-title">
@@ -405,6 +406,9 @@
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
             
+            
+            <span id="visit-statistics-status" class="visit-statistics-status" role="status" aria-live="polite">访问统计加载中…</span>
+            
             <br>
 
             <!-- 运行天数提醒. -->
@@ -446,36 +450,6 @@
 </div>
     </div>
 
-    
-    <!-- 不蒜子只在「远端计数请求成功」时才显示：请求失败（被网络拦截/后端挂了）时，
-         容器保持 display:none，避免出现「总访问量：」后面空着的坏样式。
-         成功由 busuanzi 自身的 shows() 置为 inline；这里在拿到数值后还原成 CSS 默认显示，
-         并兜底：6 秒内仍拿不到数值就维持隐藏。 -->
-    <script>
-        (function () {
-            var ids = ['busuanzi_container_site_pv', 'busuanzi_container_site_uv', 'busuanzi_container_page_pv'];
-            var deadline = Date.now() + 6000;
-            function tick() {
-                var pending = false;
-                for (var i = 0; i < ids.length; i++) {
-                    var box = document.getElementById(ids[i]);
-                    if (!box) continue;
-                    var val = box.querySelector('[id^="busuanzi_value"]');
-                    var filled = val && val.textContent.trim() !== '';
-                    if (filled) {
-                        box.style.display = '';          /* 还原 CSS 默认（span=行内, div=块级） */
-                    } else if (Date.now() < deadline) {
-                        pending = true;                  /* 还没拿到，继续等 */
-                    } else {
-                        box.style.display = 'none';      /* 超时仍未拿到，隐藏，避免空标签 */
-                    }
-                }
-                if (pending) setTimeout(tick, 400);
-            }
-            tick();
-        })();
-    </script>
-    
 </footer>
 
 <div class="progress-bar"></div>
@@ -701,7 +675,7 @@ $(function () {
 
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script defer src="/js/visit-statistics.js" data-api="https://busuanzi.9420.ltd/api" data-site="https://renbuqidebaba.github.io" data-since="2026-10-31"></script>
     
 
     

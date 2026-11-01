@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: 算法心得, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。">
+    <meta name="keywords" content="分类: 算法心得, lewenmax,托马斯回旋,Agent Infra,Go,后端工程,工程手记,生活探索">
+    <meta name="description" content="lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -60,6 +60,9 @@
 
 
 
+<link rel="stylesheet" href="/css/browse.css">
+
+
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -67,7 +70,7 @@
 </head>
 
 
-<body class="matery-foundation">
+<body class="matery-foundation browse-page">
     
 <header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
@@ -162,7 +165,7 @@
         <div class="logo-name">lewenmax</div>
         <div class="logo-desc">
             
-            lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。
+            lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。
             
         </div>
     </div>
@@ -237,485 +240,445 @@
 </header>
 
 
-    <div class="bg-cover pd-header about-cover">
-    <div class="container">
-    <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                工程与研究手记
-                
-            </div>
+    
 
-            <div class="description center-align">
-                
-                <span id="subtitle"></span>
-                <script src="/libs/typed/typed.js"></script>
-                <script>
-                    var typed = new Typed("#subtitle", {
-                        strings: [ 
-                            
-                                "从来没有真正的绝境, 只有心灵的迷途",
-                            
-                                "Never really desperate, only the lost of the soul",
-                            
-                        ],
-                        startDelay: 300,
-                        typeSpeed: 100,
-                        loop: true,
-                        backSpeed: 50,
-                        showCursor: true
-                    });
-                </script>
-                
-            </div>
-        </div>
-    </div>
+<section class="bg-cover pd-header browse-cover mp-cover-algorithm" >
+    <div class="container center-align">
+<div class="browse-breadcrumb">
+<a href="/">首页</a>
+<span>/</span>
+
+<a href="/categories/">
+分类与专题
+</a>
+<span>/</span>
+
+<span>
+算法心得
+</span>
+</div>
+<h1>
+算法心得
+</h1>
+<p>
+整理数据结构、解题思路与常用模板，慢慢建立自己的工具箱。
+</p>
+</div>
+</section>
+
+<main class="content browse-main">
+<div class="container">
+    <div class="card browse-nav-card">
+<div class="card-content browse-nav" role="navigation" aria-label="内容栏目">
+<a href="/categories/" >分类总览</a>
+
+<a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" >
+<i class="fas fa-code" aria-hidden="true">
+</i>
+工程能力
+<span>
+6
+</span>
+</a>
+
+<a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" aria-current="page">
+<i class="fas fa-project-diagram" aria-hidden="true">
+</i>
+算法心得
+<span>
+10
+</span>
+</a>
+
+<a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" >
+<i class="fas fa-camera-retro" aria-hidden="true">
+</i>
+日常随笔
+<span>
+7
+</span>
+</a>
+
+<a href="/archives/" class="browse-nav-archive" >按时间归档 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</a>
+</div>
 </div>
 
-
-<script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-</script>
-<script>
-    
-      var bannerUrl = "/medias/featureimages/" + Math.floor(Math.random() * 24) + '.jpg';
-    
-    $('.bg-cover.about-cover').css('background-image', 'url(' + bannerUrl + ')');
-
-</script>
-
-
-    </div>
+    <div class="browse-heading browse-category-heading">
+<div>
+<span class="browse-eyebrow">
+NOTEBOOK
+</span>
+<h2>
+顺着专题，慢慢读
+</h2>
 </div>
-
-<main class="content">
-
-    
-
-<div id="category-cloud" class="container chip-container">
-    <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
-            </div>
-            <div class="tag-chips">
-                
-                
-                
-                <a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" title="工程能力: 6">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">工程能力
-                        <span class="tag-length">6</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" title="算法心得: 10">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #F5EEF8;">算法心得
-                        <span class="tag-length">10</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" title="日常随笔: 7">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D5F5E3;">日常随笔
-                        <span class="tag-length">7</span>
-                    </span>
-                </a>
-                
-                
-            </div>
-        </div>
-    </div>
+<p>共 10 篇
+</p>
 </div>
+    
+<section class="browse-topic-section" id="topic-algorithms" aria-labelledby="topic-title-algorithms">
+<div class="browse-topic-heading">
+<div>
+<h3 id="topic-title-algorithms">
+算法工具箱
+<span>
+10 篇</span>
+</h3>
+<p>
+先选对数据结构，再积累搜索、贪心与动态规划的解题方法。
+</p>
+</div>
+</div>
+<div class="browse-grid ">
 
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/data-structure-cheatsheet/" aria-label="阅读 基本数据结构速查（C++ / Go / Python）">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/data-structure-cheatsheet/">
+基本数据结构速查（C++ / Go / Python）
+</a>
+</h4>
+<p>
+堆、图、排序、链表、map 在 C++ / Go / Python 三门语言里的写法对照，刷题时随手查。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/data-structure-cheatsheet/">
+约 9 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/two-pointers/" aria-label="阅读 双指针">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/two-pointers/">
+双指针
+</a>
+</h4>
+<p>
+双指针的三种形态——左右指针、快慢指针、滑动窗口，把 O(n²) 的暴力降到 O(n)。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/two-pointers/">
+约 8 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/binary-search/" aria-label="阅读 二分查找">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/binary-search/">
+二分查找
+</a>
+</h4>
+<p>
+二分不只是「在有序数组里找数」：只要答案具有单调性就能二分。收录区间二分的两种写法、旋转数组与峰值查找。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/binary-search/">
+约 7 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/linked-list/" aria-label="阅读 链表">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/linked-list/">
+链表
+</a>
+</h4>
+<p>
+旋转链表、删除倒数第 N 个节点、合并 K 个升序链表、反转链表与 K 个一组翻转。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/linked-list/">
+约 11 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/binary-tree/" aria-label="阅读 二叉树与多叉树">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/binary-tree/">
+二叉树与多叉树
+</a>
+</h4>
+<p>
+中序与层序遍历、二叉树的深度和直径、右视图、对称判断、BST 第 k 小与合法性验证——二叉树题的 DFS / BFS 套路。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/binary-tree/">
+约 18 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/search-algorithm/" aria-label="阅读 搜索算法（DFS / BFS / 回溯 / 拓扑排序）">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/search-algorithm/">
+搜索算法（DFS / BFS / 回溯 / 拓扑排序）
+</a>
+</h4>
+<p>
+DFS 暴搜与洪水填充、BFS 最短路、回溯（全排列 / 组合 / 子集 / 括号生成）与拓扑排序的模板和典型题。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/search-algorithm/">
+约 28 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/greedy-algorithm/" aria-label="阅读 贪心算法">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/greedy-algorithm/">
+贪心算法
+</a>
+</h4>
+<p>
+分饼干、分糖果、无重叠区间、合并区间、跳跃游戏、买卖股票——每道题的贪心选择是什么、为什么成立。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/greedy-algorithm/">
+约 8 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/dynamic-programming/" aria-label="阅读 动态规划">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/dynamic-programming/">
+动态规划
+</a>
+</h4>
+<p>
+一维 DP、子序列（LIS / LCS / 编辑距离）、二维 DP、分割类问题（完全平方数、解码方式、单词拆分）。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/dynamic-programming/">
+约 23 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/sorting-algorithm/" aria-label="阅读 排序算法（快速选择 / 桶排序）">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/sorting-algorithm/">
+排序算法（快速选择 / 桶排序）
+</a>
+</h4>
+<p>
+不讲冒泡快排怎么写，只收「用排序思想解题」的两道：快速选择找第 k 大、桶排序求前 k 个高频元素。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/sorting-algorithm/">
+约 5 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover  mp-cover-algorithm" href="/2026/10/15/data-structure-tricks/" aria-label="阅读 数据结构和技巧（单调栈 / 单调队列 / Trie）">
+
+<span class="browse-post-symbol" aria-hidden="true">
+ALGO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+DATA STRUCTURES · PROBLEM SOLVING
+</span>
+
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2026/10/15/data-structure-tricks/">
+数据结构和技巧（单调栈 / 单调队列 / Trie）
+</a>
+</h4>
+<p>
+单调栈（柱状图最大矩形、每日温度）、单调队列（滑动窗口最大值），以及用栈解字符串解码、最小栈。
+</p>
+<div class="browse-post-meta">
+<time datetime="2026-10-15">
+2026-10-15
+</time>
+<a href="/2026/10/15/data-structure-tricks/">
+约 16 分钟阅读 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+</div>
+</section>
 
     
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/binary-tree/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="二叉树与多叉树">
-                            
-                            <span class="card-title">二叉树与多叉树</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                中序与层序遍历、二叉树的深度和直径、右视图、对称判断、BST 第 k 小与合法性验证——二叉树题的 DFS / BFS 套路。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/linked-list/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="链表">
-                            
-                            <span class="card-title">链表</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                旋转链表、删除倒数第 N 个节点、合并 K 个升序链表、反转链表与 K 个一组翻转。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/dynamic-programming/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="动态规划">
-                            
-                            <span class="card-title">动态规划</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                一维 DP、子序列（LIS / LCS / 编辑距离）、二维 DP、分割类问题（完全平方数、解码方式、单词拆分）。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/data-structure-tricks/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="数据结构和技巧（单调栈 / 单调队列 / Trie）">
-                            
-                            <span class="card-title">数据结构和技巧（单调栈 / 单调队列 / Trie）</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                单调栈（柱状图最大矩形、每日温度）、单调队列（滑动窗口最大值），以及用栈解字符串解码、最小栈。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/search-algorithm/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="搜索算法（DFS / BFS / 回溯 / 拓扑排序）">
-                            
-                            <span class="card-title">搜索算法（DFS / BFS / 回溯 / 拓扑排序）</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                DFS 暴搜与洪水填充、BFS 最短路、回溯（全排列 / 组合 / 子集 / 括号生成）与拓扑排序的模板和典型题。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/sorting-algorithm/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="排序算法（快速选择 / 桶排序）">
-                            
-                            <span class="card-title">排序算法（快速选择 / 桶排序）</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                不讲冒泡快排怎么写，只收「用排序思想解题」的两道：快速选择找第 k 大、桶排序求前 k 个高频元素。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/binary-search/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="二分查找">
-                            
-                            <span class="card-title">二分查找</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                二分不只是「在有序数组里找数」：只要答案具有单调性就能二分。收录区间二分的两种写法、旋转数组与峰值查找。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/two-pointers/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="双指针">
-                            
-                            <span class="card-title">双指针</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                双指针的三种形态——左右指针、快慢指针、滑动窗口，把 O(n²) 的暴力降到 O(n)。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/greedy-algorithm/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="贪心算法">
-                            
-                            <span class="card-title">贪心算法</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                分饼干、分糖果、无重叠区间、合并区间、跳跃游戏、买卖股票——每道题的贪心选择是什么、为什么成立。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2026/10/15/data-structure-cheatsheet/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="基本数据结构速查（C++ / Go / Python）">
-                            
-                            <span class="card-title">基本数据结构速查（C++ / Go / Python）</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                堆、图、排序、链表、map 在 C++ / Go / Python 三门语言里的写法对照，刷题时随手查。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2026-10-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" class="post-category">
-                                    算法心得
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-        </div>
-    </article>
+</div>
 </main>
 
 
@@ -756,6 +719,9 @@
                 &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
+            
+            
+            <span id="visit-statistics-status" class="visit-statistics-status" role="status" aria-live="polite">访问统计加载中…</span>
             
             <br>
 
@@ -798,36 +764,6 @@
 </div>
     </div>
 
-    
-    <!-- 不蒜子只在「远端计数请求成功」时才显示：请求失败（被网络拦截/后端挂了）时，
-         容器保持 display:none，避免出现「总访问量：」后面空着的坏样式。
-         成功由 busuanzi 自身的 shows() 置为 inline；这里在拿到数值后还原成 CSS 默认显示，
-         并兜底：6 秒内仍拿不到数值就维持隐藏。 -->
-    <script>
-        (function () {
-            var ids = ['busuanzi_container_site_pv', 'busuanzi_container_site_uv', 'busuanzi_container_page_pv'];
-            var deadline = Date.now() + 6000;
-            function tick() {
-                var pending = false;
-                for (var i = 0; i < ids.length; i++) {
-                    var box = document.getElementById(ids[i]);
-                    if (!box) continue;
-                    var val = box.querySelector('[id^="busuanzi_value"]');
-                    var filled = val && val.textContent.trim() !== '';
-                    if (filled) {
-                        box.style.display = '';          /* 还原 CSS 默认（span=行内, div=块级） */
-                    } else if (Date.now() < deadline) {
-                        pending = true;                  /* 还没拿到，继续等 */
-                    } else {
-                        box.style.display = 'none';      /* 超时仍未拿到，隐藏，避免空标签 */
-                    }
-                }
-                if (pending) setTimeout(tick, 400);
-            }
-            tick();
-        })();
-    </script>
-    
 </footer>
 
 <div class="progress-bar"></div>
@@ -1053,7 +989,7 @@ $(function () {
 
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script defer src="/js/visit-statistics.js" data-api="https://busuanzi.9420.ltd/api" data-site="https://renbuqidebaba.github.io" data-since="2026-10-31"></script>
     
 
     

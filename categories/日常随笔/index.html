@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: 日常随笔, Go语言,Docker,后端开发,算法爱写的小菜鸡">
-    <meta name="description" content="lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。">
+    <meta name="keywords" content="分类: 日常随笔, lewenmax,托马斯回旋,Agent Infra,Go,后端工程,工程手记,生活探索">
+    <meta name="description" content="lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -60,6 +60,9 @@
 
 
 
+<link rel="stylesheet" href="/css/browse.css">
+
+
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
@@ -67,7 +70,7 @@
 </head>
 
 
-<body class="matery-foundation">
+<body class="matery-foundation browse-page">
     
 <header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
@@ -162,7 +165,7 @@
         <div class="logo-name">lewenmax</div>
         <div class="logo-desc">
             
-            lewenmax / 托马斯回旋的个人手记。记录 Go 与后端工程、知识图谱与 Agent 推理，也记录生活与旅行。
+            lewenmax / 托马斯回旋的工程与生活手记。从 Go 后端开发转向 Agent Infra，记录工程实践、研究思考，也探索人生更多的可能性。
             
         </div>
     </div>
@@ -237,422 +240,351 @@
 </header>
 
 
-    <div class="bg-cover pd-header about-cover">
-    <div class="container">
-    <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                工程与研究手记
-                
-            </div>
+    
 
-            <div class="description center-align">
-                
-                <span id="subtitle"></span>
-                <script src="/libs/typed/typed.js"></script>
-                <script>
-                    var typed = new Typed("#subtitle", {
-                        strings: [ 
-                            
-                                "从来没有真正的绝境, 只有心灵的迷途",
-                            
-                                "Never really desperate, only the lost of the soul",
-                            
-                        ],
-                        startDelay: 300,
-                        typeSpeed: 100,
-                        loop: true,
-                        backSpeed: 50,
-                        showCursor: true
-                    });
-                </script>
-                
-            </div>
-        </div>
-    </div>
+<section class="bg-cover pd-header browse-cover mp-cover-agent" style="background-image: url('/images/life7.webp')">
+    <div class="container center-align">
+<div class="browse-breadcrumb">
+<a href="/">首页</a>
+<span>/</span>
+
+<a href="/categories/">
+分类与专题
+</a>
+<span>/</span>
+
+<span>
+日常随笔
+</span>
+</div>
+<h1>
+日常随笔
+</h1>
+<p>
+留下走过的城市、出游的计划，以及代码之外的日常。
+</p>
+</div>
+</section>
+
+<main class="content browse-main">
+<div class="container">
+    <div class="card browse-nav-card">
+<div class="card-content browse-nav" role="navigation" aria-label="内容栏目">
+<a href="/categories/" >分类总览</a>
+
+<a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" >
+<i class="fas fa-code" aria-hidden="true">
+</i>
+工程能力
+<span>
+6
+</span>
+</a>
+
+<a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" >
+<i class="fas fa-project-diagram" aria-hidden="true">
+</i>
+算法心得
+<span>
+10
+</span>
+</a>
+
+<a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" aria-current="page">
+<i class="fas fa-camera-retro" aria-hidden="true">
+</i>
+日常随笔
+<span>
+7
+</span>
+</a>
+
+<a href="/archives/" class="browse-nav-archive" >按时间归档 <i class="fas fa-arrow-right" aria-hidden="true">
+</i>
+</a>
+</div>
 </div>
 
-
-<script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-</script>
-<script>
-    
-      var bannerUrl = "/medias/featureimages/" + Math.floor(Math.random() * 24) + '.jpg';
-    
-    $('.bg-cover.about-cover').css('background-image', 'url(' + bannerUrl + ')');
-
-</script>
-
-
-    </div>
+    <div class="browse-heading browse-category-heading">
+<div>
+<span class="browse-eyebrow">
+AWAY FROM KEYBOARD
+</span>
+<h2>
+风景、计划，与生活的切片
+</h2>
 </div>
-
-<main class="content">
-
-    
-
-<div id="category-cloud" class="container chip-container">
-    <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
-            </div>
-            <div class="tag-chips">
-                
-                
-                
-                <a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" title="工程能力: 6">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">工程能力
-                        <span class="tag-length">6</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E7%AE%97%E6%B3%95%E5%BF%83%E5%BE%97/" title="算法心得: 10">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">算法心得
-                        <span class="tag-length">10</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" title="日常随笔: 7">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #D5F5E3;">日常随笔
-                        <span class="tag-length">7</span>
-                    </span>
-                </a>
-                
-                
-            </div>
-        </div>
-    </div>
+<p>共 7 篇
+</p>
 </div>
+    
+<section class="browse-topic-section" id="topic-more" aria-labelledby="topic-title-more">
+<div class="browse-topic-heading">
+<div>
+<h3 id="topic-title-more">
+生活的存档
+<span>
+7 篇</span>
+</h3>
+<p>
+留下走过的城市、出游的计划，以及代码之外的日常。
+</p>
+</div>
+</div>
+<div class="browse-grid ">
 
+
+<article class="card browse-post-card">
+<a class="browse-post-cover browse-life-cover mp-cover-agent" href="/2025/03/13/hangzhou/" aria-label="阅读 杭州 · 西湖与灵隐寺">
+
+<span class="browse-post-symbol" aria-hidden="true">
+LIFE
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+TRAVEL PLANS &amp; EVERYDAY NOTES
+</span>
+
+
+<span class="browse-life-date">
+2025.03
+</span>
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2025/03/13/hangzhou/">
+杭州 · 西湖与灵隐寺
+</a>
+</h4>
+<p>
+2025 年 3 月的杭州，我俩的第五次出游：西湖、灵隐寺、苏堤走一遍，再补上大运河和博物馆。
+</p>
+<div class="browse-post-meta">
+<time datetime="2025-03-13">
+2025-03-13
+</time>
+<a href="/2025/03/13/hangzhou/">
+翻开记录 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover browse-life-cover mp-cover-agent" href="/2024/10/02/wuxi/" aria-label="阅读 无锡 · 鼋头渚与惠山古镇">
+
+<span class="browse-post-symbol" aria-hidden="true">
+LIFE
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+TRAVEL PLANS &amp; EVERYDAY NOTES
+</span>
+
+
+<span class="browse-life-date">
+2024.10
+</span>
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2024/10/02/wuxi/">
+无锡 · 鼋头渚与惠山古镇
+</a>
+</h4>
+<p>
+2024 年 10 月的无锡，我俩的第三次出游：鼋头渚的烟花大会、惠山古镇与梅园打铁花，还有运河博物馆。
+</p>
+<div class="browse-post-meta">
+<time datetime="2024-10-02">
+2024-10-02
+</time>
+<a href="/2024/10/02/wuxi/">
+翻开记录 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover browse-life-cover mp-cover-agent" href="/2024/07/28/hello-world/" aria-label="阅读 Hello World">
+
+<span class="browse-post-symbol" aria-hidden="true">
+HELLO
+</span>
+<span class="browse-post-caption" aria-hidden="true">
+THE FIRST NOTE
+</span>
+
+
+<span class="browse-life-date">
+2024.07
+</span>
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2024/07/28/hello-world/">
+Hello World
+</a>
+</h4>
+<p>
+博客开张的第一篇，记一下 Hexo 建站最常敲的那几条命令。
+</p>
+<div class="browse-post-meta">
+<time datetime="2024-07-28">
+2024-07-28
+</time>
+<a href="/2024/07/28/hello-world/">
+翻开记录 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover browse-life-cover mp-cover-agent" href="/2024/06/10/nanchang/" aria-label="阅读 南昌 · 滕王阁与八一广场">
+
+<img src="/images/life38.webp" width="960" height="640" alt="南昌滕王阁与庭院" loading="lazy" decoding="async">
+
+
+<span class="browse-life-date">
+2024.06
+</span>
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2024/06/10/nanchang/">
+南昌 · 滕王阁与八一广场
+</a>
+</h4>
+<p>
+2024 年 6 月的南昌：滕王阁的落霞，和八一广场的夜。
+</p>
+<div class="browse-post-meta">
+<time datetime="2024-06-10">
+2024-06-10
+</time>
+<a href="/2024/06/10/nanchang/">
+翻开记录 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover browse-life-cover mp-cover-agent" href="/2023/12/15/xian/" aria-label="阅读 西安 · 两个人一起走的一段路">
+
+<img src="/images/life18.webp" width="960" height="640" alt="夜晚灯光下的西安钟楼" loading="lazy" decoding="async">
+
+
+<span class="browse-life-date">
+2023.12
+</span>
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2023/12/15/xian/">
+西安 · 两个人一起走的一段路
+</a>
+</h4>
+<p>
+2023 年 12 月的西安，两个人一起走的一段路。
+</p>
+<div class="browse-post-meta">
+<time datetime="2023-12-15">
+2023-12-15
+</time>
+<a href="/2023/12/15/xian/">
+翻开记录 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover browse-life-cover mp-cover-agent" href="/2023/07/20/nanjing/" aria-label="阅读 南京 · 南京大学与鸡鸣寺">
+
+<img src="/images/life7.webp" width="960" height="640" alt="南京大学绿树环绕的校园建筑" loading="lazy" decoding="async">
+
+
+<span class="browse-life-date">
+2023.07
+</span>
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2023/07/20/nanjing/">
+南京 · 南京大学与鸡鸣寺
+</a>
+</h4>
+<p>
+2023 年 7 月的南京：南京大学的树荫，和鸡鸣寺的香火。
+</p>
+<div class="browse-post-meta">
+<time datetime="2023-07-20">
+2023-07-20
+</time>
+<a href="/2023/07/20/nanjing/">
+翻开记录 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+
+<article class="card browse-post-card">
+<a class="browse-post-cover browse-life-cover mp-cover-agent" href="/2023/07/10/guangzhou/" aria-label="阅读 广州 · 中山大学与广州塔">
+
+<img src="/images/life5.webp" width="960" height="640" alt="广州 · 中山大学与广州塔" loading="lazy" decoding="async">
+
+
+<span class="browse-life-date">
+2023.07
+</span>
+
+</a>
+<div class="card-content">
+<h4>
+<a href="/2023/07/10/guangzhou/">
+广州 · 中山大学与广州塔
+</a>
+</h4>
+<p>
+2023 年 7 月的广州：中山大学的老校舍，和夜里亮起来的广州塔。
+</p>
+<div class="browse-post-meta">
+<time datetime="2023-07-10">
+2023-07-10
+</time>
+<a href="/2023/07/10/guangzhou/">
+翻开记录 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+</article>
+
+
+</div>
+</section>
 
     
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2025/03/13/hangzhou/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="杭州 · 西湖与灵隐寺">
-                            
-                            <span class="card-title">杭州 · 西湖与灵隐寺</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                2025 年 3 月的杭州，我俩的第五次出游：西湖、灵隐寺、苏堤走一遍，再补上大运河和博物馆。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-13
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">
-                            <span class="chip bg-color">生活记录</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2024/10/02/wuxi/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="无锡 · 鼋头渚与惠山古镇">
-                            
-                            <span class="card-title">无锡 · 鼋头渚与惠山古镇</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                2024 年 10 月的无锡，我俩的第三次出游：鼋头渚的烟花大会、惠山古镇与梅园打铁花，还有运河博物馆。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-10-02
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">
-                            <span class="chip bg-color">生活记录</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2024/07/28/hello-world/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Hello World">
-                            
-                            <span class="card-title">Hello World</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                博客开张的第一篇，记一下 Hexo 建站最常敲的那几条命令。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-28
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2024/06/10/nanchang/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="南昌 · 滕王阁与八一广场">
-                            
-                            <span class="card-title">南昌 · 滕王阁与八一广场</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                2024 年 6 月的南昌：滕王阁的落霞，和八一广场的夜。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-06-10
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">
-                            <span class="chip bg-color">生活记录</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2023/12/15/xian/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="西安 · 两个人一起走的一段路">
-                            
-                            <span class="card-title">西安 · 两个人一起走的一段路</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                2023 年 12 月的西安，两个人一起走的一段路。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">
-                            <span class="chip bg-color">生活记录</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2023/07/20/nanjing/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="南京 · 南京大学与鸡鸣寺">
-                            
-                            <span class="card-title">南京 · 南京大学与鸡鸣寺</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                2023 年 7 月的南京：南京大学的树荫，和鸡鸣寺的香火。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-20
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">
-                            <span class="chip bg-color">生活记录</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2023/07/10/guangzhou/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="广州 · 中山大学与广州塔">
-                            
-                            <span class="card-title">广州 · 中山大学与广州塔</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                2023 年 7 月的广州：中山大学的老校舍，和夜里亮起来的广州塔。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-10
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    日常随笔
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/">
-                            <span class="chip bg-color">生活记录</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-        </div>
-    </article>
+</div>
 </main>
 
 
@@ -693,6 +625,9 @@
                 &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
+            
+            
+            <span id="visit-statistics-status" class="visit-statistics-status" role="status" aria-live="polite">访问统计加载中…</span>
             
             <br>
 
@@ -735,36 +670,6 @@
 </div>
     </div>
 
-    
-    <!-- 不蒜子只在「远端计数请求成功」时才显示：请求失败（被网络拦截/后端挂了）时，
-         容器保持 display:none，避免出现「总访问量：」后面空着的坏样式。
-         成功由 busuanzi 自身的 shows() 置为 inline；这里在拿到数值后还原成 CSS 默认显示，
-         并兜底：6 秒内仍拿不到数值就维持隐藏。 -->
-    <script>
-        (function () {
-            var ids = ['busuanzi_container_site_pv', 'busuanzi_container_site_uv', 'busuanzi_container_page_pv'];
-            var deadline = Date.now() + 6000;
-            function tick() {
-                var pending = false;
-                for (var i = 0; i < ids.length; i++) {
-                    var box = document.getElementById(ids[i]);
-                    if (!box) continue;
-                    var val = box.querySelector('[id^="busuanzi_value"]');
-                    var filled = val && val.textContent.trim() !== '';
-                    if (filled) {
-                        box.style.display = '';          /* 还原 CSS 默认（span=行内, div=块级） */
-                    } else if (Date.now() < deadline) {
-                        pending = true;                  /* 还没拿到，继续等 */
-                    } else {
-                        box.style.display = 'none';      /* 超时仍未拿到，隐藏，避免空标签 */
-                    }
-                }
-                if (pending) setTimeout(tick, 400);
-            }
-            tick();
-        })();
-    </script>
-    
 </footer>
 
 <div class="progress-bar"></div>
@@ -990,7 +895,7 @@ $(function () {
 
     
     
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    <script defer src="/js/visit-statistics.js" data-api="https://busuanzi.9420.ltd/api" data-site="https://renbuqidebaba.github.io" data-since="2026-10-31"></script>
     
 
     
