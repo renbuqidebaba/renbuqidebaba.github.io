@@ -71,7 +71,9 @@
             const identity = read(identityKey);
             if (identity) headers.Authorization = 'Bearer ' + identity;
             const response = await fetch(api.href, {
-                method, headers, credentials: 'omit', referrerPolicy: 'no-referrer', signal: controller.signal
+                method, headers, credentials: 'omit', referrerPolicy: 'no-referrer', signal: controller.signal,
+                // Match the provider's empty-body POST, including HTTP/2 requests.
+                ...(method === 'POST' ? { body: '' } : {})
             });
             if (!response.ok) throw new Error('Statistics unavailable');
             const result = await response.json();
