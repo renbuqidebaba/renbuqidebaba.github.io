@@ -21,3 +21,26 @@ body.matery-foundation.DarkMode .mp-article-caption { color: #e0ece7; }
     body.matery-foundation .mp-article-cover .post-title { font-size: 26px; }
     body.matery-foundation .mp-article-caption { font-size: 8px; letter-spacing: .5px; }
 }
+
+/* 回旋 L：同一标记贯穿导航与手机菜单，深色模式保留品牌识别。 */
+.matery-foundation header .brand-logo > a { display: inline-flex; align-items: center; gap: 9px; height: 64px; }
+.matery-foundation header .brand-logo .logo-img { display: block; width: 40px; height: 40px; padding: 0; object-fit: contain; }
+.matery-foundation header .brand-logo .logo-span { font-size: 24px; font-weight: 550; letter-spacing: -.65px; }
+body.matery-foundation.DarkMode header .brand-logo .logo-img { display: block; }
+.matery-foundation header .nav-menu .nav-item > a > i:not(.fa-chevron-down) { display: none; }
+.matery-foundation header .nav-menu .nav-item > a { padding-inline: 16px; font-size: 13px; }
+.matery-foundation header .side-nav .mobile-head .logo-img { display: block; width: 64px; height: 64px; padding: 0; margin: 25px 0 12px 6px; }
+.matery-foundation header .side-nav .mobile-head .logo-name { margin-top: 0; padding-left: 10px; }
+.matery-foundation header .side-nav .mobile-head .logo-desc { margin-top: 7px; padding-bottom: 20px; line-height: 1.7; }
+@media (max-width: 600px) {
+    .matery-foundation header .brand-logo > a { height: 56px; gap: 7px; }
+    .matery-foundation header .brand-logo .logo-img { width: 34px; height: 34px; }
+    .matery-foundation header .brand-logo .logo-span { font-size: 22px; }
+}
+/* 菜单在遮罩之上；明确深色配色，避免旧主题反色滤镜改变新标记。 */
+.matery-foundation header.navbar-fixed { z-index: 1000; }
+.matery-foundation header .side-nav .mobile-head { background: #315547 !important; background-image: none !important; }
+body.matery-foundation.DarkMode header .side-nav { filter: none; background-color: #252f2b; }
+body.matery-foundation.DarkMode header .side-nav .mobile-head :is(.logo-name,.logo-desc),
+body.matery-foundation.DarkMode header .side-nav .menu-list a { color: #e5ece3 !important; }
+body.matery-foundation.DarkMode header .logo-img { filter: none !important; -webkit-filter: none !important; }

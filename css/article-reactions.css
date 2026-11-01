@@ -1,0 +1,28 @@
+/* 所有文章共用，Giscus 只在读者展开后加载。 */
+.article-reactions { margin: 24px 0; scroll-margin-top: 84px; }
+.article-reactions > .card-content { padding: 28px 32px; }
+body .article-reactions h2 { font-size: 20px; font-weight: 550; line-height: 1.6; margin: 0 0 8px; color: #34495e; }
+.article-reactions .article-reactions-hint { font-size: 12px; line-height: 1.9; color: #74837d; margin: 0 0 20px; }
+.article-reactions summary { display: flex; align-items: center; gap: 9px; width: fit-content; padding: 10px 17px; border: 1px solid #d6e5db; background: #eff6f1; border-radius: 24px; color: #287451; font-size: 13px; line-height: 1.7; cursor: pointer; list-style: none; }
+.article-reactions summary::-webkit-details-marker { display: none; }
+.article-reactions summary svg { width: 18px; height: 18px; flex-shrink: 0; }
+.article-reactions summary:hover { background: #e6f0e8; }
+.article-reactions summary:focus-visible { outline: 2px solid #478b65; outline-offset: 4px; }
+.article-reactions-chevron { margin-left: 8px; transition: transform .2s; }
+.article-reactions details[open] .article-reactions-chevron { transform: rotate(180deg); }
+.article-reactions-panel { margin-top: 23px; padding-top: 20px; border-top: 1px solid #e3e9e5; min-width: 0; }
+.article-reactions-status { font-size: 12px; line-height: 1.8; color: #74837d; }
+.article-reactions-status[hidden] { display: none; }
+.article-reactions-widget { min-height: 80px; }
+.article-reactions-widget iframe { width: 100%; border: 0; }
+body.DarkMode .article-reactions { background: #282f2d; }
+body.DarkMode .article-reactions h2 { color: #dce7df; }
+body.DarkMode .article-reactions .article-reactions-hint, body.DarkMode .article-reactions-status { color: #a9b8af; }
+body.DarkMode .article-reactions summary { background: #293e33; color: #b1d4b9; border-color: #45614e; }
+body.DarkMode .article-reactions-panel { border-color: #435047; }
+@media(max-width: 600px) {
+    .article-reactions > .card-content { padding: 23px 20px; }
+    body .article-reactions h2 { font-size: 18px; }
+    .article-reactions .article-reactions-hint { font-size: 11px; }
+}
+@media(prefers-reduced-motion: reduce) { .article-reactions-chevron { transition: none; } }
